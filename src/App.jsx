@@ -1,3 +1,4 @@
+/* Enhanced Trading AI v2.1 - Cache Bust: 2025-08-20-v2 */
 import React, { useState, useEffect } from 'react';
 import useTradingStore from './stores/tradingStore';
 import apiService from './services/apiService';
@@ -120,11 +121,11 @@ function App() {
                             <div className="flex items-center space-x-3">
                                 <span className="text-2xl">🚀</span>
                                 <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                                    Quantum Trade AI Enhanced - Live Demo
+                                    Quantum Trade AI Enhanced v2.1 - All Features Active
                                 </span>
                             </div>
                             <div className="ml-6 text-sm text-gray-400">
-                                Advanced ML • Technical Analysis • Options Flow • Pattern Recognition
+                                🚀 6 Enhanced Tabs • Advanced ML • Technical Analysis • Options Flow • Pattern Recognition
                             </div>
                         </div>
                         
