@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 function App() {
     const [activeTab, setActiveTab] = useState('dashboard');
     const [isLoading, setIsLoading] = useState(true);
-    const [marketData, setMarketData] = useState({});
 
     // Initialize app and fetch data
     useEffect(() => {
