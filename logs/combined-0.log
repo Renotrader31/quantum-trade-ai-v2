@@ -650,3 +650,24 @@
 2025-08-20T13:44:40: To create a production build, use npm run build.
 2025-08-20T13:44:40: 
 2025-08-20T13:44:40: webpack compiled successfully
+2025-08-20T13:51:51: (node:4940) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:51:51: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T13:51:51: (node:4940) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:51:52: Starting the development server...
+2025-08-20T13:51:52: 
+2025-08-20T13:51:55: Compiled successfully!
+2025-08-20T13:51:55: 
+2025-08-20T13:51:55: You can now view quantum-trade-ai-v2 in the browser.
+2025-08-20T13:51:55: 
+2025-08-20T13:51:55:   http://localhost:3001
+2025-08-20T13:51:55: 
+2025-08-20T13:51:55: Note that the development build is not optimized.
+2025-08-20T13:51:55: To create a production build, use npm run build.
+2025-08-20T13:51:55: 
+2025-08-20T13:51:55: webpack compiled successfully
+2025-08-20T13:59:48: Compiling...
+2025-08-20T13:59:53: Compiled successfully!
+2025-08-20T13:59:53: webpack compiled successfully
+2025-08-20T14:55:49: Compiling...
+2025-08-20T14:55:51: Compiled successfully!
+2025-08-20T14:55:51: webpack compiled successfully
