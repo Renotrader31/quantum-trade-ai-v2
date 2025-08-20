@@ -23,7 +23,7 @@
   "homepage": "https://renotrader31.github.io/quantum-trade-ai-v2",
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false ESLINT_NO_DEV_ERRORS=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

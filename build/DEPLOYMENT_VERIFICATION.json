@@ -1,21 +1,15 @@
 {
-  "deployment_timestamp": "2025-08-20T18:17:34Z",
-  "version": "2.1.1-enhanced-cache-bust",
-  "verification_code": "NEW_BUILD_CACHE_BUSTED_181734",
-  "build_hash": "main.66eab6bc.js",
+  "deployment_timestamp": "2025-08-20T17:07:45Z",
+  "version": "2.1.0-enhanced",
+  "verification_code": "ENHANCED_6TAB_ACTIVE",
   "features": [
-    "🚀🚀 NEW BUILD v2.1.1 🚀🚀",
-    "6 Enhanced Tabs - CACHE BUSTED",
-    "Technical Analysis (20+ indicators)",
-    "Options Flow (Whale tracking)", 
-    "AI Strategy Generator (6 ML strategies)",
-    "Live Data Feed (Multi-API)",
-    "Trade Recorder",
-    "Pattern Recognition",
-    "Risk Management Tools"
+    "6 Enhanced Tabs",
+    "Technical Analysis",
+    "Options Flow",
+    "AI Strategy Generator",
+    "Live Data Feed",
+    "Trade Recorder"
   ],
-  "header_text": "🚀🚀 QUANTUM TRADE AI v2.1 - NEW BUILD - 6 ENHANCED TABS ACTIVE 🚀🚀",
-  "build_identifier": "FORCE_NEW_BUILD_20250820_181734",
-  "build_status": "NEW_VERSION_PRODUCTION_READY",
-  "cache_buster": "806524485"
+  "header_text": "🚀 QUANTUM TRADE AI v2.1 - 6 ENHANCED TABS ACTIVE 🚀",
+  "build_identifier": "FORCE_BUILD_20250820_170745"
 }
