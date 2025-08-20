@@ -1,6 +1,6 @@
 {
   "name": "quantum-trade-ai-v2",
-  "version": "2.1.1",
+  "version": "2.2.0-complete-rebuild",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
