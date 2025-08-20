@@ -1,0 +1,11 @@
+node_modules
+logs
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.cache
+.pm2
+build
+.git
