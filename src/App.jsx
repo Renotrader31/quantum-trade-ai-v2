@@ -1,4 +1,4 @@
-/* Enhanced Trading AI v2.1 - Cache Bust: 2025-08-20-v2 */
+/* Enhanced Trading AI v2.1 - Force Deploy: 2025-08-20-v3 */
 import React, { useState, useEffect } from 'react';
 import useTradingStore from './stores/tradingStore';
 import apiService from './services/apiService';
