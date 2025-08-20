@@ -20,7 +20,7 @@
     "web-vitals": "^2.1.4",
     "zustand": "^4.4.7"
   },
-  "homepage": "https://renotrader31.github.io/quantum-trade-ai-v2",
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false ESLINT_NO_DEV_ERRORS=true react-scripts build",

@@ -100,6 +100,7 @@ function App() {
             try {
                 console.log('🚀🚀🚀 LATEST DEPLOYMENT: Quantum Trade AI v2.1 Enhanced - BUILD ID:', Date.now());
                 console.log('✅ CACHE BUSTED - NEW VERSION ACTIVE - 6 ENHANCED TABS LOADED');
+                console.log('🎯 App.jsx loaded successfully - Initializing components...');
                 
                 // Step 1: Quick UI load with basic market data
                 const overview = await apiService.getMarketOverview();
