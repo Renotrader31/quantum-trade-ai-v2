@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MLTradingDashboard from './components/MLTradingDashboard';
+import MLTradingDashboard from './components/MLTradingDashboard.jsx';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
