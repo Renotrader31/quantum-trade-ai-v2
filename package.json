@@ -15,15 +15,20 @@
     "react-dom": "^19.1.1",
     "react-scripts": "5.0.1",
     "recharts": "^3.1.2",
+    "serve": "^14.2.4",
     "vercel": "^46.0.2",
     "web-vitals": "^2.1.4",
     "zustand": "^4.4.7"
   },
+  "homepage": "https://renotrader31.github.io/quantum-trade-ai-v2",
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "deploy-github": "npm run build && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +51,7 @@
   "devDependencies": {
     "@types/node": "^24.3.0",
     "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"
   }

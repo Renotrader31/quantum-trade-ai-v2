@@ -1,0 +1,13 @@
+[build]
+command = "npm install && npm run build"
+
+[deploy]
+startCommand = "npx serve -s build -p $PORT"
+healthcheckPath = "/"
+
+[env]
+REACT_APP_API_TIMEOUT = "10000"
+REACT_APP_UPDATE_INTERVAL = "30000" 
+REACT_APP_DEMO_MODE = "true"
+REACT_APP_VERSION = "2.1.1-enhanced"
+NODE_VERSION = "18"
