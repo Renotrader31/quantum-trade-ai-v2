@@ -1,4 +1,4 @@
-/* Enhanced Trading AI v2.1 - Simplified Build: 2025-08-20-v4 */
+/* FORCE DEPLOY: Enhanced Trading AI v2.1 - 6 TABS READY - 2025-08-20-FINAL */
 import React, { useState, useEffect } from 'react';
 import useTradingStore from './stores/tradingStore';
 import apiService from './services/apiService';
@@ -194,7 +194,7 @@ function App() {
                             <div className="flex items-center space-x-3">
                                 <span className="text-2xl">🚀</span>
                                 <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                                    Quantum Trade AI Enhanced v2.1 - All Features Active
+                                    🚀 QUANTUM TRADE AI v2.1 - 6 ENHANCED TABS ACTIVE 🚀
                                 </span>
                             </div>
                             <div className="ml-6 text-sm text-gray-400">
