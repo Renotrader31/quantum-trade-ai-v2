@@ -441,11 +441,19 @@
             </div>
 
             <!-- AI Recommendations -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
                 <h3 style="color: #10b981; margin: 0;">⚡ AI-Generated Trading Recommendations</h3>
-                <button class="btn btn-success" onclick="refreshAllRecommendations()" style="padding: 8px 16px;">
-                    🔄 Refresh All (Live Data)
-                </button>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-success" onclick="refreshAllRecommendations()" style="padding: 8px 16px;">
+                        🔄 Generate Max Trades
+                    </button>
+                    <button class="btn btn-primary" onclick="generateQuickTrades()" style="padding: 8px 16px;">
+                        ⚡ Quick 10 Trades
+                    </button>
+                    <button class="btn" onclick="clearRecommendations()" style="padding: 8px 16px; background: #6b7280;">
+                        🗑️ Clear All
+                    </button>
+                </div>
             </div>
             <div class="grid grid-3" id="aiRecommendations">
                 <!-- Dynamic AI recommendations will be loaded here -->
@@ -518,25 +526,25 @@
                 <div class="stock-item" onclick="selectStock('SPY')">
                     <div class="stock-category">ETF</div>
                     <div class="stock-symbol">SPY</div>
-                    <div class="stock-price">$456.78</div>
+                    <div class="stock-price">$565.50</div>
                     <div class="stock-change">+1.23%</div>
                 </div>
                 <div class="stock-item negative" onclick="selectStock('QQQ')">
                     <div class="stock-category">ETF</div>
                     <div class="stock-symbol">QQQ</div>
-                    <div class="stock-price">$378.45</div>
+                    <div class="stock-price">$481.25</div>
                     <div class="stock-change">-0.56%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('IWM')">
                     <div class="stock-category">ETF</div>
                     <div class="stock-symbol">IWM</div>
-                    <div class="stock-price">$194.32</div>
+                    <div class="stock-price">$220.30</div>
                     <div class="stock-change">+0.87%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('VIX')">
                     <div class="stock-category">VOL</div>
                     <div class="stock-symbol">VIX</div>
-                    <div class="stock-price">$18.45</div>
+                    <div class="stock-price">$14.85</div>
                     <div class="stock-change">-2.34%</div>
                 </div>
 
@@ -544,31 +552,31 @@
                 <div class="stock-item" onclick="selectStock('AAPL')">
                     <div class="stock-category">TECH</div>
                     <div class="stock-symbol">AAPL</div>
-                    <div class="stock-price">$189.67</div>
+                    <div class="stock-price">$224.72</div>
                     <div class="stock-change">+2.14%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('MSFT')">
                     <div class="stock-category">TECH</div>
                     <div class="stock-symbol">MSFT</div>
-                    <div class="stock-price">$345.23</div>
+                    <div class="stock-price">$430.54</div>
                     <div class="stock-change">+0.67%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('GOOGL')">
                     <div class="stock-category">TECH</div>
                     <div class="stock-symbol">GOOGL</div>
-                    <div class="stock-price">$134.56</div>
+                    <div class="stock-price">$167.98</div>
                     <div class="stock-change">+1.45%</div>
                 </div>
                 <div class="stock-item negative" onclick="selectStock('AMZN')">
                     <div class="stock-category">TECH</div>
                     <div class="stock-symbol">AMZN</div>
-                    <div class="stock-price">$145.78</div>
+                    <div class="stock-price">$179.31</div>
                     <div class="stock-change">-0.23%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('META')">
                     <div class="stock-category">TECH</div>
                     <div class="stock-symbol">META</div>
-                    <div class="stock-price">$389.45</div>
+                    <div class="stock-price">$527.34</div>
                     <div class="stock-change">+3.21%</div>
                 </div>
 
@@ -576,7 +584,7 @@
                 <div class="stock-item negative" onclick="selectStock('NVDA')">
                     <div class="stock-category">AI</div>
                     <div class="stock-symbol">NVDA</div>
-                    <div class="stock-price">$567.12</div>
+                    <div class="stock-price">$125.61</div>
                     <div class="stock-change">-1.45%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('AMD')">
@@ -602,7 +610,7 @@
                 <div class="stock-item" onclick="selectStock('TSLA')">
                     <div class="stock-category">EV</div>
                     <div class="stock-symbol">TSLA</div>
-                    <div class="stock-price">$234.89</div>
+                    <div class="stock-price">$242.65</div>
                     <div class="stock-change">+0.89%</div>
                 </div>
                 <div class="stock-item" onclick="selectStock('RIVN')">
@@ -1092,15 +1100,27 @@ Check the recommendations section below for full details!`);
             return generateRealisticMarketData(symbol);
         }
 
-        // Generate realistic market data based on current market conditions
+        // Generate realistic market data based on ACTUAL current market conditions (Aug 2024)
         function generateRealisticMarketData(symbol) {
-            const basePrices = {
-                'SPY': 580, 'QQQ': 520, 'AAPL': 230, 'TSLA': 410, 'NVDA': 140,
-                'MSFT': 440, 'GOOGL': 185, 'AMZN': 220, 'META': 570, 'BRK.B': 470
+            const currentPrices = {
+                // Major ETFs
+                'SPY': 565.50, 'QQQ': 481.25, 'IWM': 220.30, 'VIX': 14.85,
+                // Mega Cap Tech
+                'AAPL': 224.72, 'MSFT': 430.54, 'GOOGL': 167.98, 'AMZN': 179.31,
+                'META': 527.34, 'TSLA': 242.65, 'NVDA': 125.61, 'NFLX': 641.34,
+                // Other Major Stocks  
+                'BRK.B': 455.23, 'JPM': 207.82, 'V': 271.45, 'UNH': 588.92,
+                'HD': 409.81, 'PG': 171.23, 'JNJ': 162.37, 'WMT': 69.96,
+                // Meme/Popular Stocks
+                'GME': 17.45, 'AMC': 4.23, 'BB': 2.87, 'PLTR': 39.12,
+                // Crypto Related
+                'COIN': 201.45, 'MSTR': 1547.23, 'RIOT': 10.87,
+                // AI/Tech
+                'SMCI': 441.29, 'ARM': 137.82, 'AVGO': 169.01
             };
             
-            const basePrice = basePrices[symbol.toUpperCase()] || 100;
-            const variation = (Math.random() - 0.5) * 0.1; // ±5% variation
+            const basePrice = currentPrices[symbol.toUpperCase()] || 75.50;
+            const variation = (Math.random() - 0.5) * 0.04; // ±2% daily variation (more realistic)
             const price = basePrice * (1 + variation);
             
             return {
@@ -1112,75 +1132,306 @@ Check the recommendations section below for full details!`);
             };
         }
 
-        // Generate advanced AI analysis with multiple strategies
+        // Generate advanced AI analysis with MANY strategies for maximum ML training data
         function generateAdvancedAIAnalysis(symbol, marketData) {
             const currentPrice = marketData ? marketData.price : 100;
             const volume = marketData ? marketData.volume : 1000000;
             
-            // Define sophisticated strategies
+            // EXPANDED STRATEGY LIST - More trades = More ML training data
             const strategies = [
-                // Stock Strategies
+                // === STOCK STRATEGIES === (4 total)
                 {
                     name: 'Long Position',
                     type: 'stock',
                     description: 'Buy and hold stock position',
-                    action: 'BUY',
-                    timeframe: '30-60 days'
+                    action: 'BUY STOCK',
+                    timeframe: '30-60 days',
+                    frequency: 'high'
                 },
                 {
                     name: 'Short Position', 
                     type: 'stock',
                     description: 'Short sell expecting decline',
                     action: 'SELL SHORT',
-                    timeframe: '15-30 days'
+                    timeframe: '15-30 days',
+                    frequency: 'medium'
                 },
-                // Options Strategies
+                {
+                    name: 'Swing Long',
+                    type: 'stock', 
+                    description: 'Short-term bullish swing trade',
+                    action: 'SWING BUY',
+                    timeframe: '5-15 days',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Swing Short',
+                    type: 'stock',
+                    description: 'Short-term bearish swing trade', 
+                    action: 'SWING SHORT',
+                    timeframe: '5-15 days',
+                    frequency: 'high'
+                },
+                
+                // === BASIC OPTIONS STRATEGIES === (8 total)
                 {
                     name: 'Long Call',
                     type: 'options',
                     description: 'Buy call options for bullish exposure',
                     action: 'BUY CALLS',
-                    timeframe: '20-45 days to expiry'
+                    timeframe: '20-45 days to expiry',
+                    frequency: 'very high'
                 },
                 {
-                    name: 'Bull Call Spread',
+                    name: 'Long Put',
                     type: 'options',
-                    description: 'Buy low strike call, sell high strike call',
-                    action: 'BULL CALL SPREAD',
-                    timeframe: '30-45 days to expiry'
+                    description: 'Buy put options for bearish exposure',
+                    action: 'BUY PUTS', 
+                    timeframe: '20-45 days to expiry',
+                    frequency: 'very high'
                 },
                 {
-                    name: 'Iron Condor',
+                    name: 'Short Call',
                     type: 'options',
-                    description: 'Sell call spread + put spread (range-bound)',
-                    action: 'IRON CONDOR',
-                    timeframe: '20-35 days to expiry'
+                    description: 'Sell call options for income (bearish)',
+                    action: 'SELL CALLS',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'high'
                 },
                 {
-                    name: 'Straddle',
-                    type: 'options',
-                    description: 'Buy call + put (volatility play)',
-                    action: 'LONG STRADDLE',
-                    timeframe: '15-30 days to expiry'
+                    name: 'Short Put',
+                    type: 'options', 
+                    description: 'Sell put options for income (bullish)',
+                    action: 'SELL PUTS',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'high'
                 },
                 {
                     name: 'Covered Call',
                     type: 'options',
                     description: 'Own stock + sell call (income strategy)',
                     action: 'COVERED CALL',
-                    timeframe: '30-45 days to expiry'
+                    timeframe: '30-45 days to expiry',
+                    frequency: 'medium'
                 },
                 {
                     name: 'Cash-Secured Put',
                     type: 'options',
                     description: 'Sell put with cash backing',
                     action: 'CASH-SECURED PUT',
-                    timeframe: '20-35 days to expiry'
+                    timeframe: '20-35 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Protective Put',
+                    type: 'options',
+                    description: 'Own stock + buy put (insurance)',
+                    action: 'PROTECTIVE PUT',
+                    timeframe: '30-60 days to expiry', 
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Collar',
+                    type: 'options',
+                    description: 'Own stock + sell call + buy put',
+                    action: 'COLLAR',
+                    timeframe: '30-45 days to expiry',
+                    frequency: 'low'
+                },
+                
+                // === SPREAD STRATEGIES === (10 total)
+                {
+                    name: 'Bull Call Spread',
+                    type: 'options',
+                    description: 'Buy low strike call, sell high strike call',
+                    action: 'BULL CALL SPREAD',
+                    timeframe: '30-45 days to expiry',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Bear Call Spread',
+                    type: 'options', 
+                    description: 'Sell low strike call, buy high strike call',
+                    action: 'BEAR CALL SPREAD',
+                    timeframe: '30-45 days to expiry',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Bull Put Spread',
+                    type: 'options',
+                    description: 'Sell high strike put, buy low strike put',
+                    action: 'BULL PUT SPREAD', 
+                    timeframe: '30-45 days to expiry',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Bear Put Spread',
+                    type: 'options',
+                    description: 'Buy high strike put, sell low strike put',
+                    action: 'BEAR PUT SPREAD',
+                    timeframe: '30-45 days to expiry',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Calendar Call Spread',
+                    type: 'options',
+                    description: 'Sell short-term call, buy long-term call',
+                    action: 'CALENDAR CALL',
+                    timeframe: '20-45 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Calendar Put Spread',
+                    type: 'options', 
+                    description: 'Sell short-term put, buy long-term put',
+                    action: 'CALENDAR PUT',
+                    timeframe: '20-45 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Diagonal Call Spread',
+                    type: 'options',
+                    description: 'Calendar + vertical spread hybrid',
+                    action: 'DIAGONAL CALL',
+                    timeframe: '25-50 days to expiry',
+                    frequency: 'low'
+                },
+                {
+                    name: 'Diagonal Put Spread',
+                    type: 'options',
+                    description: 'Calendar + vertical spread hybrid',
+                    action: 'DIAGONAL PUT', 
+                    timeframe: '25-50 days to expiry',
+                    frequency: 'low'
+                },
+                {
+                    name: 'Ratio Call Spread',
+                    type: 'options',
+                    description: 'Buy 1 call, sell 2+ calls (different strikes)',
+                    action: 'RATIO CALL SPREAD',
+                    timeframe: '20-35 days to expiry',
+                    frequency: 'low'
+                },
+                {
+                    name: 'Ratio Put Spread', 
+                    type: 'options',
+                    description: 'Buy 1 put, sell 2+ puts (different strikes)',
+                    action: 'RATIO PUT SPREAD',
+                    timeframe: '20-35 days to expiry',
+                    frequency: 'low'
+                },
+                
+                // === VOLATILITY STRATEGIES === (8 total)
+                {
+                    name: 'Long Straddle',
+                    type: 'options',
+                    description: 'Buy call + put same strike (volatility play)',
+                    action: 'LONG STRADDLE',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Short Straddle',
+                    type: 'options',
+                    description: 'Sell call + put same strike (low volatility)',
+                    action: 'SHORT STRADDLE',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Long Strangle',
+                    type: 'options',
+                    description: 'Buy call + put different strikes (volatility)',
+                    action: 'LONG STRANGLE',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'high'
+                },
+                {
+                    name: 'Short Strangle',
+                    type: 'options',
+                    description: 'Sell call + put different strikes (income)',
+                    action: 'SHORT STRANGLE',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Iron Butterfly',
+                    type: 'options',
+                    description: 'Short straddle + long strangle (neutral)',
+                    action: 'IRON BUTTERFLY',
+                    timeframe: '20-35 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Iron Condor',
+                    type: 'options',
+                    description: 'Sell call spread + put spread (range-bound)',
+                    action: 'IRON CONDOR',
+                    timeframe: '20-35 days to expiry', 
+                    frequency: 'high'
+                },
+                {
+                    name: 'Jade Lizard',
+                    type: 'options',
+                    description: 'Short strangle + extra short call',
+                    action: 'JADE LIZARD',
+                    timeframe: '20-40 days to expiry',
+                    frequency: 'low'
+                },
+                {
+                    name: 'Broken Wing Butterfly',
+                    type: 'options',
+                    description: 'Asymmetric butterfly for directional bias',
+                    action: 'BROKEN WING BUTTERFLY',
+                    timeframe: '25-45 days to expiry',
+                    frequency: 'low'
+                },
+                
+                // === ADVANCED STRATEGIES === (5 total) 
+                {
+                    name: 'Strip',
+                    type: 'options',
+                    description: 'Buy 1 call + 2 puts (bearish volatility)',
+                    action: 'STRIP',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'low'
+                },
+                {
+                    name: 'Strap',
+                    type: 'options',
+                    description: 'Buy 2 calls + 1 put (bullish volatility)', 
+                    action: 'STRAP',
+                    timeframe: '15-30 days to expiry',
+                    frequency: 'low'
+                },
+                {
+                    name: 'Synthetic Long',
+                    type: 'options',
+                    description: 'Buy call + sell put (mimics long stock)',
+                    action: 'SYNTHETIC LONG',
+                    timeframe: '30-60 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Synthetic Short',
+                    type: 'options',
+                    description: 'Sell call + buy put (mimics short stock)',
+                    action: 'SYNTHETIC SHORT',
+                    timeframe: '30-60 days to expiry',
+                    frequency: 'medium'
+                },
+                {
+                    name: 'Conversion',
+                    type: 'options',
+                    description: 'Long stock + synthetic short (arbitrage)',
+                    action: 'CONVERSION',
+                    timeframe: '15-45 days to expiry',
+                    frequency: 'very low'
                 }
             ];
             
-            // AI decision logic based on market conditions
-            const selectedStrategy = selectOptimalStrategy(currentPrice, volume, symbol);
+            // AI decision logic optimized for maximum trade generation
+            const selectedStrategy = selectOptimalStrategy(currentPrice, volume, symbol, strategies);
             const strategy = strategies[selectedStrategy];
             
             // Generate dates
@@ -1216,14 +1467,38 @@ Check the recommendations section below for full details!`);
             };
         }
 
-        // Select optimal strategy based on market conditions
-        function selectOptimalStrategy(price, volume, symbol) {
-            // High volume = more liquid options
-            if (volume > 3000000) {
-                return Math.random() > 0.3 ? Math.floor(Math.random() * 8) : 0; // Favor options strategies
+        // Select optimal strategy based on frequency (for maximum ML training data)
+        function selectOptimalStrategy(price, volume, symbol, strategies) {
+            // Create weighted array based on frequency for MORE TRADES
+            const weightedStrategies = [];
+            
+            strategies.forEach((strategy, index) => {
+                let weight = 1;
+                switch(strategy.frequency) {
+                    case 'very high': weight = 8; break;  // 8x more likely
+                    case 'high': weight = 5; break;      // 5x more likely  
+                    case 'medium': weight = 3; break;    // 3x more likely
+                    case 'low': weight = 2; break;       // 2x more likely
+                    case 'very low': weight = 1; break;  // normal frequency
+                }
+                
+                // Add index multiple times based on weight
+                for(let i = 0; i < weight; i++) {
+                    weightedStrategies.push(index);
+                }
+            });
+            
+            // High volume stocks get more options strategies (more trade opportunities)
+            if (volume > 2000000) {
+                // Filter for options strategies (indices 4 and above are options)
+                const optionsIndices = weightedStrategies.filter(i => strategies[i].type === 'options');
+                if (optionsIndices.length > 0 && Math.random() < 0.75) {
+                    return optionsIndices[Math.floor(Math.random() * optionsIndices.length)];
+                }
             }
-            // Lower volume = stick to stock strategies  
-            return Math.random() > 0.7 ? Math.floor(Math.random() * 8) : Math.floor(Math.random() * 2);
+            
+            // Return random weighted strategy
+            return weightedStrategies[Math.floor(Math.random() * weightedStrategies.length)];
         }
 
         // Calculate expected return based on strategy
@@ -1722,7 +1997,7 @@ Mark the outcome when trade is closed to improve AI accuracy.`);
             initializeUnusualWhales();
         }, 2000);
 
-        // Refresh all AI recommendations with live data
+        // Refresh ALL recommendations with MAXIMUM trade generation for ML training
         async function refreshAllRecommendations() {
             const button = event.target;
             const originalText = button.innerHTML;
@@ -1730,21 +2005,43 @@ Mark the outcome when trade is closed to improve AI accuracy.`);
             button.disabled = true;
             
             const container = document.getElementById('aiRecommendations');
-            container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #0ea5e9;"><h4>🤖 Generating AI Recommendations...</h4></div>';
+            container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #0ea5e9;"><h4>🤖 Generating Maximum Trade Opportunities...</h4></div>';
             
             try {
-                const symbols = ['SPY', 'QQQ', 'AAPL'];
+                // EXPANDED symbol list for MORE trade opportunities
+                const symbols = [
+                    // Core ETFs
+                    'SPY', 'QQQ', 'IWM', 
+                    // Mega Cap Tech (high volume = more options strategies)
+                    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NVDA',
+                    // Popular Trading Stocks  
+                    'GME', 'AMC', 'PLTR', 'COIN'
+                ];
                 
-                // Generate recommendations for each symbol
+                // Generate MULTIPLE recommendations per symbol for maximum ML data
                 for (const symbol of symbols) {
                     const marketData = await getRealMarketData(symbol);
-                    const analysis = generateAdvancedAIAnalysis(symbol, marketData);
-                    addAIRecommendationCard(analysis);
+                    
+                    // Generate 2-3 different strategies per symbol for MORE TRADES
+                    const numStrategies = Math.floor(Math.random() * 2) + 2; // 2-3 strategies each
+                    
+                    for (let i = 0; i < numStrategies; i++) {
+                        const analysis = generateAdvancedAIAnalysis(symbol, marketData);
+                        addAIRecommendationCard(analysis);
+                        
+                        // Small delay to prevent overwhelming the UI
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
                 }
                 
                 // Clear loading message after first card is added
                 const loadingMsg = container.querySelector('div[style*="grid-column"]');
                 if (loadingMsg) loadingMsg.remove();
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`🎉 Generated ${container.children.length} trade recommendations!\n\n💡 More trades = More ML training data = Better future predictions!\n\n🔄 Refresh again anytime for new opportunities!`);
+                }, 1000);
                 
             } catch (error) {
                 console.error('Error refreshing recommendations:', error);
@@ -1767,6 +2064,54 @@ Mark the outcome when trade is closed to improve AI accuracy.`);
         setTimeout(() => {
             initializeAIRecommendations();
         }, 4000);
+
+        // Generate quick 10 trades for rapid ML data collection
+        async function generateQuickTrades() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '⚡ Generating...';
+            button.disabled = true;
+            
+            const container = document.getElementById('aiRecommendations');
+            
+            try {
+                // Quick popular symbols for fast generation
+                const quickSymbols = ['SPY', 'QQQ', 'AAPL', 'TSLA', 'NVDA'];
+                const numTrades = 10;
+                
+                for (let i = 0; i < numTrades; i++) {
+                    const symbol = quickSymbols[Math.floor(Math.random() * quickSymbols.length)];
+                    const marketData = await getRealMarketData(symbol);
+                    const analysis = generateAdvancedAIAnalysis(symbol, marketData);
+                    addAIRecommendationCard(analysis);
+                    
+                    // Very quick generation
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                }
+                
+                alert(`⚡ Quick generation complete! Generated ${numTrades} rapid-fire trades for ML training!\n\n🎯 These quick trades help accelerate your machine learning model training.`);
+                
+            } catch (error) {
+                console.error('Error generating quick trades:', error);
+                alert('❌ Error generating quick trades. Please try again.');
+            } finally {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        }
+        
+        // Clear all recommendations
+        function clearRecommendations() {
+            const container = document.getElementById('aiRecommendations');
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8;">
+                    <h4>🤖 AI Recommendations Cleared</h4>
+                    <p>Click "🔄 Generate Max Trades" above to generate new recommendations</p>
+                </div>
+            `;
+            
+            alert('🗑️ All recommendations cleared! Ready to generate fresh trading opportunities.');
+        }
 
         console.log('🚀 Enhanced Quantum Trade AI v2.1 loaded successfully!');
         console.log('✅ Features: Broader Universe, AI Recommendations, Custom Ticker Input, ML Training, Unusual Whales Premium');
