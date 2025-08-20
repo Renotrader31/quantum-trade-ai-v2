@@ -130,12 +130,11 @@ function App() {
                         
                         <div className="flex items-center space-x-4">
                             <div className="text-sm">
-                                <span className="text-gray-400">Data Sources:</span>
+                                <span className="text-gray-400">Mode:</span>
                                 <div className="ml-2 flex items-center gap-2">
-                                    <span className="text-xs bg-blue-600 px-2 py-1 rounded">Polygon</span>
-                                    <span className="text-xs bg-green-600 px-2 py-1 rounded">FMP</span>
-                                    <span className="text-xs bg-purple-600 px-2 py-1 rounded">12Data</span>
-                                    <span className="text-xs bg-orange-600 px-2 py-1 rounded">UW</span>
+                                    <span className="text-xs bg-yellow-600 px-2 py-1 rounded">Demo Mode</span>
+                                    <span className="text-xs bg-blue-600 px-2 py-1 rounded">All Features Active</span>
+                                    <span className="text-xs bg-green-600 px-2 py-1 rounded">No API Keys Required</span>
                                 </div>
                             </div>
                             <div className="text-sm text-gray-400">

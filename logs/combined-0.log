@@ -671,3 +671,791 @@
 2025-08-20T14:55:49: Compiling...
 2025-08-20T14:55:51: Compiled successfully!
 2025-08-20T14:55:51: webpack compiled successfully
+2025-08-20T14:56:07: The build failed because the process exited too early. This probably means the system ran out of memory or someone called `kill -9` on the process.
+2025-08-20T14:56:12: (node:9635) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T14:56:12: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T14:56:12: (node:9635) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T14:56:13: Starting the development server...
+2025-08-20T14:56:13: 
+2025-08-20T14:56:32: Compiled with warnings.
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: [eslint] 
+2025-08-20T14:56:32: src/components/MLTradingDashboard.jsx
+2025-08-20T14:56:32:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T14:56:32:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T14:56:32:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T14:56:32:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T14:56:32:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T14:56:32:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T14:56:32:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T14:56:32:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T14:56:32:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T14:56:32:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T14:56:32:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T14:56:32:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T14:56:32:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T14:56:32:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T14:56:32:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T14:56:32:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T14:56:32:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/apiService.js
+2025-08-20T14:56:32:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/enhancedMLEngine.js
+2025-08-20T14:56:32:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T14:56:32:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T14:56:32:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/flowAnalysis.js
+2025-08-20T14:56:32:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T14:56:32:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/realDataService.js
+2025-08-20T14:56:32:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/technicalAnalysis.js
+2025-08-20T14:56:32:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T14:56:32:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T14:56:32:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: Search for the keywords to learn more about each warning.
+2025-08-20T14:56:32: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: WARNING in [eslint] 
+2025-08-20T14:56:32: src/components/MLTradingDashboard.jsx
+2025-08-20T14:56:32:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T14:56:32:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T14:56:32:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T14:56:32:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T14:56:32:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T14:56:32:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T14:56:32:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T14:56:32:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T14:56:32:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T14:56:32:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T14:56:32:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T14:56:32:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T14:56:32:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T14:56:32:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T14:56:32:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T14:56:32:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T14:56:32:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/apiService.js
+2025-08-20T14:56:32:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/enhancedMLEngine.js
+2025-08-20T14:56:32:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T14:56:32:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T14:56:32:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/flowAnalysis.js
+2025-08-20T14:56:32:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T14:56:32:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/realDataService.js
+2025-08-20T14:56:32:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: src/services/technicalAnalysis.js
+2025-08-20T14:56:32:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T14:56:32:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T14:56:32:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T14:56:32: 
+2025-08-20T14:56:32: webpack compiled with 1 warning
+2025-08-20T15:04:14: Compiling...
+2025-08-20T15:04:16: Compiled with warnings.
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: [eslint] 
+2025-08-20T15:04:16: src/components/MLTradingDashboard.jsx
+2025-08-20T15:04:16:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:04:16:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:04:16:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:04:16:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:04:16:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:16:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:04:16:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:16:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:04:16:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:04:16:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:04:16:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:04:16:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:04:16:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:04:16:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:04:16:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:04:16:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:04:16:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/apiService.js
+2025-08-20T15:04:16:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/enhancedMLEngine.js
+2025-08-20T15:04:16:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:16:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:16:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/flowAnalysis.js
+2025-08-20T15:04:16:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:04:16:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/realDataService.js
+2025-08-20T15:04:16:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/technicalAnalysis.js
+2025-08-20T15:04:16:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:16:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:04:16:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: Search for the keywords to learn more about each warning.
+2025-08-20T15:04:16: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: WARNING in [eslint] 
+2025-08-20T15:04:16: src/components/MLTradingDashboard.jsx
+2025-08-20T15:04:16:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:04:16:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:04:16:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:04:16:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:04:16:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:16:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:04:16:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:16:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:04:16:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:04:16:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:04:16:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:04:16:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:04:16:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:04:16:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:04:16:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:04:16:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:04:16:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/apiService.js
+2025-08-20T15:04:16:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/enhancedMLEngine.js
+2025-08-20T15:04:16:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:16:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:16:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/flowAnalysis.js
+2025-08-20T15:04:16:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:04:16:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/realDataService.js
+2025-08-20T15:04:16:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: src/services/technicalAnalysis.js
+2025-08-20T15:04:16:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:16:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:04:16:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:16: 
+2025-08-20T15:04:16: webpack compiled with 1 warning
+2025-08-20T15:04:27: Compiling...
+2025-08-20T15:04:28: Compiled with warnings.
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: [eslint] 
+2025-08-20T15:04:28: src/components/MLTradingDashboard.jsx
+2025-08-20T15:04:28:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:04:28:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:04:28:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:04:28:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:04:28:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:28:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:04:28:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:28:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:04:28:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:04:28:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:04:28:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:04:28:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:04:28:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:04:28:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:04:28:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:04:28:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:04:28:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/apiService.js
+2025-08-20T15:04:28:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/enhancedMLEngine.js
+2025-08-20T15:04:28:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:28:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:28:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/flowAnalysis.js
+2025-08-20T15:04:28:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:04:28:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/realDataService.js
+2025-08-20T15:04:28:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/technicalAnalysis.js
+2025-08-20T15:04:28:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:28:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:04:28:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: Search for the keywords to learn more about each warning.
+2025-08-20T15:04:28: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: WARNING in [eslint] 
+2025-08-20T15:04:28: src/components/MLTradingDashboard.jsx
+2025-08-20T15:04:28:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:04:28:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:04:28:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:04:28:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:04:28:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:28:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:04:28:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:04:28:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:04:28:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:04:28:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:04:28:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:04:28:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:04:28:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:04:28:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:04:28:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:04:28:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:04:28:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/apiService.js
+2025-08-20T15:04:28:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/enhancedMLEngine.js
+2025-08-20T15:04:28:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:28:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:28:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/flowAnalysis.js
+2025-08-20T15:04:28:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:04:28:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/realDataService.js
+2025-08-20T15:04:28:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: src/services/technicalAnalysis.js
+2025-08-20T15:04:28:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:04:28:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:04:28:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:04:28: 
+2025-08-20T15:04:28: webpack compiled with 1 warning
+2025-08-20T15:06:30: Compiling...
+2025-08-20T15:06:31: Compiled with warnings.
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: [eslint] 
+2025-08-20T15:06:31: src/components/MLTradingDashboard.jsx
+2025-08-20T15:06:31:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:06:31:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:06:31:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:06:31:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:06:31:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:31:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:06:31:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:31:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:06:31:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:06:31:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:06:31:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:06:31:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:06:31:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:06:31:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:06:31:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:06:31:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:06:31:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/apiService.js
+2025-08-20T15:06:31:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/enhancedMLEngine.js
+2025-08-20T15:06:31:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:31:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:31:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/flowAnalysis.js
+2025-08-20T15:06:31:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:06:31:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/realDataService.js
+2025-08-20T15:06:31:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/technicalAnalysis.js
+2025-08-20T15:06:31:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:31:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:06:31:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: Search for the keywords to learn more about each warning.
+2025-08-20T15:06:31: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: WARNING in [eslint] 
+2025-08-20T15:06:31: src/components/MLTradingDashboard.jsx
+2025-08-20T15:06:31:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:06:31:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:06:31:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:06:31:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:06:31:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:31:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:06:31:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:31:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:06:31:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:06:31:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:06:31:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:06:31:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:06:31:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:06:31:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:06:31:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:06:31:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:06:31:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/apiService.js
+2025-08-20T15:06:31:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/enhancedMLEngine.js
+2025-08-20T15:06:31:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:31:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:31:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/flowAnalysis.js
+2025-08-20T15:06:31:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:06:31:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/realDataService.js
+2025-08-20T15:06:31:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: src/services/technicalAnalysis.js
+2025-08-20T15:06:31:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:31:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:06:31:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:31: 
+2025-08-20T15:06:31: webpack compiled with 1 warning
+2025-08-20T15:06:38: Compiling...
+2025-08-20T15:06:39: Compiled with warnings.
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: [eslint] 
+2025-08-20T15:06:39: src/components/MLTradingDashboard.jsx
+2025-08-20T15:06:39:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:06:39:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:06:39:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:06:39:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:06:39:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:39:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:06:39:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:39:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:06:39:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:06:39:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:06:39:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:06:39:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:06:39:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:06:39:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:06:39:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:06:39:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:06:39:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/apiService.js
+2025-08-20T15:06:39:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/enhancedMLEngine.js
+2025-08-20T15:06:39:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:39:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:39:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/flowAnalysis.js
+2025-08-20T15:06:39:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:06:39:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/realDataService.js
+2025-08-20T15:06:39:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/technicalAnalysis.js
+2025-08-20T15:06:39:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:39:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:06:39:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: Search for the keywords to learn more about each warning.
+2025-08-20T15:06:39: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: WARNING in [eslint] 
+2025-08-20T15:06:39: src/components/MLTradingDashboard.jsx
+2025-08-20T15:06:39:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:06:39:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:06:39:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:06:39:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:06:39:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:39:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:06:39:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:06:39:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:06:39:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:06:39:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:06:39:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:06:39:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:06:39:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:06:39:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:06:39:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:06:39:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:06:39:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/apiService.js
+2025-08-20T15:06:39:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/enhancedMLEngine.js
+2025-08-20T15:06:39:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:39:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:39:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/flowAnalysis.js
+2025-08-20T15:06:39:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:06:39:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/realDataService.js
+2025-08-20T15:06:39:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: src/services/technicalAnalysis.js
+2025-08-20T15:06:39:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:06:39:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:06:39:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:06:39: 
+2025-08-20T15:06:39: webpack compiled with 1 warning
+2025-08-20T15:07:59: Compiling...
+2025-08-20T15:08:00: Compiled with warnings.
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: [eslint] 
+2025-08-20T15:08:00: src/components/MLTradingDashboard.jsx
+2025-08-20T15:08:00:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:08:00:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:08:00:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:08:00:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:08:00:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:08:00:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:08:00:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:08:00:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:08:00:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:08:00:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:08:00:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:08:00:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:08:00:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:08:00:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:08:00:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:08:00:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:08:00:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/apiService.js
+2025-08-20T15:08:00:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/enhancedMLEngine.js
+2025-08-20T15:08:00:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:08:00:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:08:00:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/flowAnalysis.js
+2025-08-20T15:08:00:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:08:00:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/realDataService.js
+2025-08-20T15:08:00:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/technicalAnalysis.js
+2025-08-20T15:08:00:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:08:00:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:08:00:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: Search for the keywords to learn more about each warning.
+2025-08-20T15:08:00: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: WARNING in [eslint] 
+2025-08-20T15:08:00: src/components/MLTradingDashboard.jsx
+2025-08-20T15:08:00:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:08:00:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:08:00:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:08:00:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:08:00:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:08:00:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:08:00:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:08:00:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:08:00:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:08:00:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:08:00:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:08:00:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:08:00:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:08:00:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:08:00:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:08:00:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:08:00:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/apiService.js
+2025-08-20T15:08:00:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/enhancedMLEngine.js
+2025-08-20T15:08:00:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:08:00:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:08:00:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/flowAnalysis.js
+2025-08-20T15:08:00:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:08:00:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/realDataService.js
+2025-08-20T15:08:00:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: src/services/technicalAnalysis.js
+2025-08-20T15:08:00:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:08:00:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:08:00:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:08:00: 
+2025-08-20T15:08:00: webpack compiled with 1 warning
+2025-08-20T15:29:32: Compiling...
+2025-08-20T15:29:36: Compiled with warnings.
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: [eslint] 
+2025-08-20T15:29:36: src/components/MLTradingDashboard.jsx
+2025-08-20T15:29:36:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:29:36:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:29:36:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:29:36:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:29:36:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:36:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:29:36:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:36:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:29:36:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:29:36:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:29:36:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:29:36:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:29:36:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:29:36:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:29:36:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:29:36:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:29:36:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/apiService.js
+2025-08-20T15:29:36:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/enhancedMLEngine.js
+2025-08-20T15:29:36:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:36:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:36:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/flowAnalysis.js
+2025-08-20T15:29:36:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:29:36:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/realDataService.js
+2025-08-20T15:29:36:   Line 423:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/technicalAnalysis.js
+2025-08-20T15:29:36:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:36:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:29:36:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: Search for the keywords to learn more about each warning.
+2025-08-20T15:29:36: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: WARNING in [eslint] 
+2025-08-20T15:29:36: src/components/MLTradingDashboard.jsx
+2025-08-20T15:29:36:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:29:36:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:29:36:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:29:36:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:29:36:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:36:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:29:36:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:36:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:29:36:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:29:36:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:29:36:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:29:36:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:29:36:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:29:36:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:29:36:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:29:36:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:29:36:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/apiService.js
+2025-08-20T15:29:36:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/enhancedMLEngine.js
+2025-08-20T15:29:36:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:36:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:36:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/flowAnalysis.js
+2025-08-20T15:29:36:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:29:36:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/realDataService.js
+2025-08-20T15:29:36:   Line 423:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: src/services/technicalAnalysis.js
+2025-08-20T15:29:36:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:36:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:29:36:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:36: 
+2025-08-20T15:29:36: webpack compiled with 1 warning
+2025-08-20T15:29:46: Compiling...
+2025-08-20T15:29:48: Compiled with warnings.
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: [eslint] 
+2025-08-20T15:29:48: src/components/MLTradingDashboard.jsx
+2025-08-20T15:29:48:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:29:48:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:29:48:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:29:48:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:29:48:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:48:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:29:48:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:48:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:29:48:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:29:48:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:29:48:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:29:48:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:29:48:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:29:48:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:29:48:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:29:48:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:29:48:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/apiService.js
+2025-08-20T15:29:48:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/enhancedMLEngine.js
+2025-08-20T15:29:48:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:48:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:48:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/flowAnalysis.js
+2025-08-20T15:29:48:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:29:48:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/realDataService.js
+2025-08-20T15:29:48:   Line 475:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/technicalAnalysis.js
+2025-08-20T15:29:48:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:48:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:29:48:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: Search for the keywords to learn more about each warning.
+2025-08-20T15:29:48: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: WARNING in [eslint] 
+2025-08-20T15:29:48: src/components/MLTradingDashboard.jsx
+2025-08-20T15:29:48:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:29:48:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:29:48:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:29:48:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:29:48:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:48:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:29:48:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:29:48:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:29:48:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:29:48:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:29:48:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:29:48:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:29:48:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:29:48:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:29:48:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:29:48:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:29:48:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/apiService.js
+2025-08-20T15:29:48:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/enhancedMLEngine.js
+2025-08-20T15:29:48:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:48:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:48:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/flowAnalysis.js
+2025-08-20T15:29:48:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:29:48:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/realDataService.js
+2025-08-20T15:29:48:   Line 475:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: src/services/technicalAnalysis.js
+2025-08-20T15:29:48:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:29:48:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:29:48:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:29:48: 
+2025-08-20T15:29:48: webpack compiled with 1 warning
+2025-08-20T15:30:17: Compiling...
+2025-08-20T15:30:19: Compiled with warnings.
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: [eslint] 
+2025-08-20T15:30:19: src/components/MLTradingDashboard.jsx
+2025-08-20T15:30:19:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:30:19:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:30:19:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:30:19:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:30:19:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:30:19:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:30:19:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:30:19:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:30:19:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:30:19:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:30:19:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:30:19:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:30:19:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:30:19:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:30:19:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:30:19:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:30:19:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/apiService.js
+2025-08-20T15:30:19:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/enhancedMLEngine.js
+2025-08-20T15:30:19:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:30:19:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:30:19:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/flowAnalysis.js
+2025-08-20T15:30:19:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:30:19:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/realDataService.js
+2025-08-20T15:30:19:   Line 475:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/technicalAnalysis.js
+2025-08-20T15:30:19:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:30:19:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:30:19:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: Search for the keywords to learn more about each warning.
+2025-08-20T15:30:19: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: WARNING in [eslint] 
+2025-08-20T15:30:19: src/components/MLTradingDashboard.jsx
+2025-08-20T15:30:19:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T15:30:19:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T15:30:19:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T15:30:19:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T15:30:19:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T15:30:19:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T15:30:19:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T15:30:19:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T15:30:19:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T15:30:19:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T15:30:19:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T15:30:19:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T15:30:19:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T15:30:19:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T15:30:19:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T15:30:19:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T15:30:19:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/apiService.js
+2025-08-20T15:30:19:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/enhancedMLEngine.js
+2025-08-20T15:30:19:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:30:19:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T15:30:19:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/flowAnalysis.js
+2025-08-20T15:30:19:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T15:30:19:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/realDataService.js
+2025-08-20T15:30:19:   Line 475:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: src/services/technicalAnalysis.js
+2025-08-20T15:30:19:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T15:30:19:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T15:30:19:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T15:30:19: 
+2025-08-20T15:30:19: webpack compiled with 1 warning

@@ -24,13 +24,8 @@
     }
   ],
   "env": {
-    "REACT_APP_UNUSUAL_WHALES_API_KEY": "@unusual_whales_api_key",
-    "REACT_APP_ALPHA_VANTAGE_KEY": "@alpha_vantage_key", 
-    "REACT_APP_TWELVE_DATA_KEY": "@twelve_data_key",
-    "REACT_APP_POLYGON_API_KEY": "@polygon_api_key",
-    "REACT_APP_FMP_API_KEY": "@fmp_api_key",
-    "REACT_APP_ORTEX_API_KEY": "@ortex_api_key",
     "REACT_APP_API_TIMEOUT": "10000",
-    "REACT_APP_UPDATE_INTERVAL": "30000"
+    "REACT_APP_UPDATE_INTERVAL": "30000",
+    "REACT_APP_DEMO_MODE": "true"
   }
 }
