@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import liveDataService from './services/liveDataService';
 import optionsStrategiesService from './services/optionsStrategiesService';
 import { getAllSymbols, getSymbolsByCategory, searchSymbols, CATEGORIES } from './data/stockUniverse';
+import UnusualWhalesTab from './components/UnusualWhalesTab';
 
 // 🔥 PROFESSIONAL TRADING PLATFORM WITH PREMIUM APIS 🔥
 function App() {
@@ -49,8 +50,9 @@ function App() {
         { id: 'dashboard', name: '📊 Dashboard', color: '#3b82f6' },
         { id: 'ai-strategy', name: '🤖 AI Strategy', color: '#10b981' },
         { id: 'live-data', name: '📈 Live Data (500+ Stocks)', color: '#f59e0b' },
+        { id: 'unusual-whales', name: '🐋 Unusual Whales Premium', color: '#0ea5e9' },
         { id: 'options-strategies', name: '🎯 Options Strategies', color: '#9333ea' },
-        { id: 'options-flow', name: '🐋 Options Flow', color: '#8b5cf6' },
+        { id: 'options-flow', name: '📊 Options Flow', color: '#8b5cf6' },
         { id: 'technical-analysis', name: '🔍 Technical Analysis', color: '#ef4444' },
         { id: 'record-trade', name: '📝 Record Trade', color: '#06b6d4' }
     ];
@@ -512,6 +514,9 @@ function App() {
                         </p>
                     </div>
                 );
+
+            case 'unusual-whales':
+                return <UnusualWhalesTab />;
 
             case 'live-data':
                 return (
