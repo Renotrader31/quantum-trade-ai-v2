@@ -336,4 +336,4 @@ function App() {
     );
 }
 
-export default App;
+export default App;/* Force publish trigger - Wed Aug 20 19:17:29 UTC 2025 */
