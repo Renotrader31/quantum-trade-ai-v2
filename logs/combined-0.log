@@ -1,0 +1,652 @@
+2025-08-20T13:24:33: (node:1717) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:24:33: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T13:24:33: (node:1717) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:24:34: Starting the development server...
+2025-08-20T13:24:34: 
+2025-08-20T13:24:55: Compiled with warnings.
+2025-08-20T13:24:55: 
+2025-08-20T13:24:55: [eslint] 
+2025-08-20T13:24:55: src/components/MLTradingDashboard.jsx
+2025-08-20T13:24:55:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T13:24:55:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T13:24:55:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T13:24:55:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T13:24:55:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T13:24:55:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T13:24:55:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T13:24:55:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T13:24:55:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T13:24:55:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T13:24:55:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T13:24:55:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T13:24:55:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T13:24:55:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T13:24:55:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T13:24:55:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T13:24:55:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T13:24:55: 
+2025-08-20T13:24:55: src/services/apiService.js
+2025-08-20T13:24:55:   Line 292:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:24:55: 
+2025-08-20T13:24:55: Search for the keywords to learn more about each warning.
+2025-08-20T13:24:55: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:24:55: 
+2025-08-20T13:24:55: WARNING in [eslint] 
+2025-08-20T13:24:55: src/components/MLTradingDashboard.jsx
+2025-08-20T13:24:55:   Line 3:24:   'Activity' is defined but never used                    no-unused-vars
+2025-08-20T13:24:55:   Line 4:5:    'DollarSign' is defined but never used                  no-unused-vars
+2025-08-20T13:24:55:   Line 4:17:   'Target' is defined but never used                      no-unused-vars
+2025-08-20T13:24:55:   Line 4:25:   'AlertCircle' is defined but never used                 no-unused-vars
+2025-08-20T13:24:55:   Line 5:5:    'ArrowUpRight' is defined but never used                no-unused-vars
+2025-08-20T13:24:55:   Line 5:19:   'ArrowDownRight' is defined but never used              no-unused-vars
+2025-08-20T13:24:55:   Line 5:35:   'ChevronRight' is defined but never used                no-unused-vars
+2025-08-20T13:24:55:   Line 6:5:    'RefreshCw' is defined but never used                   no-unused-vars
+2025-08-20T13:24:55:   Line 6:23:   'Flame' is defined but never used                       no-unused-vars
+2025-08-20T13:24:55:   Line 6:30:   'LineChart' is defined but never used                   no-unused-vars
+2025-08-20T13:24:55:   Line 6:41:   'Clock' is defined but never used                       no-unused-vars
+2025-08-20T13:24:55:   Line 7:5:    'TrendingDown' is defined but never used                no-unused-vars
+2025-08-20T13:24:55:   Line 7:19:   'Calendar' is defined but never used                    no-unused-vars
+2025-08-20T13:24:55:   Line 7:29:   'PieChart' is defined but never used                    no-unused-vars
+2025-08-20T13:24:55:   Line 7:39:   'BarChart2' is defined but never used                   no-unused-vars
+2025-08-20T13:24:55:   Line 17:12:  'selectedSymbol' is assigned a value but never used     no-unused-vars
+2025-08-20T13:24:55:   Line 17:28:  'setSelectedSymbol' is assigned a value but never used  no-unused-vars
+2025-08-20T13:24:55: 
+2025-08-20T13:24:55: src/services/apiService.js
+2025-08-20T13:24:55:   Line 292:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:24:55: 
+2025-08-20T13:24:55: webpack compiled with 1 warning
+2025-08-20T13:25:15: (node:1910) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:25:15: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T13:25:15: (node:1910) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:25:16: Starting the development server...
+2025-08-20T13:25:16: 
+2025-08-20T13:25:22: (node:1984) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:25:22: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T13:25:22: (node:1984) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:25:22: Starting the development server...
+2025-08-20T13:25:22: 
+2025-08-20T13:25:26: Compiled successfully!
+2025-08-20T13:25:26: 
+2025-08-20T13:25:26: You can now view quantum-trade-ai-v2 in the browser.
+2025-08-20T13:25:26: 
+2025-08-20T13:25:26:   http://localhost:3001
+2025-08-20T13:25:26: 
+2025-08-20T13:25:26: Note that the development build is not optimized.
+2025-08-20T13:25:26: To create a production build, use npm run build.
+2025-08-20T13:25:26: 
+2025-08-20T13:25:26: webpack compiled successfully
+2025-08-20T13:29:38: Compiling...
+2025-08-20T13:29:41: Compiled successfully!
+2025-08-20T13:29:41: webpack compiled successfully
+2025-08-20T13:29:50: Compiling...
+2025-08-20T13:30:00: Compiled with warnings.
+2025-08-20T13:30:00: 
+2025-08-20T13:30:00: [eslint] 
+2025-08-20T13:30:00: src/services/apiService.js
+2025-08-20T13:30:00:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:00: 
+2025-08-20T13:30:00: src/services/realDataService.js
+2025-08-20T13:30:00:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:00: 
+2025-08-20T13:30:00: Search for the keywords to learn more about each warning.
+2025-08-20T13:30:00: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:30:00: 
+2025-08-20T13:30:00: WARNING in [eslint] 
+2025-08-20T13:30:00: src/services/apiService.js
+2025-08-20T13:30:00:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:00: 
+2025-08-20T13:30:00: src/services/realDataService.js
+2025-08-20T13:30:00:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:00: 
+2025-08-20T13:30:00: webpack compiled with 1 warning
+2025-08-20T13:30:39: Compiling...
+2025-08-20T13:30:40: Compiled with warnings.
+2025-08-20T13:30:40: 
+2025-08-20T13:30:40: [eslint] 
+2025-08-20T13:30:40: src/services/apiService.js
+2025-08-20T13:30:40:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:40: 
+2025-08-20T13:30:40: src/services/realDataService.js
+2025-08-20T13:30:40:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:40: 
+2025-08-20T13:30:40: Search for the keywords to learn more about each warning.
+2025-08-20T13:30:40: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:30:40: 
+2025-08-20T13:30:40: WARNING in [eslint] 
+2025-08-20T13:30:40: src/services/apiService.js
+2025-08-20T13:30:40:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:40: 
+2025-08-20T13:30:40: src/services/realDataService.js
+2025-08-20T13:30:40:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:40: 
+2025-08-20T13:30:40: webpack compiled with 1 warning
+2025-08-20T13:30:45: Compiling...
+2025-08-20T13:30:46: Compiled with warnings.
+2025-08-20T13:30:46: 
+2025-08-20T13:30:46: [eslint] 
+2025-08-20T13:30:46: src/services/apiService.js
+2025-08-20T13:30:46:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:46: 
+2025-08-20T13:30:46: src/services/realDataService.js
+2025-08-20T13:30:46:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:46: 
+2025-08-20T13:30:46: Search for the keywords to learn more about each warning.
+2025-08-20T13:30:46: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:30:46: 
+2025-08-20T13:30:46: WARNING in [eslint] 
+2025-08-20T13:30:46: src/services/apiService.js
+2025-08-20T13:30:46:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:46: 
+2025-08-20T13:30:46: src/services/realDataService.js
+2025-08-20T13:30:46:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:46: 
+2025-08-20T13:30:46: webpack compiled with 1 warning
+2025-08-20T13:30:54: Compiling...
+2025-08-20T13:30:55: Compiled with warnings.
+2025-08-20T13:30:55: 
+2025-08-20T13:30:55: [eslint] 
+2025-08-20T13:30:55: src/services/apiService.js
+2025-08-20T13:30:55:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:55: 
+2025-08-20T13:30:55: src/services/realDataService.js
+2025-08-20T13:30:55:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:55: 
+2025-08-20T13:30:55: Search for the keywords to learn more about each warning.
+2025-08-20T13:30:55: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:30:55: 
+2025-08-20T13:30:55: WARNING in [eslint] 
+2025-08-20T13:30:55: src/services/apiService.js
+2025-08-20T13:30:55:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:55: 
+2025-08-20T13:30:55: src/services/realDataService.js
+2025-08-20T13:30:55:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:30:55: 
+2025-08-20T13:30:55: webpack compiled with 1 warning
+2025-08-20T13:31:04: Compiling...
+2025-08-20T13:31:05: Compiled with warnings.
+2025-08-20T13:31:05: 
+2025-08-20T13:31:05: [eslint] 
+2025-08-20T13:31:05: src/services/apiService.js
+2025-08-20T13:31:05:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:05: 
+2025-08-20T13:31:05: src/services/realDataService.js
+2025-08-20T13:31:05:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:05: 
+2025-08-20T13:31:05: Search for the keywords to learn more about each warning.
+2025-08-20T13:31:05: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:31:05: 
+2025-08-20T13:31:05: WARNING in [eslint] 
+2025-08-20T13:31:05: src/services/apiService.js
+2025-08-20T13:31:05:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:05: 
+2025-08-20T13:31:05: src/services/realDataService.js
+2025-08-20T13:31:05:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:05: 
+2025-08-20T13:31:05: webpack compiled with 1 warning
+2025-08-20T13:31:15: Compiling...
+2025-08-20T13:31:17: Compiled with warnings.
+2025-08-20T13:31:17: 
+2025-08-20T13:31:17: [eslint] 
+2025-08-20T13:31:17: src/services/apiService.js
+2025-08-20T13:31:17:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:17: 
+2025-08-20T13:31:17: src/services/realDataService.js
+2025-08-20T13:31:17:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:17: 
+2025-08-20T13:31:17: Search for the keywords to learn more about each warning.
+2025-08-20T13:31:17: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:31:17: 
+2025-08-20T13:31:17: WARNING in [eslint] 
+2025-08-20T13:31:17: src/services/apiService.js
+2025-08-20T13:31:17:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:17: 
+2025-08-20T13:31:17: src/services/realDataService.js
+2025-08-20T13:31:17:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:17: 
+2025-08-20T13:31:17: webpack compiled with 1 warning
+2025-08-20T13:31:41: Compiling...
+2025-08-20T13:31:42: Compiled with warnings.
+2025-08-20T13:31:42: 
+2025-08-20T13:31:42: [eslint] 
+2025-08-20T13:31:42: src/services/apiService.js
+2025-08-20T13:31:42:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:42: 
+2025-08-20T13:31:42: src/services/realDataService.js
+2025-08-20T13:31:42:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:42: 
+2025-08-20T13:31:42: Search for the keywords to learn more about each warning.
+2025-08-20T13:31:42: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:31:42: 
+2025-08-20T13:31:42: WARNING in [eslint] 
+2025-08-20T13:31:42: src/services/apiService.js
+2025-08-20T13:31:42:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:42: 
+2025-08-20T13:31:42: src/services/realDataService.js
+2025-08-20T13:31:42:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:42: 
+2025-08-20T13:31:42: webpack compiled with 1 warning
+2025-08-20T13:31:51: Compiling...
+2025-08-20T13:31:52: Compiled with warnings.
+2025-08-20T13:31:52: 
+2025-08-20T13:31:52: [eslint] 
+2025-08-20T13:31:52: src/services/apiService.js
+2025-08-20T13:31:52:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:52: 
+2025-08-20T13:31:52: src/services/realDataService.js
+2025-08-20T13:31:52:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:52: 
+2025-08-20T13:31:52: Search for the keywords to learn more about each warning.
+2025-08-20T13:31:52: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:31:52: 
+2025-08-20T13:31:53: WARNING in [eslint] 
+2025-08-20T13:31:53: src/services/apiService.js
+2025-08-20T13:31:53:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:53: 
+2025-08-20T13:31:53: src/services/realDataService.js
+2025-08-20T13:31:53:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:31:53: 
+2025-08-20T13:31:53: webpack compiled with 1 warning
+2025-08-20T13:32:08: Compiling...
+2025-08-20T13:32:09: Compiled with warnings.
+2025-08-20T13:32:09: 
+2025-08-20T13:32:09: [eslint] 
+2025-08-20T13:32:09: src/services/apiService.js
+2025-08-20T13:32:09:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:32:09: 
+2025-08-20T13:32:09: src/services/realDataService.js
+2025-08-20T13:32:09:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:32:09: 
+2025-08-20T13:32:09: Search for the keywords to learn more about each warning.
+2025-08-20T13:32:09: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:32:09: 
+2025-08-20T13:32:09: WARNING in [eslint] 
+2025-08-20T13:32:09: src/services/apiService.js
+2025-08-20T13:32:09:   Line 308:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:32:09: 
+2025-08-20T13:32:09: src/services/realDataService.js
+2025-08-20T13:32:09:   Line 413:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:32:09: 
+2025-08-20T13:32:09: webpack compiled with 1 warning
+2025-08-20T13:32:24: (node:2988) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:32:24: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T13:32:24: (node:2988) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:32:25: Starting the development server...
+2025-08-20T13:32:25: 
+2025-08-20T13:32:30: Compiled successfully!
+2025-08-20T13:32:30: 
+2025-08-20T13:32:30: You can now view quantum-trade-ai-v2 in the browser.
+2025-08-20T13:32:30: 
+2025-08-20T13:32:30:   http://localhost:3001
+2025-08-20T13:32:30: 
+2025-08-20T13:32:30: Note that the development build is not optimized.
+2025-08-20T13:32:30: To create a production build, use npm run build.
+2025-08-20T13:32:30: 
+2025-08-20T13:32:30: webpack compiled successfully
+2025-08-20T13:38:21: Compiling...
+2025-08-20T13:38:22: Compiled successfully!
+2025-08-20T13:38:22: webpack compiled successfully
+2025-08-20T13:39:27: Compiling...
+2025-08-20T13:39:28: Compiled successfully!
+2025-08-20T13:39:28: webpack compiled successfully
+2025-08-20T13:41:14: Compiling...
+2025-08-20T13:41:16: Compiled successfully!
+2025-08-20T13:41:16: webpack compiled successfully
+2025-08-20T13:42:10: Compiling...
+2025-08-20T13:42:16: Compiled with warnings.
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: [eslint] 
+2025-08-20T13:42:16: src/services/apiService.js
+2025-08-20T13:42:16:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: src/services/enhancedMLEngine.js
+2025-08-20T13:42:16:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:16:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:16:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: src/services/flowAnalysis.js
+2025-08-20T13:42:16:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:16:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: src/services/technicalAnalysis.js
+2025-08-20T13:42:16:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:16:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:16:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: Search for the keywords to learn more about each warning.
+2025-08-20T13:42:16: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: WARNING in [eslint] 
+2025-08-20T13:42:16: src/services/apiService.js
+2025-08-20T13:42:16:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: src/services/enhancedMLEngine.js
+2025-08-20T13:42:16:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:16:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:16:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: src/services/flowAnalysis.js
+2025-08-20T13:42:16:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:16:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: src/services/technicalAnalysis.js
+2025-08-20T13:42:16:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:16:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:16:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:16: 
+2025-08-20T13:42:16: webpack compiled with 1 warning
+2025-08-20T13:42:16: Compiling...
+2025-08-20T13:42:17: Compiled with warnings.
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: [eslint] 
+2025-08-20T13:42:17: src/services/apiService.js
+2025-08-20T13:42:17:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: src/services/enhancedMLEngine.js
+2025-08-20T13:42:17:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:17:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:17:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: src/services/flowAnalysis.js
+2025-08-20T13:42:17:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:17:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: src/services/technicalAnalysis.js
+2025-08-20T13:42:17:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:17:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:17:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: Search for the keywords to learn more about each warning.
+2025-08-20T13:42:17: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: WARNING in [eslint] 
+2025-08-20T13:42:17: src/services/apiService.js
+2025-08-20T13:42:17:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: src/services/enhancedMLEngine.js
+2025-08-20T13:42:17:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:17:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:17:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: src/services/flowAnalysis.js
+2025-08-20T13:42:17:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:17:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: src/services/technicalAnalysis.js
+2025-08-20T13:42:17:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:17:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:17:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:17: 
+2025-08-20T13:42:17: webpack compiled with 1 warning
+2025-08-20T13:42:36: Compiling...
+2025-08-20T13:42:37: Compiled with warnings.
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: [eslint] 
+2025-08-20T13:42:37: src/services/apiService.js
+2025-08-20T13:42:37:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: src/services/enhancedMLEngine.js
+2025-08-20T13:42:37:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:37:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:37:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: src/services/flowAnalysis.js
+2025-08-20T13:42:37:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:37:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: src/services/technicalAnalysis.js
+2025-08-20T13:42:37:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:37:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:37:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: Search for the keywords to learn more about each warning.
+2025-08-20T13:42:37: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: WARNING in [eslint] 
+2025-08-20T13:42:37: src/services/apiService.js
+2025-08-20T13:42:37:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: src/services/enhancedMLEngine.js
+2025-08-20T13:42:37:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:37:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:37:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: src/services/flowAnalysis.js
+2025-08-20T13:42:37:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:37:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: src/services/technicalAnalysis.js
+2025-08-20T13:42:37:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:37:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:37:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:37: 
+2025-08-20T13:42:37: webpack compiled with 1 warning
+2025-08-20T13:42:44: Compiling...
+2025-08-20T13:42:45: Compiled with warnings.
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: [eslint] 
+2025-08-20T13:42:45: src/services/apiService.js
+2025-08-20T13:42:45:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: src/services/enhancedMLEngine.js
+2025-08-20T13:42:45:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:45:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:45:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: src/services/flowAnalysis.js
+2025-08-20T13:42:45:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:45:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: src/services/technicalAnalysis.js
+2025-08-20T13:42:45:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:45:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:45:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: Search for the keywords to learn more about each warning.
+2025-08-20T13:42:45: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: WARNING in [eslint] 
+2025-08-20T13:42:45: src/services/apiService.js
+2025-08-20T13:42:45:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: src/services/enhancedMLEngine.js
+2025-08-20T13:42:45:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:45:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:45:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: src/services/flowAnalysis.js
+2025-08-20T13:42:45:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:42:45:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: src/services/technicalAnalysis.js
+2025-08-20T13:42:45:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:42:45:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:42:45:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:42:45: 
+2025-08-20T13:42:45: webpack compiled with 1 warning
+2025-08-20T13:43:53: Compiling...
+2025-08-20T13:43:53: Compiled with warnings.
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: [eslint] 
+2025-08-20T13:43:53: src/services/apiService.js
+2025-08-20T13:43:53:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: src/services/enhancedMLEngine.js
+2025-08-20T13:43:53:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:43:53:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:43:53:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: src/services/flowAnalysis.js
+2025-08-20T13:43:53:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:43:53:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: src/services/technicalAnalysis.js
+2025-08-20T13:43:53:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:43:53:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:43:53:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: Search for the keywords to learn more about each warning.
+2025-08-20T13:43:53: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: WARNING in [eslint] 
+2025-08-20T13:43:53: src/services/apiService.js
+2025-08-20T13:43:53:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: src/services/enhancedMLEngine.js
+2025-08-20T13:43:53:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:43:53:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:43:53:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: src/services/flowAnalysis.js
+2025-08-20T13:43:53:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:43:53:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: src/services/technicalAnalysis.js
+2025-08-20T13:43:53:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:43:53:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:43:53:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:43:53: 
+2025-08-20T13:43:53: webpack compiled with 1 warning
+2025-08-20T13:44:01: Compiling...
+2025-08-20T13:44:02: Compiled with warnings.
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: [eslint] 
+2025-08-20T13:44:02: src/services/apiService.js
+2025-08-20T13:44:02:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: src/services/enhancedMLEngine.js
+2025-08-20T13:44:02:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:02:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:02:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: src/services/flowAnalysis.js
+2025-08-20T13:44:02:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:44:02:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: src/services/technicalAnalysis.js
+2025-08-20T13:44:02:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:02:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:44:02:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: Search for the keywords to learn more about each warning.
+2025-08-20T13:44:02: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: WARNING in [eslint] 
+2025-08-20T13:44:02: src/services/apiService.js
+2025-08-20T13:44:02:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: src/services/enhancedMLEngine.js
+2025-08-20T13:44:02:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:02:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:02:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: src/services/flowAnalysis.js
+2025-08-20T13:44:02:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:44:02:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: src/services/technicalAnalysis.js
+2025-08-20T13:44:02:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:02:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:44:02:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:02: 
+2025-08-20T13:44:02: webpack compiled with 1 warning
+2025-08-20T13:44:08: Compiling...
+2025-08-20T13:44:08: Compiled with warnings.
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: [eslint] 
+2025-08-20T13:44:08: src/services/apiService.js
+2025-08-20T13:44:08:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: src/services/enhancedMLEngine.js
+2025-08-20T13:44:08:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:08:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:08:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: src/services/flowAnalysis.js
+2025-08-20T13:44:08:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:44:08:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: src/services/technicalAnalysis.js
+2025-08-20T13:44:08:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:08:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:44:08:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: Search for the keywords to learn more about each warning.
+2025-08-20T13:44:08: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: WARNING in [eslint] 
+2025-08-20T13:44:08: src/services/apiService.js
+2025-08-20T13:44:08:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: src/services/enhancedMLEngine.js
+2025-08-20T13:44:08:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:08:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:08:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: src/services/flowAnalysis.js
+2025-08-20T13:44:08:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:44:08:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: src/services/technicalAnalysis.js
+2025-08-20T13:44:08:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:08:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:44:08:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:08: 
+2025-08-20T13:44:08: webpack compiled with 1 warning
+2025-08-20T13:44:15: Compiling...
+2025-08-20T13:44:16: Compiled with warnings.
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: [eslint] 
+2025-08-20T13:44:16: src/services/apiService.js
+2025-08-20T13:44:16:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: src/services/enhancedMLEngine.js
+2025-08-20T13:44:16:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:16:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:16:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: src/services/flowAnalysis.js
+2025-08-20T13:44:16:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:44:16:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: src/services/technicalAnalysis.js
+2025-08-20T13:44:16:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:16:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:44:16:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: Search for the keywords to learn more about each warning.
+2025-08-20T13:44:16: To ignore, add // eslint-disable-next-line to the line before.
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: WARNING in [eslint] 
+2025-08-20T13:44:16: src/services/apiService.js
+2025-08-20T13:44:16:   Line 321:1:  Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: src/services/enhancedMLEngine.js
+2025-08-20T13:44:16:   Line 430:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:16:   Line 444:15:  'baseMultiplier' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:16:   Line 585:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: src/services/flowAnalysis.js
+2025-08-20T13:44:16:   Line 142:15:  'strikes' is assigned a value but never used                      no-unused-vars
+2025-08-20T13:44:16:   Line 487:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: src/services/technicalAnalysis.js
+2025-08-20T13:44:16:   Line 318:15:  'beforePrevious' is assigned a value but never used               no-unused-vars
+2025-08-20T13:44:16:   Line 372:15:  'sma20' is assigned a value but never used                        no-unused-vars
+2025-08-20T13:44:16:   Line 563:1:   Assign instance to a variable before exporting as module default  import/no-anonymous-default-export
+2025-08-20T13:44:16: 
+2025-08-20T13:44:16: webpack compiled with 1 warning
+2025-08-20T13:44:34: (node:4250) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:44:34: (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-08-20T13:44:34: (node:4250) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+2025-08-20T13:44:35: Starting the development server...
+2025-08-20T13:44:35: 
+2025-08-20T13:44:40: Compiled successfully!
+2025-08-20T13:44:40: 
+2025-08-20T13:44:40: You can now view quantum-trade-ai-v2 in the browser.
+2025-08-20T13:44:40: 
+2025-08-20T13:44:40:   http://localhost:3001
+2025-08-20T13:44:40: 
+2025-08-20T13:44:40: Note that the development build is not optimized.
+2025-08-20T13:44:40: To create a production build, use npm run build.
+2025-08-20T13:44:40: 
+2025-08-20T13:44:40: webpack compiled successfully

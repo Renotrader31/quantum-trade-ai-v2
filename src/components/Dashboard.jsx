@@ -1,5 +1,6 @@
 import React from 'react';
 import useTradingStore from '../stores/tradingStore';
+import APIHealthStatus from './APIHealthStatus';
 
 const Dashboard = () => {
     const { 
@@ -89,49 +90,54 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* AI Recommendations */}
-            <div className="bg-gray-900 rounded-xl p-6">
-                <h2 className="text-xl font-bold mb-4">🤖 AI Recommendations</h2>
-                <div className="space-y-4">
-                    {aiRecommendations.slice(0, 3).map((rec, idx) => (
-                        <div key={idx} className="bg-gray-800 rounded-lg p-4">
-                            <div className="flex justify-between items-start mb-3">
-                                <div>
-                                    <h3 className="text-lg font-bold">{rec.symbol}</h3>
-                                    <span className={`inline-block px-2 py-1 rounded text-sm font-semibold ${
-                                        rec.action === 'BUY' ? 'bg-green-900 text-green-400' : 
-                                        rec.action === 'SELL' ? 'bg-red-900 text-red-400' : 
-                                        'bg-yellow-900 text-yellow-400'
-                                    }`}>
-                                        {rec.action}
-                                    </span>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                {/* AI Recommendations */}
+                <div className="bg-gray-900 rounded-xl p-6">
+                    <h2 className="text-xl font-bold mb-4">🤖 AI Recommendations</h2>
+                    <div className="space-y-4">
+                        {aiRecommendations.slice(0, 3).map((rec, idx) => (
+                            <div key={idx} className="bg-gray-800 rounded-lg p-4">
+                                <div className="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 className="text-lg font-bold">{rec.symbol}</h3>
+                                        <span className={`inline-block px-2 py-1 rounded text-sm font-semibold ${
+                                            rec.action === 'BUY' ? 'bg-green-900 text-green-400' : 
+                                            rec.action === 'SELL' ? 'bg-red-900 text-red-400' : 
+                                            'bg-yellow-900 text-yellow-400'
+                                        }`}>
+                                            {rec.action}
+                                        </span>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className="text-lg font-bold">{rec.confidence}%</div>
+                                        <div className="text-xs text-gray-400">confidence</div>
+                                    </div>
                                 </div>
-                                <div className="text-right">
-                                    <div className="text-lg font-bold">{rec.confidence}%</div>
-                                    <div className="text-xs text-gray-400">confidence</div>
+                                
+                                <div className="text-sm text-gray-300 mb-2">
+                                    Strategy: {rec.strategy} • {rec.timeframe} • R:R {rec.riskReward}
+                                </div>
+                                
+                                <p className="text-sm text-gray-400 mb-3">
+                                    {rec.reasoning}
+                                </p>
+                                
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <span className="text-gray-400 text-sm">Entry: </span>
+                                        <span className="font-semibold">${rec.entryPrice}</span>
+                                    </div>
+                                    <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-semibold transition-colors">
+                                        Execute Trade
+                                    </button>
                                 </div>
                             </div>
-                            
-                            <div className="text-sm text-gray-300 mb-2">
-                                Strategy: {rec.strategy} • {rec.timeframe} • R:R {rec.riskReward}
-                            </div>
-                            
-                            <p className="text-sm text-gray-400 mb-3">
-                                {rec.reasoning}
-                            </p>
-                            
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <span className="text-gray-400 text-sm">Entry: </span>
-                                    <span className="font-semibold">${rec.entryPrice}</span>
-                                </div>
-                                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-semibold transition-colors">
-                                    Execute Trade
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
+
+                {/* API Health Status */}
+                <APIHealthStatus />
             </div>
         </div>
     );

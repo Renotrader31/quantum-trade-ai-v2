@@ -6,6 +6,8 @@ import Dashboard from './components/Dashboard';
 import AIStrategyGenerator from './components/AIStrategyGenerator';
 import TradeRecorder from './components/TradeRecorder';
 import LiveDataFeed from './components/LiveDataFeed';
+import OptionsFlow from './components/OptionsFlow';
+import TechnicalAnalysis from './components/TechnicalAnalysis';
 
 function App() {
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -28,9 +30,26 @@ function App() {
                 const overview = await apiService.getMarketOverview();
                 updateMarketData(overview.stocks);
                 
-                // Generate AI recommendations
-                const recommendations = mlService.generateRecommendations(overview.stocks);
-                setAIRecommendations(recommendations);
+                // Generate AI recommendations (enhanced with flow data)
+                try {
+                    // Try to get options flow data
+                    let optionsFlowData = null;
+                    try {
+                        const { default: realDataService } = await import('./services/realDataService');
+                        optionsFlowData = await realDataService.getOptionsFlowData();
+                        console.log('📊 Options flow data fetched for AI analysis');
+                    } catch (flowError) {
+                        console.warn('⚠️ Options flow data not available:', flowError.message);
+                    }
+                    
+                    const recommendations = await mlService.generateRecommendations(overview.stocks, optionsFlowData);
+                    setAIRecommendations(recommendations);
+                } catch (error) {
+                    console.error('❌ Failed to generate AI recommendations:', error);
+                    // Fallback to basic recommendations
+                    const recommendations = await mlService.generateRecommendations(overview.stocks);
+                    setAIRecommendations(recommendations);
+                }
                 
                 setIsLoading(false);
                 console.log('✅ App initialized successfully');
@@ -40,8 +59,23 @@ function App() {
                     const freshData = await apiService.getMarketOverview();
                     updateMarketData(freshData.stocks);
                     
-                    const newRecommendations = mlService.generateRecommendations(freshData.stocks);
-                    setAIRecommendations(newRecommendations);
+                    // Update recommendations with latest data
+                    try {
+                        let optionsFlowData = null;
+                        try {
+                            const { default: realDataService } = await import('./services/realDataService');
+                            optionsFlowData = await realDataService.getOptionsFlowData();
+                        } catch (flowError) {
+                            console.warn('⚠️ Options flow data not available for update');
+                        }
+                        
+                        const newRecommendations = await mlService.generateRecommendations(freshData.stocks, optionsFlowData);
+                        setAIRecommendations(newRecommendations);
+                    } catch (error) {
+                        console.error('❌ Failed to update AI recommendations:', error);
+                        const newRecommendations = await mlService.generateRecommendations(freshData.stocks);
+                        setAIRecommendations(newRecommendations);
+                    }
                 }, 60000); // Update every minute
                 
                 return () => clearInterval(interval);
@@ -58,6 +92,8 @@ function App() {
         { id: 'dashboard', name: 'Dashboard', icon: '📊' },
         { id: 'ai-strategy', name: 'AI Strategy', icon: '🤖' },
         { id: 'live-data', name: 'Live Data', icon: '📈' },
+        { id: 'options-flow', name: 'Options Flow', icon: '🐋' },
+        { id: 'technical-analysis', name: 'Technical Analysis', icon: '🔍' },
         { id: 'trade-recorder', name: 'Record Trade', icon: '📝' }
     ];
 
@@ -94,7 +130,12 @@ function App() {
                         <div className="flex items-center space-x-4">
                             <div className="text-sm">
                                 <span className="text-gray-400">Data Sources:</span>
-                                <span className="ml-2 text-green-500 font-semibold">Active ✅</span>
+                                <div className="ml-2 flex items-center gap-2">
+                                    <span className="text-xs bg-blue-600 px-2 py-1 rounded">Polygon</span>
+                                    <span className="text-xs bg-green-600 px-2 py-1 rounded">FMP</span>
+                                    <span className="text-xs bg-purple-600 px-2 py-1 rounded">12Data</span>
+                                    <span className="text-xs bg-orange-600 px-2 py-1 rounded">UW</span>
+                                </div>
                             </div>
                             <div className="text-sm text-gray-400">
                                 {new Date().toLocaleTimeString()}
@@ -131,6 +172,8 @@ function App() {
                 {activeTab === 'dashboard' && <Dashboard />}
                 {activeTab === 'ai-strategy' && <AIStrategyGenerator />}
                 {activeTab === 'live-data' && <LiveDataFeed />}
+                {activeTab === 'options-flow' && <OptionsFlow />}
+                {activeTab === 'technical-analysis' && <TechnicalAnalysis />}
                 {activeTab === 'trade-recorder' && <TradeRecorder />}
             </main>
         </div>

@@ -1,0 +1,585 @@
+/**
+ * Enhanced Machine Learning Trading Engine
+ * Advanced AI-powered trading strategies with technical analysis and flow integration
+ */
+
+import technicalAnalysis from './technicalAnalysis.js';
+import flowAnalysis from './flowAnalysis.js';
+
+class EnhancedMLEngine {
+    constructor() {
+        this.strategies = {
+            momentum: { 
+                weight: 0.25, 
+                performance: 0.68,
+                parameters: { rsiThreshold: 70, macdSignal: true, volumeMultiplier: 1.5 }
+            },
+            meanReversion: { 
+                weight: 0.20, 
+                performance: 0.62,
+                parameters: { rsiOversold: 30, rsiOverbought: 70, bollingerPosition: 0.1 }
+            },
+            breakout: { 
+                weight: 0.20, 
+                performance: 0.75,
+                parameters: { atrMultiplier: 2.0, volumeThreshold: 2.0, adxStrength: 25 }
+            },
+            flowBased: { 
+                weight: 0.15, 
+                performance: 0.72,
+                parameters: { whaleThreshold: 50000, sentimentScore: 60, callPutRatio: 1.2 }
+            },
+            scalping: { 
+                weight: 0.10, 
+                performance: 0.58,
+                parameters: { quickRsi: 14, fastEma: 9, slowEma: 21 }
+            },
+            swing: { 
+                weight: 0.10, 
+                performance: 0.71,
+                parameters: { sma20: true, sma50: true, supportResistance: true }
+            }
+        };
+        
+        this.features = [
+            'price', 'volume', 'change', 'rsi', 'macd', 'volatility',
+            'trend', 'momentum', 'support', 'resistance', 'bollinger',
+            'adx', 'stochastic', 'williamsR', 'atr', 'vwap', 'obv',
+            'flowSentiment', 'whaleActivity', 'gammaExposure'
+        ];
+        
+        this.learning = {
+            totalTrades: 0,
+            successfulTrades: 0,
+            strategyPerformance: {},
+            adaptiveWeights: true,
+            confidenceThreshold: 65
+        };
+    }
+
+    // ==================== ENHANCED RECOMMENDATION ENGINE ====================
+
+    /**
+     * Generate enhanced AI recommendations using technical analysis and flow data
+     */
+    async generateEnhancedRecommendations(marketData, optionsFlowData = null) {
+        const recommendations = [];
+        
+        for (const [symbol, stockData] of Object.entries(marketData)) {
+            try {
+                // Perform comprehensive technical analysis
+                const technicalData = technicalAnalysis.performCompleteAnalysis(stockData);
+                
+                // Analyze options flow if available
+                let flowData = null;
+                if (optionsFlowData && optionsFlowData.length > 0) {
+                    const symbolFlow = optionsFlowData.filter(flow => 
+                        (flow.symbol || flow.ticker || '').toUpperCase() === symbol.toUpperCase()
+                    );
+                    flowData = flowAnalysis.analyzeFlowPatterns(symbolFlow);
+                }
+                
+                // Extract enhanced features
+                const features = this.extractEnhancedFeatures(stockData, technicalData, flowData);
+                
+                // Generate analysis using multiple strategies
+                const analysis = this.performEnhancedAnalysis(features, technicalData, flowData);
+                
+                if (analysis.confidence >= this.learning.confidenceThreshold) {
+                    const recommendation = {
+                        symbol,
+                        action: analysis.action,
+                        confidence: analysis.confidence,
+                        strategy: analysis.primaryStrategy,
+                        entryPrice: stockData.price,
+                        targetPrice: this.calculateEnhancedTarget(stockData.price, analysis),
+                        stopLoss: this.calculateEnhancedStopLoss(stockData.price, analysis),
+                        reasoning: analysis.reasoning,
+                        riskReward: analysis.riskReward,
+                        timeframe: analysis.timeframe,
+                        technicalSignals: this.summarizeTechnicalSignals(technicalData),
+                        flowSignals: flowData ? this.summarizeFlowSignals(flowData) : null,
+                        probability: this.calculateSuccessProbability(analysis),
+                        positionSize: this.calculatePositionSize(analysis),
+                        timestamp: Date.now(),
+                        // Enhanced data
+                        technicalScore: analysis.technicalScore,
+                        flowScore: flowData ? flowData.overallSignal.score : 0,
+                        volatilityScore: features.volatilityScore,
+                        momentumScore: features.momentumScore,
+                        supportLevel: features.supportLevel,
+                        resistanceLevel: features.resistanceLevel
+                    };
+                    
+                    recommendations.push(recommendation);
+                }
+            } catch (error) {
+                console.error(`Error analyzing ${symbol}:`, error);
+            }
+        }
+        
+        // Sort by confidence and return top recommendations
+        return recommendations
+            .sort((a, b) => b.confidence - a.confidence)
+            .slice(0, 10);
+    }
+
+    /**
+     * Extract enhanced features combining technical and flow data
+     */
+    extractEnhancedFeatures(stockData, technicalData, flowData) {
+        const prices = this.generatePriceHistory(stockData.price);
+        
+        const features = {
+            // Basic features
+            price: stockData.price,
+            volume: stockData.volume / 1000000,
+            change: stockData.changePercent,
+            
+            // Technical features
+            rsi: technicalData.rsi || 50,
+            macd: technicalData.macd ? technicalData.macd.macd : 0,
+            macdSignal: technicalData.macd ? technicalData.macd.signal : 0,
+            macdHistogram: technicalData.macd ? technicalData.macd.histogram : 0,
+            
+            // Bollinger Bands
+            bollingerPosition: technicalData.bollingerBands ? 
+                technicalData.bollingerBands.position : 50,
+            bollingerBandwidth: technicalData.bollingerBands ? 
+                technicalData.bollingerBands.bandwidth : 20,
+            
+            // Trend indicators
+            adx: technicalData.adx ? technicalData.adx.adx : 20,
+            adxTrend: technicalData.adx ? technicalData.adx.trend : 'WEAK_TREND',
+            sma20: technicalData.sma20 || stockData.price,
+            sma50: technicalData.sma50 || stockData.price,
+            ema12: technicalData.ema12 || stockData.price,
+            ema26: technicalData.ema26 || stockData.price,
+            
+            // Volatility
+            atr: technicalData.atr || (stockData.price * 0.02),
+            volatility: this.calculateVolatility(prices),
+            
+            // Volume indicators
+            vwap: technicalData.vwap || stockData.price,
+            obv: technicalData.obv || 0,
+            
+            // Support/Resistance
+            supportLevel: technicalData.pivotPoints ? technicalData.pivotPoints.s1 : stockData.low,
+            resistanceLevel: technicalData.pivotPoints ? technicalData.pivotPoints.r1 : stockData.high,
+            
+            // Flow features (if available)
+            flowSentiment: flowData ? flowData.sentimentAnalysis.sentimentScore : 50,
+            whaleActivity: flowData ? flowData.whaleActivity.totalWhalePremium : 0,
+            callPutRatio: flowData ? flowData.sentimentAnalysis.callPutRatio : 1,
+            gammaExposure: flowData ? flowData.gamma.netGamma : 0,
+            
+            // Derived features
+            trendStrength: this.calculateTrendStrength(technicalData),
+            momentumScore: this.calculateMomentumScore(technicalData),
+            volatilityScore: this.calculateVolatilityScore(technicalData),
+            volumeScore: this.calculateVolumeScore(stockData, technicalData)
+        };
+        
+        return features;
+    }
+
+    /**
+     * Perform enhanced analysis using multiple strategies
+     */
+    performEnhancedAnalysis(features, technicalData, flowData) {
+        const strategyScores = {};
+        const strategyReasons = {};
+        
+        // Momentum Strategy Analysis
+        strategyScores.momentum = this.analyzeMomentumStrategy(features, technicalData);
+        strategyReasons.momentum = this.getMomentumReasoning(features, technicalData);
+        
+        // Mean Reversion Strategy Analysis
+        strategyScores.meanReversion = this.analyzeMeanReversionStrategy(features, technicalData);
+        strategyReasons.meanReversion = this.getMeanReversionReasoning(features, technicalData);
+        
+        // Breakout Strategy Analysis
+        strategyScores.breakout = this.analyzeBreakoutStrategy(features, technicalData);
+        strategyReasons.breakout = this.getBreakoutReasoning(features, technicalData);
+        
+        // Flow-Based Strategy Analysis
+        if (flowData) {
+            strategyScores.flowBased = this.analyzeFlowStrategy(features, flowData);
+            strategyReasons.flowBased = this.getFlowReasoning(features, flowData);
+        }
+        
+        // Swing Strategy Analysis
+        strategyScores.swing = this.analyzeSwingStrategy(features, technicalData);
+        strategyReasons.swing = this.getSwingReasoning(features, technicalData);
+        
+        // Calculate weighted final score
+        let finalScore = 0;
+        let totalWeight = 0;
+        const reasoning = [];
+        
+        Object.keys(strategyScores).forEach(strategy => {
+            const weight = this.strategies[strategy].weight;
+            const performance = this.strategies[strategy].performance;
+            const adjustedWeight = weight * performance; // Weight by historical performance
+            
+            finalScore += strategyScores[strategy] * adjustedWeight;
+            totalWeight += adjustedWeight;
+            
+            if (Math.abs(strategyScores[strategy]) > 0.3) {
+                reasoning.push(`${strategy}: ${strategyReasons[strategy]}`);
+            }
+        });
+        
+        const normalizedScore = totalWeight > 0 ? finalScore / totalWeight : 0;
+        const action = normalizedScore > 0.15 ? 'BUY' : 
+                     normalizedScore < -0.15 ? 'SELL' : 'HOLD';
+        const confidence = Math.min(Math.abs(normalizedScore) * 100 + 50, 95);
+        
+        // Determine primary strategy
+        const primaryStrategy = Object.keys(strategyScores).reduce((maxStrategy, strategy) => 
+            Math.abs(strategyScores[strategy]) > Math.abs(strategyScores[maxStrategy] || 0) ? 
+            strategy : maxStrategy, 'momentum');
+        
+        return {
+            action,
+            confidence: parseFloat(confidence.toFixed(1)),
+            primaryStrategy,
+            reasoning: reasoning.join(' | '),
+            riskReward: this.calculateRiskReward(normalizedScore, features),
+            timeframe: this.selectTimeframe(features, primaryStrategy),
+            technicalScore: normalizedScore,
+            strategyScores,
+            overallTechnicalSignal: technicalData.overallSignal
+        };
+    }
+
+    // ==================== STRATEGY ANALYZERS ====================
+
+    /**
+     * Analyze momentum strategy
+     */
+    analyzeMomentumStrategy(features, technicalData) {
+        let score = 0;
+        
+        // RSI momentum
+        if (features.rsi > 60 && features.rsi < 80) score += 0.3;
+        else if (features.rsi < 40 && features.rsi > 20) score -= 0.3;
+        
+        // MACD momentum
+        if (features.macdHistogram > 0 && features.macd > features.macdSignal) score += 0.25;
+        else if (features.macdHistogram < 0 && features.macd < features.macdSignal) score -= 0.25;
+        
+        // Price vs moving averages
+        if (features.price > features.ema12 && features.ema12 > features.ema26) score += 0.2;
+        else if (features.price < features.ema12 && features.ema12 < features.ema26) score -= 0.2;
+        
+        // Volume confirmation
+        if (features.volumeScore > 1.2) score += 0.15;
+        
+        // ADX trend strength
+        if (features.adxTrend === 'STRONG_UPTREND') score += 0.1;
+        else if (features.adxTrend === 'STRONG_DOWNTREND') score -= 0.1;
+        
+        return Math.max(-1, Math.min(1, score));
+    }
+
+    /**
+     * Analyze mean reversion strategy
+     */
+    analyzeMeanReversionStrategy(features, technicalData) {
+        let score = 0;
+        
+        // RSI extremes
+        if (features.rsi < 30) score += 0.4;
+        else if (features.rsi > 70) score -= 0.4;
+        
+        // Bollinger Bands position
+        if (features.bollingerPosition < 20) score += 0.3;
+        else if (features.bollingerPosition > 80) score -= 0.3;
+        
+        // Williams %R extremes
+        const williamsR = technicalData.williamsR;
+        if (williamsR && williamsR < -80) score += 0.2;
+        else if (williamsR && williamsR > -20) score -= 0.2;
+        
+        // Stochastic oversold/overbought
+        if (technicalData.stochastic) {
+            if (technicalData.stochastic.k < 20) score += 0.1;
+            else if (technicalData.stochastic.k > 80) score -= 0.1;
+        }
+        
+        return Math.max(-1, Math.min(1, score));
+    }
+
+    /**
+     * Analyze breakout strategy
+     */
+    analyzeBreakoutStrategy(features, technicalData) {
+        let score = 0;
+        
+        // Price breakout above resistance
+        if (features.price > features.resistanceLevel * 1.02) score += 0.4;
+        else if (features.price < features.supportLevel * 0.98) score -= 0.4;
+        
+        // Volume confirmation
+        if (features.volumeScore > 1.5) score += 0.3;
+        
+        // ATR expansion (volatility increase)
+        if (features.volatilityScore > 1.2) score += 0.2;
+        
+        // Bollinger band squeeze release
+        if (features.bollingerBandwidth < 15 && features.bollingerPosition > 60) score += 0.1;
+        else if (features.bollingerBandwidth < 15 && features.bollingerPosition < 40) score -= 0.1;
+        
+        return Math.max(-1, Math.min(1, score));
+    }
+
+    /**
+     * Analyze flow-based strategy
+     */
+    analyzeFlowStrategy(features, flowData) {
+        let score = 0;
+        
+        // Whale activity
+        if (flowData.whaleActivity.totalWhalePremium > 100000) {
+            if (flowData.whaleActivity.whaleCallPutRatio > 1.5) score += 0.4;
+            else if (flowData.whaleActivity.whaleCallPutRatio < 0.7) score -= 0.4;
+        }
+        
+        // Overall sentiment
+        if (flowData.sentimentAnalysis.sentimentScore > 70) score += 0.3;
+        else if (flowData.sentimentAnalysis.sentimentScore < 30) score -= 0.3;
+        
+        // Unusual activity
+        if (flowData.unusualActivity.length > 0) {
+            const significance = flowData.unusualActivity.reduce((max, activity) => 
+                activity.significance === 'HIGH' ? Math.max(max, 0.2) : 
+                activity.significance === 'MEDIUM' ? Math.max(max, 0.1) : max, 0);
+            score += flowData.overallSignal.score > 0 ? significance : -significance;
+        }
+        
+        return Math.max(-1, Math.min(1, score));
+    }
+
+    /**
+     * Analyze swing strategy
+     */
+    analyzeSwingStrategy(features, technicalData) {
+        let score = 0;
+        
+        // Price position relative to moving averages
+        if (features.price > features.sma20 && features.sma20 > features.sma50) score += 0.3;
+        else if (features.price < features.sma20 && features.sma20 < features.sma50) score -= 0.3;
+        
+        // Support/resistance levels
+        const distanceFromSupport = (features.price - features.supportLevel) / features.price;
+        const distanceFromResistance = (features.resistanceLevel - features.price) / features.price;
+        
+        if (distanceFromSupport < 0.02 && distanceFromSupport > 0) score += 0.2;
+        if (distanceFromResistance < 0.02 && distanceFromResistance > 0) score -= 0.2;
+        
+        // VWAP position
+        if (features.price > features.vwap * 1.01) score += 0.1;
+        else if (features.price < features.vwap * 0.99) score -= 0.1;
+        
+        return Math.max(-1, Math.min(1, score));
+    }
+
+    // ==================== HELPER METHODS ====================
+
+    calculateTrendStrength(technicalData) {
+        let strength = 0;
+        
+        if (technicalData.adx && technicalData.adx.adx > 25) strength += 0.3;
+        if (technicalData.macd && technicalData.macd.crossover === 'BULLISH') strength += 0.2;
+        if (technicalData.sma20 && technicalData.sma50 && technicalData.sma20 > technicalData.sma50) strength += 0.2;
+        
+        return Math.min(strength, 1);
+    }
+
+    calculateMomentumScore(technicalData) {
+        let momentum = 0;
+        
+        if (technicalData.rsi > 50) momentum += (technicalData.rsi - 50) / 50 * 0.4;
+        else momentum -= (50 - technicalData.rsi) / 50 * 0.4;
+        
+        if (technicalData.macd && technicalData.macd.histogram > 0) momentum += 0.3;
+        else if (technicalData.macd && technicalData.macd.histogram < 0) momentum -= 0.3;
+        
+        return Math.max(-1, Math.min(1, momentum));
+    }
+
+    calculateVolatilityScore(technicalData) {
+        if (!technicalData.atr || !technicalData.bollingerBands) return 1;
+        
+        // Higher ATR and Bollinger bandwidth = higher volatility
+        const atrScore = Math.min(technicalData.atr / 5, 2); // Normalize ATR
+        const bbScore = technicalData.bollingerBands.bandwidth / 20; // Normalize bandwidth
+        
+        return (atrScore + bbScore) / 2;
+    }
+
+    calculateVolumeScore(stockData, technicalData) {
+        // Compare current volume to average (simplified)
+        const avgVolume = stockData.volume * 0.8; // Assume current is 20% above average
+        return stockData.volume / avgVolume;
+    }
+
+    calculateEnhancedTarget(price, analysis) {
+        const baseMultiplier = analysis.action === 'BUY' ? 1.05 : 0.95;
+        
+        // Adjust based on volatility and confidence
+        const volatilityAdjustment = analysis.volatilityScore || 1;
+        const confidenceAdjustment = analysis.confidence / 100;
+        
+        const adjustedMultiplier = analysis.action === 'BUY' ? 
+            1 + (0.05 * volatilityAdjustment * confidenceAdjustment) :
+            1 - (0.05 * volatilityAdjustment * confidenceAdjustment);
+        
+        return parseFloat((price * adjustedMultiplier).toFixed(2));
+    }
+
+    calculateEnhancedStopLoss(price, analysis) {
+        const baseMultiplier = analysis.action === 'BUY' ? 0.97 : 1.03;
+        
+        // Tighter stops for higher confidence trades
+        const confidenceAdjustment = analysis.confidence / 100;
+        const stopDistance = 0.03 * (1 - confidenceAdjustment * 0.3);
+        
+        const adjustedMultiplier = analysis.action === 'BUY' ? 
+            1 - stopDistance : 1 + stopDistance;
+        
+        return parseFloat((price * adjustedMultiplier).toFixed(2));
+    }
+
+    calculateRiskReward(score, features) {
+        const baseRatio = Math.abs(score) * 2 + 1;
+        const volatilityAdjustment = (features.volatilityScore || 1) * 0.5;
+        const finalRatio = baseRatio + volatilityAdjustment;
+        
+        return `1:${finalRatio.toFixed(1)}`;
+    }
+
+    calculateSuccessProbability(analysis) {
+        // Base probability from confidence
+        let probability = analysis.confidence;
+        
+        // Adjust based on strategy performance
+        const strategyPerf = this.strategies[analysis.primaryStrategy].performance;
+        probability = probability * strategyPerf;
+        
+        return Math.min(95, Math.max(5, Math.round(probability)));
+    }
+
+    calculatePositionSize(analysis) {
+        // Risk-based position sizing (simplified)
+        const baseSize = 1000; // Base position size
+        const confidenceMultiplier = analysis.confidence / 100;
+        const riskAdjustment = 1 / (analysis.volatilityScore || 1);
+        
+        return Math.round(baseSize * confidenceMultiplier * riskAdjustment);
+    }
+
+    selectTimeframe(features, strategy) {
+        if (strategy === 'scalping') return '5-15 minutes';
+        if (strategy === 'momentum') return '1-3 hours';
+        if (strategy === 'meanReversion') return '2-6 hours';
+        if (strategy === 'breakout') return '1-5 days';
+        if (strategy === 'swing') return '3-10 days';
+        if (strategy === 'flowBased') return '1-2 days';
+        
+        return '1-3 days';
+    }
+
+    // Reasoning methods
+    getMomentumReasoning(features, technicalData) {
+        const reasons = [];
+        if (features.rsi > 60) reasons.push('Strong RSI momentum');
+        if (features.macd > features.macdSignal) reasons.push('MACD bullish crossover');
+        if (features.adxTrend.includes('STRONG')) reasons.push('Strong trend detected');
+        return reasons.join(', ') || 'Momentum analysis';
+    }
+
+    getMeanReversionReasoning(features, technicalData) {
+        const reasons = [];
+        if (features.rsi < 30) reasons.push('RSI oversold');
+        if (features.rsi > 70) reasons.push('RSI overbought');
+        if (features.bollingerPosition < 20) reasons.push('Below lower Bollinger band');
+        if (features.bollingerPosition > 80) reasons.push('Above upper Bollinger band');
+        return reasons.join(', ') || 'Mean reversion opportunity';
+    }
+
+    getBreakoutReasoning(features, technicalData) {
+        const reasons = [];
+        if (features.price > features.resistanceLevel) reasons.push('Resistance breakout');
+        if (features.price < features.supportLevel) reasons.push('Support breakdown');
+        if (features.volumeScore > 1.5) reasons.push('Volume confirmation');
+        return reasons.join(', ') || 'Breakout pattern';
+    }
+
+    getFlowReasoning(features, flowData) {
+        const reasons = [];
+        if (flowData.whaleActivity.totalWhalePremium > 100000) reasons.push('Whale activity detected');
+        if (flowData.sentimentAnalysis.sentimentScore > 70) reasons.push('Bullish flow sentiment');
+        if (flowData.sentimentAnalysis.sentimentScore < 30) reasons.push('Bearish flow sentiment');
+        return reasons.join(', ') || 'Options flow analysis';
+    }
+
+    getSwingReasoning(features, technicalData) {
+        const reasons = [];
+        if (features.price > features.sma20) reasons.push('Above SMA20');
+        if (features.price > features.vwap) reasons.push('Above VWAP');
+        return reasons.join(', ') || 'Swing trading setup';
+    }
+
+    summarizeTechnicalSignals(technicalData) {
+        return {
+            rsi: technicalData.rsi,
+            macdSignal: technicalData.macd ? technicalData.macd.crossover : null,
+            bollingerSignal: technicalData.bollingerBands ? technicalData.bollingerBands.signal : null,
+            overallSignal: technicalData.overallSignal ? technicalData.overallSignal.signal : null,
+            trendStrength: technicalData.adx ? technicalData.adx.trend : null
+        };
+    }
+
+    summarizeFlowSignals(flowData) {
+        return {
+            sentiment: flowData.sentimentAnalysis.sentiment,
+            whaleActivity: flowData.whaleActivity.totalWhaleFlows,
+            callPutRatio: flowData.sentimentAnalysis.callPutRatio,
+            overallSignal: flowData.overallSignal.signal,
+            confidence: flowData.overallSignal.confidence
+        };
+    }
+
+    // Existing helper methods
+    generatePriceHistory(currentPrice, days = 50) {
+        const prices = [];
+        let price = currentPrice * 0.95;
+        
+        for (let i = 0; i < days; i++) {
+            price = price * (1 + (Math.random() - 0.5) * 0.03);
+            prices.push(price);
+        }
+        
+        return prices;
+    }
+
+    calculateVolatility(prices) {
+        if (prices.length < 2) return 0.2;
+        
+        const returns = [];
+        for (let i = 1; i < prices.length; i++) {
+            returns.push((prices[i] - prices[i - 1]) / prices[i - 1]);
+        }
+        
+        const avgReturn = returns.reduce((a, b) => a + b, 0) / returns.length;
+        const variance = returns.reduce((sum, ret) => 
+            sum + Math.pow(ret - avgReturn, 2), 0) / returns.length;
+        
+        return Math.sqrt(variance * 252);
+    }
+}
+
+export default new EnhancedMLEngine();

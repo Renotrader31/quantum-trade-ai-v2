@@ -93,8 +93,21 @@ class MLTradingEngine {
         return prices;
     }
 
-    // Generate AI trading recommendations
-    generateRecommendations(marketData) {
+    // Generate AI trading recommendations (enhanced version)
+    async generateRecommendations(marketData, optionsFlowData = null) {
+        try {
+            // Use enhanced ML engine if available
+            if (typeof window !== 'undefined') {
+                // In browser environment, use dynamic import
+                const { default: enhancedML } = await import('./enhancedMLEngine.js');
+                console.log('🤖 Using Enhanced ML Engine for recommendations...');
+                return await enhancedML.generateEnhancedRecommendations(marketData, optionsFlowData);
+            }
+        } catch (error) {
+            console.warn('⚠️ Enhanced ML Engine not available, using fallback:', error.message);
+        }
+
+        // Fallback to original recommendations
         const recommendations = [];
         
         Object.entries(marketData).forEach(([symbol, data]) => {
@@ -268,24 +281,40 @@ class MLTradingEngine {
         };
     }
 
-    // Get market overview
+    // Get market overview (now uses real data)
     async getMarketOverview() {
-        const symbols = ['SPY', 'QQQ', 'AAPL', 'NVDA', 'TSLA'];
-        const stocks = {};
-        
-        symbols.forEach(symbol => {
-            stocks[symbol] = this.generateMockData(symbol);
-        });
+        try {
+            // Import real data service dynamically to avoid circular imports
+            const { default: realDataService } = await import('./realDataService');
+            
+            console.log('🔄 Fetching real market data...');
+            const realData = await realDataService.getMarketOverview();
+            
+            console.log('✅ Real data fetched successfully:', Object.keys(realData.stocks));
+            return realData;
+        } catch (error) {
+            console.warn('⚠️ Real data fetch failed, falling back to mock data:', error.message);
+            
+            // Fallback to mock data if real data fails
+            const symbols = ['SPY', 'QQQ', 'AAPL', 'NVDA', 'TSLA'];
+            const stocks = {};
+            
+            symbols.forEach(symbol => {
+                stocks[symbol] = this.generateMockData(symbol);
+            });
 
-        const totalChange = Object.values(stocks).reduce((sum, stock) => sum + stock.changePercent, 0);
-        const avgChange = totalChange / symbols.length;
+            const totalChange = Object.values(stocks).reduce((sum, stock) => sum + stock.changePercent, 0);
+            const avgChange = totalChange / symbols.length;
 
-        return {
-            stocks,
-            marketSentiment: avgChange > 0.5 ? 'Bullish' : avgChange < -0.5 ? 'Bearish' : 'Neutral',
-            avgChange: parseFloat(avgChange.toFixed(2)),
-            timestamp: Date.now()
-        };
+            return {
+                stocks,
+                marketSentiment: avgChange > 0.5 ? 'Bullish' : avgChange < -0.5 ? 'Bearish' : 'Neutral',
+                avgChange: parseFloat(avgChange.toFixed(2)),
+                timestamp: Date.now(),
+                usingMockData: true,
+                error: error.message
+            };
+        }
     }
 }
 
