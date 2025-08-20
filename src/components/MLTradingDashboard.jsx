@@ -27,6 +27,10 @@ const MLTradingDashboard = () => {
     useEffect(() => {
         const initializeML = async () => {
             try {
+                console.log('🚀 QUANTUM TRADE AI v2.1 - 6 ENHANCED TABS ACTIVE 🚀');
+                console.log('Build Version: 2.1.0-enhanced-latest');
+                console.log('Deployment Timestamp:', new Date().toISOString());
+                
                 const { default: MLTradingSystem } = await import('../services/MLTradingSystem');
                 const system = new MLTradingSystem();
                 setMlSystem(system);

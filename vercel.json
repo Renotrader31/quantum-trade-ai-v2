@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "quantum-trade-ai-v2",
+  "name": "quantum-trade-ai-v2-enhanced",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "devCommand": "npm start",
@@ -14,11 +14,24 @@
   ],
   "headers": [
     {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "X-Force-Refresh",
+          "value": "true"
+        }
+      ]
+    },
+    {
       "source": "/static/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "public, max-age=86400"
         }
       ]
     }
@@ -26,6 +39,8 @@
   "env": {
     "REACT_APP_API_TIMEOUT": "10000",
     "REACT_APP_UPDATE_INTERVAL": "30000",
-    "REACT_APP_DEMO_MODE": "true"
+    "REACT_APP_DEMO_MODE": "true",
+    "REACT_APP_BUILD_ID": "@BUILD_TIME",
+    "REACT_APP_VERSION": "2.1.1-enhanced"
   }
 }

@@ -1,4 +1,4 @@
-/* FORCE DEPLOY: Enhanced Trading AI v2.1 - 6 TABS READY - 2025-08-20-FINAL */
+/* FORCE NEW DEPLOY: Enhanced Trading AI v2.1 - 6 TABS READY - 2025-08-20-CACHE-BUST-FINAL */
 import React, { useState, useEffect } from 'react';
 import useTradingStore from './stores/tradingStore';
 import apiService from './services/apiService';
@@ -98,7 +98,8 @@ function App() {
     useEffect(() => {
         const initializeApp = async () => {
             try {
-                console.log('🚀 Initializing Quantum Trade AI Enhanced Version...');
+                console.log('🚀🚀🚀 LATEST DEPLOYMENT: Quantum Trade AI v2.1 Enhanced - BUILD ID:', Date.now());
+                console.log('✅ CACHE BUSTED - NEW VERSION ACTIVE - 6 ENHANCED TABS LOADED');
                 
                 // Step 1: Quick UI load with basic market data
                 const overview = await apiService.getMarketOverview();
@@ -194,11 +195,11 @@ function App() {
                             <div className="flex items-center space-x-3">
                                 <span className="text-2xl">🚀</span>
                                 <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                                    🚀 QUANTUM TRADE AI v2.1 - 6 ENHANCED TABS ACTIVE 🚀
+                                    🚀🚀 QUANTUM TRADE AI v2.1 - NEW BUILD - 6 ENHANCED TABS ACTIVE 🚀🚀
                                 </span>
                             </div>
                             <div className="ml-6 text-sm text-gray-400">
-                                🚀 6 Enhanced Tabs • Advanced ML • Technical Analysis • Options Flow • Pattern Recognition
+                                🚀 NEW BUILD v2.1 • 6 Enhanced Tabs • Advanced ML • Technical Analysis • Options Flow • Pattern Recognition • BUILD: {Date.now()}
                             </div>
                         </div>
                         
