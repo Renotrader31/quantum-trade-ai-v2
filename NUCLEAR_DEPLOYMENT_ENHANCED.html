@@ -2093,7 +2093,7 @@ ${formatExecutionDetails(executionDetails)}
                 
                 // Update dashboard counters
                 totalTradesEl.textContent = mlTrades.length;
-                pendingTradesEl.textContent = activeTrades.length + pendingOrders.length;
+                pendingTradesEl.textContent = pendingOrders.length; // Only count truly pending orders, not active trades
                 winningTradesEl.textContent = winningTrades.length;
                 
                 // Calculate and update ML accuracy
@@ -2187,6 +2187,7 @@ ${formatExecutionDetails(executionDetails)}
             
             // Update displays
             updatePendingOrdersDisplay();
+            updateMLDashboardStats(); // Ensure ML dashboard updates after order fill
             
             alert(`✅ Order filled!\n\n${order.symbol} ${order.strategy}\nFill Price: $${fillPrice}\n\n📊 Trade moved to active positions for tracking.`);
         }
@@ -2212,6 +2213,7 @@ ${formatExecutionDetails(executionDetails)}
             
             // Update display
             updatePendingOrdersDisplay();
+            updateMLDashboardStats(); // Update ML dashboard after order cancellation
             
             alert(`❌ Order cancelled: ${order.symbol} ${order.strategy}\n\nReason: ${reason}\n\n💡 Good risk management! The ML system learns from cancellation patterns too.`);
         }
@@ -2242,8 +2244,21 @@ ${formatExecutionDetails(executionDetails)}
         // Manual refresh function for debugging
         function refreshMLDashboard() {
             console.log('🔄 Manual ML Dashboard refresh triggered...');
+            
+            // Debug localStorage data
+            const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            console.log('🔍 Debug Data:', {
+                mlTrades: mlTrades,
+                pendingOrders: pendingOrders,
+                pendingCount: pendingOrders.filter(order => order.orderStatus === 'PENDING').length,
+                filledCount: pendingOrders.filter(order => order.orderStatus === 'FILLED').length
+            });
+            
             updateMLDashboardStats();
             updatePendingOrdersDisplay();
+            
+            alert('🔄 Dashboard refreshed! Check console for debug info.');
         }
         
         // Debug function to check pending orders
