@@ -1065,8 +1065,10 @@ Check the recommendations section below for full details!`);
                 const analysis = generateAdvancedAIAnalysis(ticker, null);
                 addAIRecommendationCard(analysis);
             } finally {
-                button.innerHTML = originalText;
-                button.disabled = false;
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
             }
         }
 
@@ -2170,8 +2172,26 @@ ${formatExecutionDetails(executionDetails)}
             }, 1000);
         }
         
+        // Debug function to check pending orders
+        function debugPendingOrders() {
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            console.log('📋 Debug - Pending Orders:', pendingOrders);
+            console.log('📋 Debug - Filtered Pending:', pendingOrders.filter(order => order.orderStatus === 'PENDING'));
+            return pendingOrders;
+        }
+        
+        // Force update pending orders display
+        function forceUpdatePendingOrders() {
+            console.log('🔄 Force updating pending orders display...');
+            updatePendingOrdersDisplay();
+        }
+        
         // Initialize ML system when page loads
         initializeMLDashboard();
+        
+        // Add window functions for debugging
+        window.debugPendingOrders = debugPendingOrders;
+        window.forceUpdatePendingOrders = forceUpdatePendingOrders;
 
         // Auto-update simulation
         setInterval(() => {
@@ -2473,10 +2493,12 @@ ${formatExecutionDetails(executionDetails)}
 
         // Refresh ALL recommendations with MAXIMUM trade generation for ML training
         async function refreshAllRecommendations() {
-            const button = event.target;
-            const originalText = button.innerHTML;
-            button.innerHTML = '🔄 Loading...';
-            button.disabled = true;
+            const button = event && event.target ? event.target : document.querySelector('button[onclick*="refreshAllRecommendations"]');
+            const originalText = button ? button.innerHTML : 'Generate Max Trades';
+            if (button) {
+                button.innerHTML = '🔄 Loading...';
+                button.disabled = true;
+            }
             
             const container = document.getElementById('aiRecommendations');
             container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #0ea5e9;"><h4>🤖 Generating Maximum Trade Opportunities...</h4></div>';
@@ -2521,8 +2543,10 @@ ${formatExecutionDetails(executionDetails)}
                 console.error('Error refreshing recommendations:', error);
                 container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #ef4444;"><h4>❌ Error loading recommendations</h4><p>Please try again</p></div>';
             } finally {
-                button.innerHTML = originalText;
-                button.disabled = false;
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
             }
         }
 
@@ -2569,8 +2593,10 @@ ${formatExecutionDetails(executionDetails)}
                 console.error('Error generating quick trades:', error);
                 alert('❌ Error generating quick trades. Please try again.');
             } finally {
-                button.innerHTML = originalText;
-                button.disabled = false;
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
             }
         }
         
