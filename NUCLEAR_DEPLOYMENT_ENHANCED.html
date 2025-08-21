@@ -1634,17 +1634,22 @@ ${formatExecutionDetails(executionDetails)}
             }
         }
         
-        // Generate strategy-specific execution details
+        // Generate strategy-specific execution details with REAL TRADING COSTS
         function generateExecutionDetails(action, strategy, symbol, entryPrice) {
             const price = parseFloat(entryPrice);
             
             // Stock strategies
             if (action.includes('BUY STOCK') || action.includes('SELL SHORT') || action.includes('SWING')) {
+                const quantity = Math.floor(Math.random() * 400) + 100; // 100-500 shares
+                const totalCost = quantity * price;
                 return {
                     orderType: 'Stock',
-                    quantity: Math.floor(Math.random() * 400) + 100, // 100-500 shares
+                    quantity: quantity,
                     instrument: 'Stock',
-                    orderMethod: 'Market Order'
+                    orderMethod: 'Market Order',
+                    initialDebit: action.includes('BUY') ? totalCost : 0,
+                    initialCredit: action.includes('SELL') ? totalCost : 0,
+                    premium: 0 // No premium for stocks
                 };
             }
             
@@ -1658,6 +1663,12 @@ ${formatExecutionDetails(executionDetails)}
                 const strikeOffset = (Math.random() * 20 - 10); // ±$10 from current price
                 const strike = Math.round(price + strikeOffset);
                 
+                // Calculate realistic premium (simplified)
+                const timeValue = Math.random() * 3 + 0.5; // $0.50-$3.50 time value
+                const intrinsicValue = Math.max(0, isCall ? price - strike : strike - price);
+                const premium = (intrinsicValue + timeValue).toFixed(2);
+                const totalPremium = contracts * parseFloat(premium) * 100; // $100 per point
+                
                 return {
                     orderType: 'Options',
                     quantity: contracts,
@@ -1665,7 +1676,10 @@ ${formatExecutionDetails(executionDetails)}
                     orderMethod: isBuy ? 'Buy to Open' : 'Sell to Open',
                     contracts: contracts,
                     strike: strike,
-                    expiry: getNextFridayExpiry()
+                    expiry: getNextFridayExpiry(),
+                    premium: parseFloat(premium),
+                    initialDebit: isBuy ? totalPremium : 0,
+                    initialCredit: isBuy ? 0 : totalPremium
                 };
             }
             
@@ -1673,13 +1687,23 @@ ${formatExecutionDetails(executionDetails)}
             if (action.includes('SPREAD') || action.includes('CONDOR') || action.includes('BUTTERFLY') || 
                 action.includes('STRADDLE') || action.includes('STRANGLE') || action.includes('COLLAR')) {
                 const contracts = Math.floor(Math.random() * 5) + 1; // 1-5 contracts
+                
+                // Calculate spread premium (net debit or credit)
+                const netPremium = (Math.random() * 4 - 2).toFixed(2); // -$2 to +$2 per contract
+                const totalPremium = Math.abs(contracts * parseFloat(netPremium) * 100);
+                const isDebit = parseFloat(netPremium) > 0;
+                
                 return {
                     orderType: 'Options Spread',
                     quantity: contracts,
                     instrument: `${symbol} ${strategy} (Multi-leg)`,
                     orderMethod: 'Spread Order',
                     contracts: contracts,
-                    legs: getSpreadLegs(action, price)
+                    legs: getSpreadLegs(action, price),
+                    premium: Math.abs(parseFloat(netPremium)),
+                    initialDebit: isDebit ? totalPremium : 0,
+                    initialCredit: isDebit ? 0 : totalPremium,
+                    netPremium: parseFloat(netPremium)
                 };
             }
             
@@ -1688,17 +1712,31 @@ ${formatExecutionDetails(executionDetails)}
                 orderType: 'Market',
                 quantity: 100,
                 instrument: symbol,
-                orderMethod: 'Market Order'
+                orderMethod: 'Market Order',
+                initialDebit: 100 * price,
+                initialCredit: 0,
+                premium: 0
             };
         }
         
-        // Format execution details for display
+        // Format execution details for display with COST TRACKING
         function formatExecutionDetails(details) {
             let formatted = `📋 Order Details:
 - Instrument: ${details.instrument}
 - Quantity: ${details.quantity}${details.contracts ? ' contracts' : ' shares'}
 - Order Type: ${details.orderMethod}
 - Status: Filled`;
+            
+            // Add cost information
+            if (details.initialDebit > 0) {
+                formatted += `\n💰 Initial Debit: $${details.initialDebit.toFixed(2)}`;
+            }
+            if (details.initialCredit > 0) {
+                formatted += `\n💵 Initial Credit: $${details.initialCredit.toFixed(2)}`;
+            }
+            if (details.premium > 0) {
+                formatted += `\n📊 Premium per Contract: $${details.premium}`;
+            }
             
             if (details.strike) {
                 formatted += `\n- Strike: $${details.strike}`;
@@ -1764,7 +1802,7 @@ ${formatExecutionDetails(executionDetails)}
             console.log('✅ Trade added to ML tracking system:', tradeData);
         }
 
-        // Update Record Trade tab with new ML-tracked trade
+        // Update Record Trade tab with new ML-tracked trade (ENHANCED)
         function updateRecordTradeTab(tradeData) {
             const tradeHistory = document.getElementById('tradeHistory');
             const newTrade = document.createElement('div');
@@ -1774,16 +1812,23 @@ ${formatExecutionDetails(executionDetails)}
             const displayText = tradeData.orderType === 'Options' ? 
                 `${tradeData.contracts} contracts` : 
                 `${tradeData.quantity} shares`;
+            
+            // Show initial debit or credit
+            const costDisplay = tradeData.initialDebit > 0 ? 
+                `Debit: $${tradeData.initialDebit.toFixed(2)}` : 
+                `Credit: $${tradeData.initialCredit.toFixed(2)}`;
                 
             newTrade.innerHTML = `
                 <div><strong>${tradeData.symbol}</strong> - ${tradeData.action}<br>
                      <small style="color: #94a3b8;">${displayText} @ $${tradeData.entryPrice}</small><br>
-                     <small style="color: #10b981;">Strategy: ${tradeData.strategy}</small></div>
+                     <small style="color: #10b981;">Strategy: ${tradeData.strategy}</small><br>
+                     <small style="color: #f59e0b;">${costDisplay}</small></div>
                 <div style="color: #f59e0b;">Pending</div>
                 <div style="color: #94a3b8;">Just now</div>
                 <div><span class="status-pending" style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem;">PENDING</span></div>
-                <div><button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeWin('${tradeData.id}')">Mark Win</button></div>
-                <div><button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeLoss('${tradeData.id}')">Mark Loss</button></div>
+                <div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="earlyExit('${tradeData.id}')">Early Exit</button></div>
+                <div><button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="markTradeWin('${tradeData.id}')">Mark Win</button>
+                     <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeLoss('${tradeData.id}')">Mark Loss</button></div>
             `;
             tradeHistory.insertBefore(newTrade, tradeHistory.firstChild);
         }
@@ -1822,56 +1867,124 @@ ${formatExecutionDetails(executionDetails)}
             alert(`✅ Manual trade recorded: ${action} ${quantity} shares of ${symbol} at $${price}\n\n🤖 Added to ML training system!\nMark the outcome when trade closes to improve AI accuracy.`);
         }
 
-        // Mark ML-tracked trade as win
+        // Mark ML-tracked trade as win (ENHANCED WITH COST BASIS)
         function markTradeWin(tradeId) {
-            const actualReturn = parseFloat(prompt('Enter actual return (e.g., 15.5 for 15.5% gain):') || '0');
-            if (actualReturn === null) return;
+            const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            const trade = mlTrades.find(t => t.id === tradeId);
+            if (!trade) return;
             
-            updateMLTradeOutcome(tradeId, 'WIN', actualReturn);
+            // Different prompts based on trade type
+            let actualProfit, actualReturn;
+            if (trade.orderType === 'Options' || trade.orderType === 'Options Spread') {
+                actualProfit = parseFloat(prompt(`Enter actual P&L in dollars (e.g., 850 for $850 profit):\n\nInitial ${trade.initialDebit > 0 ? 'Debit' : 'Credit'}: $${(trade.initialDebit || trade.initialCredit).toFixed(2)}`) || '0');
+                actualReturn = trade.initialDebit > 0 ? 
+                    (actualProfit / trade.initialDebit * 100) : 
+                    (actualProfit / trade.initialCredit * 100);
+            } else {
+                actualProfit = parseFloat(prompt(`Enter actual P&L in dollars (e.g., 1250 for $1,250 profit):`) || '0');
+                actualReturn = (actualProfit / trade.initialDebit * 100);
+            }
+            
+            if (actualProfit === null) return;
+            
+            updateMLTradeOutcome(tradeId, 'WIN', actualReturn, actualProfit);
             
             const row = document.querySelector(`[data-ml-id="${tradeId}"]`);
             if (row) {
-                const pnl = actualReturn > 0 ? `+${actualReturn.toFixed(1)}%` : `${actualReturn.toFixed(1)}%`;
-                row.children[1].innerHTML = `<span style="color: #10b981; font-weight: bold;">${pnl}</span>`;
+                row.children[1].innerHTML = `<span style="color: #10b981; font-weight: bold;">+$${actualProfit.toFixed(0)} (${actualReturn.toFixed(1)}%)</span>`;
                 row.children[3].innerHTML = '<span class="status-win" style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem;">WIN</span>';
                 row.children[4].innerHTML = '';
                 row.children[5].innerHTML = '';
             }
             
             updateMLDashboardStats();
-            alert(`✅ Trade marked as WIN with ${actualReturn.toFixed(1)}% return!\n\n🤖 ML algorithms learning from this successful outcome to improve future recommendations.`);
+            alert(`✅ Trade marked as WIN!\n\n💰 Profit: $${actualProfit.toFixed(0)}\n📈 Return: ${actualReturn.toFixed(1)}%\n\n🤖 ML algorithms learning from this successful outcome!`);
         }
 
-        // Mark ML-tracked trade as loss  
+        // Mark ML-tracked trade as loss (ENHANCED WITH COST BASIS)
         function markTradeLoss(tradeId) {
-            const actualReturn = parseFloat(prompt('Enter actual loss (e.g., -8.2 for -8.2% loss):') || '0');
-            if (actualReturn === null) return;
+            const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            const trade = mlTrades.find(t => t.id === tradeId);
+            if (!trade) return;
             
-            updateMLTradeOutcome(tradeId, 'LOSS', actualReturn);
+            let actualLoss, actualReturn;
+            if (trade.orderType === 'Options' || trade.orderType === 'Options Spread') {
+                actualLoss = parseFloat(prompt(`Enter actual loss in dollars (e.g., -450 for $450 loss):\n\nInitial ${trade.initialDebit > 0 ? 'Debit' : 'Credit'}: $${(trade.initialDebit || trade.initialCredit).toFixed(2)}`) || '0');
+                actualReturn = trade.initialDebit > 0 ? 
+                    (actualLoss / trade.initialDebit * 100) : 
+                    (actualLoss / trade.initialCredit * 100);
+            } else {
+                actualLoss = parseFloat(prompt(`Enter actual loss in dollars (e.g., -850 for $850 loss):`) || '0');
+                actualReturn = (actualLoss / trade.initialDebit * 100);
+            }
+            
+            if (actualLoss === null) return;
+            
+            updateMLTradeOutcome(tradeId, 'LOSS', actualReturn, actualLoss);
             
             const row = document.querySelector(`[data-ml-id="${tradeId}"]`);
             if (row) {
-                const pnl = `${actualReturn.toFixed(1)}%`;
-                row.children[1].innerHTML = `<span style="color: #ef4444; font-weight: bold;">${pnl}</span>`;
+                row.children[1].innerHTML = `<span style="color: #ef4444; font-weight: bold;">$${actualLoss.toFixed(0)} (${actualReturn.toFixed(1)}%)</span>`;
                 row.children[3].innerHTML = '<span class="status-loss" style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem;">LOSS</span>';
                 row.children[4].innerHTML = '';
                 row.children[5].innerHTML = '';
             }
             
             updateMLDashboardStats();
-            alert(`❌ Trade marked as LOSS with ${actualReturn.toFixed(1)}% return.\n\n🤖 ML algorithms adjusting parameters based on this outcome to improve future recommendations.`);
+            alert(`❌ Trade marked as LOSS.\n\n💸 Loss: $${Math.abs(actualLoss).toFixed(0)}\n📉 Return: ${actualReturn.toFixed(1)}%\n\n🤖 ML algorithms learning from this outcome to improve future recommendations.`);
         }
         
-        // Update ML trade outcome in storage
-        function updateMLTradeOutcome(tradeId, outcome, actualReturn) {
+        // Early Exit Function (NEW FEATURE)
+        function earlyExit(tradeId) {
+            const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            const trade = mlTrades.find(t => t.id === tradeId);
+            if (!trade) return;
+            
+            const exitReason = prompt(`Early exit reason (e.g., "Take profit", "Cut loss", "Roll position", "Market conditions"):`) || 'Early exit';
+            if (!exitReason) return;
+            
+            let actualProfit;
+            if (trade.orderType === 'Options' || trade.orderType === 'Options Spread') {
+                actualProfit = parseFloat(prompt(`Enter exit P&L in dollars:\n\nOriginal ${trade.initialDebit > 0 ? 'Debit' : 'Credit'}: $${(trade.initialDebit || trade.initialCredit).toFixed(2)}\n\nExit P&L (e.g., 200 for $200 profit, -150 for $150 loss):`) || '0');
+            } else {
+                actualProfit = parseFloat(prompt(`Enter exit P&L in dollars (e.g., 500 for $500 profit, -300 for $300 loss):`) || '0');
+            }
+            
+            if (actualProfit === null) return;
+            
+            const actualReturn = trade.initialDebit > 0 ? 
+                (actualProfit / trade.initialDebit * 100) : 
+                (actualProfit / trade.initialCredit * 100);
+            
+            const outcome = actualProfit >= 0 ? 'EARLY_WIN' : 'EARLY_LOSS';
+            updateMLTradeOutcome(tradeId, outcome, actualReturn, actualProfit, exitReason);
+            
+            const row = document.querySelector(`[data-ml-id="${tradeId}"]`);
+            if (row) {
+                const profitColor = actualProfit >= 0 ? '#10b981' : '#ef4444';
+                const profitSign = actualProfit >= 0 ? '+' : '';
+                row.children[1].innerHTML = `<span style="color: ${profitColor}; font-weight: bold;">${profitSign}$${actualProfit.toFixed(0)} (${actualReturn.toFixed(1)}%)</span>`;
+                row.children[3].innerHTML = `<span class="${actualProfit >= 0 ? 'status-win' : 'status-loss'}" style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem;">EARLY EXIT</span>`;
+                row.children[4].innerHTML = `<small style="color: #94a3b8;">${exitReason}</small>`;
+                row.children[5].innerHTML = '';
+            }
+            
+            updateMLDashboardStats();
+            alert(`⚡ Early exit recorded!\n\n💰 P&L: ${actualProfit >= 0 ? '+' : ''}$${actualProfit.toFixed(0)}\n📊 Return: ${actualReturn.toFixed(1)}%\n🎯 Reason: ${exitReason}\n\n🤖 ML algorithms learning from early exit patterns!`);
+        }
+        
+        // Update ML trade outcome in storage (ENHANCED)
+        function updateMLTradeOutcome(tradeId, outcome, actualReturn, actualProfit, exitReason = null) {
             let mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
             const tradeIndex = mlTrades.findIndex(trade => trade.id === tradeId);
             
             if (tradeIndex !== -1) {
                 mlTrades[tradeIndex].outcome = outcome;
                 mlTrades[tradeIndex].actualReturn = actualReturn;
+                mlTrades[tradeIndex].actualProfit = actualProfit;
                 mlTrades[tradeIndex].closeDate = new Date().toISOString();
                 mlTrades[tradeIndex].status = 'CLOSED';
+                if (exitReason) mlTrades[tradeIndex].exitReason = exitReason;
                 
                 // Calculate accuracy vs prediction
                 const predicted = mlTrades[tradeIndex].expectedReturn;
