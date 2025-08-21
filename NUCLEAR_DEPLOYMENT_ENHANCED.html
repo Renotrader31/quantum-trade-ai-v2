@@ -862,6 +862,16 @@
         <div id="record-trade" class="section hidden">
             <h2 style="color: #06b6d4;">📝 ENHANCED TRADE RECORDER - ML TRAINING DATA</h2>
             
+            <!-- Pending Orders Section -->
+            <div style="background: #334155; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                <h3 style="color: #f59e0b; margin-bottom: 20px;">⏳ Pending Orders</h3>
+                <div id="pendingOrders">
+                    <div style="text-align: center; padding: 20px; color: #94a3b8;">
+                        <p>No pending orders. Execute trades from AI Strategy tab to see them here.</p>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Manual Trade Input -->
             <div style="background: #334155; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
                 <h3 style="color: #06b6d4; margin-bottom: 20px;">➕ Record New Trade</h3>
@@ -1597,38 +1607,44 @@ Check the recommendations section below for full details!`);
             container.insertAdjacentHTML('afterbegin', cardHTML);
         }
 
-        // Enhanced Trade Execution with ML Integration
+        // Enhanced Trade Execution with ORDER MANAGEMENT
         function executeTrade(symbol, action, strategy, entryPrice, expectedReturn, confidence) {
             // Generate strategy-specific execution details
             const executionDetails = generateExecutionDetails(action, strategy, symbol, entryPrice);
             
-            // Add to ML tracking system
-            addToMLTrackingSystem({
+            // Create order with PENDING status first
+            const orderData = {
                 symbol,
                 action, 
                 strategy,
                 entryPrice: parseFloat(entryPrice),
                 expectedReturn: parseFloat(expectedReturn),
                 confidence: parseInt(confidence),
-                executionTime: new Date().toISOString(),
+                orderTime: new Date().toISOString(),
+                orderStatus: 'PENDING', // Start as PENDING
                 ...executionDetails
-            });
+            };
             
-            // Show execution confirmation
-            alert(`🚀 Executing ${action} trade for ${symbol}...
+            // Add to pending orders system
+            addToPendingOrders(orderData);
+            
+            // Show order placement confirmation
+            alert(`📋 Order placed for ${symbol}!
 
 📊 Strategy: ${strategy}
 ${formatExecutionDetails(executionDetails)}
 
-✅ Trade executed successfully!
-🤖 Added to ML training data!
+⏳ Order Status: PENDING
+💡 Order added to pending queue.
 
-🔄 Go to "📝 Record Trade" tab to mark outcome when trade closes.`);
+🔄 Go to "📝 Record Trade" tab to:
+   • See pending orders
+   • Cancel if market changes
+   • Mark as filled when executed`);
             
-            // Optional: Auto-switch to Record Trade tab for immediate tracking
-            if (confirm('Switch to Record Trade tab to track this trade?')) {
+            // Optional: Auto-switch to Record Trade tab
+            if (confirm('Switch to Record Trade tab to manage this order?')) {
                 showTab('record-trade');
-                // Update tab styling manually since we're calling programmatically
                 document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
                 document.querySelector('[onclick*="record-trade"]').classList.add('active');
             }
@@ -1775,14 +1791,36 @@ ${formatExecutionDetails(executionDetails)}
             return 'Multi-leg spread';
         }
         
-        // Add to ML Tracking System (REAL ML INTEGRATION)
+        // Add to PENDING ORDERS System (NEW!)
+        function addToPendingOrders(orderData) {
+            // Get or create pending orders array
+            let pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            
+            // Add unique ID and order metadata
+            orderData.id = 'order_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            orderData.orderStatus = 'PENDING';
+            orderData.fillTime = null;
+            orderData.cancelTime = null;
+            orderData.fillPrice = null;
+            
+            // Add to pending orders
+            pendingOrders.push(orderData);
+            localStorage.setItem('pendingOrders', JSON.stringify(pendingOrders));
+            
+            // Update pending orders display
+            updatePendingOrdersDisplay();
+            
+            console.log('📋 Order added to pending queue:', orderData);
+        }
+        
+        // Add to ML Tracking System (When order is FILLED)
         function addToMLTrackingSystem(tradeData) {
             // Get or create ML tracking array in localStorage
             let mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
             
             // Add unique ID and metadata
-            tradeData.id = 'ml_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            tradeData.status = 'PENDING';
+            tradeData.id = tradeData.id || 'ml_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            tradeData.status = 'ACTIVE'; // Active position, not pending order
             tradeData.outcome = null;
             tradeData.actualReturn = null;
             tradeData.closeDate = null;
@@ -1817,15 +1855,20 @@ ${formatExecutionDetails(executionDetails)}
             const costDisplay = tradeData.initialDebit > 0 ? 
                 `Debit: $${tradeData.initialDebit.toFixed(2)}` : 
                 `Credit: $${tradeData.initialCredit.toFixed(2)}`;
+            
+            // Show fill time if available
+            const timeDisplay = tradeData.fillTime ? 
+                new Date(tradeData.fillTime).toLocaleTimeString() : 
+                'Just now';
                 
             newTrade.innerHTML = `
                 <div><strong>${tradeData.symbol}</strong> - ${tradeData.action}<br>
                      <small style="color: #94a3b8;">${displayText} @ $${tradeData.entryPrice}</small><br>
                      <small style="color: #10b981;">Strategy: ${tradeData.strategy}</small><br>
                      <small style="color: #f59e0b;">${costDisplay}</small></div>
-                <div style="color: #f59e0b;">Pending</div>
-                <div style="color: #94a3b8;">Just now</div>
-                <div><span class="status-pending" style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem;">PENDING</span></div>
+                <div style="color: #10b981; font-weight: bold;">ACTIVE</div>
+                <div style="color: #94a3b8;">${timeDisplay}</div>
+                <div><span class="status-win" style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem; background: #10b981;">FILLED</span></div>
                 <div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="earlyExit('${tradeData.id}')">Early Exit</button></div>
                 <div><button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="markTradeWin('${tradeData.id}')">Mark Win</button>
                      <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeLoss('${tradeData.id}')">Mark Loss</button></div>
@@ -1997,16 +2040,20 @@ ${formatExecutionDetails(executionDetails)}
             }
         }
         
-        // Update ML Dashboard Statistics
+        // Update ML Dashboard Statistics (ENHANCED)
         function updateMLDashboardStats() {
             const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]')
+                .filter(order => order.orderStatus === 'PENDING');
+            
             const closedTrades = mlTrades.filter(trade => trade.status === 'CLOSED');
-            const pendingTrades = mlTrades.filter(trade => trade.status === 'PENDING');
-            const winningTrades = closedTrades.filter(trade => trade.outcome === 'WIN');
+            const activeTrades = mlTrades.filter(trade => trade.status === 'ACTIVE');
+            const winningTrades = closedTrades.filter(trade => 
+                trade.outcome === 'WIN' || trade.outcome === 'EARLY_WIN');
             
             // Update dashboard counters
             document.getElementById('totalTrades').textContent = mlTrades.length;
-            document.getElementById('pendingTrades').textContent = pendingTrades.length;
+            document.getElementById('pendingTrades').textContent = activeTrades.length + pendingOrders.length;
             document.getElementById('winningTrades').textContent = winningTrades.length;
             
             // Calculate and update ML accuracy
@@ -2018,14 +2065,108 @@ ${formatExecutionDetails(executionDetails)}
                 const avgPredictionAccuracy = closedTrades.reduce((sum, trade) => 
                     sum + (trade.predictionAccuracy || 0), 0) / closedTrades.length;
                     
-                console.log(`📊 ML Stats Updated: ${winRate}% win rate, ${avgPredictionAccuracy.toFixed(1)}% prediction accuracy`);
+                console.log(`📊 ML Stats Updated: ${winRate}% win rate, ${avgPredictionAccuracy.toFixed(1)}% prediction accuracy, ${pendingOrders.length} pending orders`);
             }
         }
 
+        // Update Pending Orders Display
+        function updatePendingOrdersDisplay() {
+            const container = document.getElementById('pendingOrders');
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]')
+                .filter(order => order.orderStatus === 'PENDING');
+            
+            if (pendingOrders.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #94a3b8;">
+                        <p>No pending orders. Execute trades from AI Strategy tab to see them here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = pendingOrders.map(order => {
+                const orderTime = new Date(order.orderTime).toLocaleTimeString();
+                const costDisplay = order.initialDebit > 0 ? 
+                    `Debit: $${order.initialDebit.toFixed(2)}` : 
+                    `Credit: $${order.initialCredit.toFixed(2)}`;
+                
+                return `
+                    <div class="trade-row" style="background: linear-gradient(135deg, #f59e0b, #d97706); margin-bottom: 10px;" data-order-id="${order.id}">
+                        <div><strong>${order.symbol}</strong> - ${order.action}<br>
+                             <small style="color: #1e293b;">${order.strategy}</small><br>
+                             <small style="color: #1e293b;">${costDisplay}</small></div>
+                        <div style="color: #1e293b; font-weight: bold;">PENDING</div>
+                        <div style="color: #1e293b;">${orderTime}</div>
+                        <div><span style="background: #1e293b; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.8rem;">⏳ PENDING</span></div>
+                        <div><button class="btn" style="background: #10b981; padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="fillOrder('${order.id}')">✅ Mark Filled</button></div>
+                        <div><button class="btn" style="background: #ef4444; padding: 6px 12px; font-size: 0.8rem;" onclick="cancelOrder('${order.id}')">❌ Cancel Order</button></div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Fill Order (Mark as executed)
+        function fillOrder(orderId) {
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            const orderIndex = pendingOrders.findIndex(order => order.id === orderId);
+            
+            if (orderIndex === -1) return;
+            
+            const order = pendingOrders[orderIndex];
+            
+            // Get fill details
+            const fillPrice = parseFloat(prompt(`Order for ${order.symbol} ${order.strategy}\n\nEnter fill price (original: $${order.entryPrice}):`, order.entryPrice) || order.entryPrice);
+            if (fillPrice === null) return;
+            
+            // Update order status
+            pendingOrders[orderIndex].orderStatus = 'FILLED';
+            pendingOrders[orderIndex].fillTime = new Date().toISOString();
+            pendingOrders[orderIndex].fillPrice = fillPrice;
+            pendingOrders[orderIndex].entryPrice = fillPrice; // Use actual fill price
+            
+            localStorage.setItem('pendingOrders', JSON.stringify(pendingOrders));
+            
+            // Move to ML tracking system as active position
+            const filledOrder = { ...pendingOrders[orderIndex] };
+            delete filledOrder.orderStatus; // Remove order-specific fields
+            addToMLTrackingSystem(filledOrder);
+            
+            // Update displays
+            updatePendingOrdersDisplay();
+            
+            alert(`✅ Order filled!\n\n${order.symbol} ${order.strategy}\nFill Price: $${fillPrice}\n\n📊 Trade moved to active positions for tracking.`);
+        }
+        
+        // Cancel Order
+        function cancelOrder(orderId) {
+            const reason = prompt('Cancellation reason (e.g., "Market moved against", "Better opportunity", "Risk management"):') || 'Cancelled';
+            if (!reason) return;
+            
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
+            const orderIndex = pendingOrders.findIndex(order => order.id === orderId);
+            
+            if (orderIndex === -1) return;
+            
+            const order = pendingOrders[orderIndex];
+            
+            // Update order status
+            pendingOrders[orderIndex].orderStatus = 'CANCELLED';
+            pendingOrders[orderIndex].cancelTime = new Date().toISOString();
+            pendingOrders[orderIndex].cancelReason = reason;
+            
+            localStorage.setItem('pendingOrders', JSON.stringify(pendingOrders));
+            
+            // Update display
+            updatePendingOrdersDisplay();
+            
+            alert(`❌ Order cancelled: ${order.symbol} ${order.strategy}\n\nReason: ${reason}\n\n💡 Good risk management! The ML system learns from cancellation patterns too.`);
+        }
+        
         // Initialize ML Dashboard on page load
         function initializeMLDashboard() {
             setTimeout(() => {
                 updateMLDashboardStats();
+                updatePendingOrdersDisplay();
             }, 1000);
         }
         
