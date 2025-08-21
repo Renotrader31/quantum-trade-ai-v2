@@ -889,7 +889,12 @@
 
             <!-- ML Performance Analytics -->
             <div style="background: #334155; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
-                <h3 style="color: #06b6d4; margin-bottom: 20px;">🧠 ML Performance & Learning</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="color: #06b6d4; margin: 0;">🧠 ML Performance & Learning</h3>
+                    <button onclick="refreshMLDashboard()" style="background: #06b6d4; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                        🔄 Refresh Stats
+                    </button>
+                </div>
                 <div class="grid grid-4">
                     <div class="card" style="background: linear-gradient(135deg, #10b981, #047857);">
                         <div class="metric" id="mlAccuracy">78.3%</div>
@@ -1809,8 +1814,9 @@ ${formatExecutionDetails(executionDetails)}
             pendingOrders.push(orderData);
             localStorage.setItem('pendingOrders', JSON.stringify(pendingOrders));
             
-            // Update pending orders display
+            // Update both displays
             updatePendingOrdersDisplay();
+            updateMLDashboardStats(); // 🔥 FIX: Update ML metrics when pending orders change!
             
             console.log('📋 Order added to pending queue:', orderData);
         }
@@ -2042,32 +2048,78 @@ ${formatExecutionDetails(executionDetails)}
             }
         }
         
-        // Update ML Dashboard Statistics (ENHANCED)
+        // Update ML Dashboard Statistics (ENHANCED WITH ERROR HANDLING)
         function updateMLDashboardStats() {
-            const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
-            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]')
-                .filter(order => order.orderStatus === 'PENDING');
-            
-            const closedTrades = mlTrades.filter(trade => trade.status === 'CLOSED');
-            const activeTrades = mlTrades.filter(trade => trade.status === 'ACTIVE');
-            const winningTrades = closedTrades.filter(trade => 
-                trade.outcome === 'WIN' || trade.outcome === 'EARLY_WIN');
-            
-            // Update dashboard counters
-            document.getElementById('totalTrades').textContent = mlTrades.length;
-            document.getElementById('pendingTrades').textContent = activeTrades.length + pendingOrders.length;
-            document.getElementById('winningTrades').textContent = winningTrades.length;
-            
-            // Calculate and update ML accuracy
-            if (closedTrades.length > 0) {
-                const winRate = (winningTrades.length / closedTrades.length * 100).toFixed(1);
-                document.getElementById('mlAccuracy').textContent = winRate + '%';
+            try {
+                console.log('🔄 Starting ML Dashboard Stats Update...');
                 
-                // Update algorithm accuracy based on prediction accuracy
-                const avgPredictionAccuracy = closedTrades.reduce((sum, trade) => 
-                    sum + (trade.predictionAccuracy || 0), 0) / closedTrades.length;
+                const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+                const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]')
+                    .filter(order => order.orderStatus === 'PENDING');
+                
+                console.log('📊 Raw Data:', { 
+                    mlTrades: mlTrades.length, 
+                    pendingOrders: pendingOrders.length,
+                    mlTradesData: mlTrades,
+                    pendingOrdersData: pendingOrders 
+                });
+                
+                const closedTrades = mlTrades.filter(trade => trade.status === 'CLOSED');
+                const activeTrades = mlTrades.filter(trade => trade.status === 'ACTIVE');
+                const winningTrades = closedTrades.filter(trade => 
+                    trade.outcome === 'WIN' || trade.outcome === 'EARLY_WIN');
+                
+                console.log('📊 Calculated Data:', { 
+                    closed: closedTrades.length, 
+                    active: activeTrades.length,
+                    winning: winningTrades.length 
+                });
+                
+                // Check if DOM elements exist
+                const totalTradesEl = document.getElementById('totalTrades');
+                const pendingTradesEl = document.getElementById('pendingTrades');
+                const winningTradesEl = document.getElementById('winningTrades');
+                const mlAccuracyEl = document.getElementById('mlAccuracy');
+                
+                if (!totalTradesEl || !pendingTradesEl || !winningTradesEl || !mlAccuracyEl) {
+                    console.error('❌ ML Dashboard DOM elements not found!', {
+                        totalTrades: !!totalTradesEl,
+                        pendingTrades: !!pendingTradesEl,
+                        winningTrades: !!winningTradesEl,
+                        mlAccuracy: !!mlAccuracyEl
+                    });
+                    return;
+                }
+                
+                // Update dashboard counters
+                totalTradesEl.textContent = mlTrades.length;
+                pendingTradesEl.textContent = activeTrades.length + pendingOrders.length;
+                winningTradesEl.textContent = winningTrades.length;
+                
+                // Calculate and update ML accuracy
+                if (closedTrades.length > 0) {
+                    const winRate = (winningTrades.length / closedTrades.length * 100).toFixed(1);
+                    mlAccuracyEl.textContent = winRate + '%';
                     
-                console.log(`📊 ML Stats Updated: ${winRate}% win rate, ${avgPredictionAccuracy.toFixed(1)}% prediction accuracy, ${pendingOrders.length} pending orders`);
+                    // Update algorithm accuracy based on prediction accuracy
+                    const avgPredictionAccuracy = closedTrades.reduce((sum, trade) => 
+                        sum + (trade.predictionAccuracy || 0), 0) / closedTrades.length;
+                        
+                    console.log(`✅ ML Stats Updated Successfully: ${winRate}% win rate, ${avgPredictionAccuracy.toFixed(1)}% prediction accuracy`);
+                } else {
+                    mlAccuracyEl.textContent = '0.0%';
+                    console.log('✅ ML Stats Updated: No closed trades yet, showing 0.0% accuracy');
+                }
+                
+                console.log('✅ Final Dashboard Values:', {
+                    totalTrades: totalTradesEl.textContent,
+                    pendingTrades: pendingTradesEl.textContent,
+                    winningTrades: winningTradesEl.textContent,
+                    mlAccuracy: mlAccuracyEl.textContent
+                });
+                
+            } catch (error) {
+                console.error('❌ Error updating ML Dashboard Stats:', error);
             }
         }
 
@@ -2166,10 +2218,32 @@ ${formatExecutionDetails(executionDetails)}
         
         // Initialize ML Dashboard on page load
         function initializeMLDashboard() {
+            console.log('🚀 Initializing ML Dashboard...');
+            
+            // Try immediately first
+            updateMLDashboardStats();
+            updatePendingOrdersDisplay();
+            
+            // Also try after delay to ensure DOM is ready
             setTimeout(() => {
+                console.log('🔄 Secondary ML Dashboard initialization...');
                 updateMLDashboardStats();
                 updatePendingOrdersDisplay();
             }, 1000);
+            
+            // Add another attempt after longer delay
+            setTimeout(() => {
+                console.log('🔄 Final ML Dashboard initialization...');
+                updateMLDashboardStats();
+                updatePendingOrdersDisplay();
+            }, 3000);
+        }
+        
+        // Manual refresh function for debugging
+        function refreshMLDashboard() {
+            console.log('🔄 Manual ML Dashboard refresh triggered...');
+            updateMLDashboardStats();
+            updatePendingOrdersDisplay();
         }
         
         // Debug function to check pending orders
@@ -2187,7 +2261,27 @@ ${formatExecutionDetails(executionDetails)}
         }
         
         // Initialize ML system when page loads
-        initializeMLDashboard();
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOM Content Loaded - Initializing ML Dashboard...');
+            initializeMLDashboard();
+        });
+        
+        // Also run immediately in case DOM is already loaded
+        if (document.readyState === 'loading') {
+            console.log('📄 Document still loading, waiting for DOMContentLoaded...');
+        } else {
+            console.log('📄 Document already loaded, initializing immediately...');
+            initializeMLDashboard();
+        }
+        
+        // Fallback initialization
+        window.addEventListener('load', function() {
+            console.log('🌍 Window loaded - Final ML Dashboard initialization...');
+            setTimeout(() => {
+                updateMLDashboardStats();
+                updatePendingOrdersDisplay();
+            }, 500);
+        });
         
         // Add window functions for debugging
         window.debugPendingOrders = debugPendingOrders;
