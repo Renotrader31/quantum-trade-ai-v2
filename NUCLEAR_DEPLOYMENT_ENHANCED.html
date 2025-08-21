@@ -1848,6 +1848,76 @@ ${formatExecutionDetails(executionDetails)}
             console.log('✅ Trade added to ML tracking system:', tradeData);
         }
 
+        // Load Trade History from localStorage on page startup (NEW!)
+        function loadTradeHistoryFromStorage() {
+            console.log('📊 Loading trade history from localStorage...');
+            
+            const tradeHistory = document.getElementById('tradeHistory');
+            const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            
+            if (mlTrades.length === 0) {
+                console.log('📊 No trades in localStorage, keeping demo trades');
+                // Keep the hardcoded demo trades if no real trades exist
+                return;
+            }
+            
+            // Clear hardcoded demo trades and load real trades
+            tradeHistory.innerHTML = '';
+            console.log(`📊 Loading ${mlTrades.length} real trades from localStorage...`);
+            
+            // Sort trades by timestamp (newest first)
+            const sortedTrades = mlTrades.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            sortedTrades.forEach(tradeData => {
+                const newTrade = document.createElement('div');
+                newTrade.className = 'trade-row';
+                newTrade.setAttribute('data-ml-id', tradeData.id);
+                
+                const displayText = tradeData.orderType === 'Options' ? 
+                    `${tradeData.contracts} contracts` : 
+                    `${tradeData.quantity} shares`;
+                
+                // Show P&L if trade is closed, otherwise show cost
+                let profitDisplay = '';
+                let statusColor = '#94a3b8';
+                let statusText = 'ACTIVE';
+                
+                if (tradeData.status === 'CLOSED') {
+                    const profit = tradeData.realizedPnL || 0;
+                    profitDisplay = profit >= 0 ? `+$${Math.abs(profit).toFixed(0)}` : `-$${Math.abs(profit).toFixed(0)}`;
+                    statusColor = profit >= 0 ? '#10b981' : '#ef4444';
+                    statusText = tradeData.outcome || 'CLOSED';
+                } else {
+                    const costDisplay = tradeData.initialDebit > 0 ? 
+                        `Debit: $${tradeData.initialDebit.toFixed(2)}` : 
+                        `Credit: $${tradeData.initialCredit.toFixed(2)}`;
+                    profitDisplay = costDisplay;
+                    statusColor = '#10b981';
+                    statusText = 'ACTIVE';
+                }
+                
+                const timeDisplay = new Date(tradeData.timestamp).toLocaleDateString();
+                
+                newTrade.innerHTML = `
+                    <div><strong>${tradeData.symbol}</strong> - ${tradeData.strategy}<br>
+                         <small style="color: #94a3b8;">${displayText} @ $${tradeData.entryPrice}</small><br>
+                         <small style="color: #10b981;">Strategy: ${tradeData.strategy}</small></div>
+                    <div style="color: ${statusColor}; font-weight: bold;">${profitDisplay}</div>
+                    <div style="color: #94a3b8;">${timeDisplay}</div>
+                    <div><span class="status-${tradeData.outcome === 'WIN' ? 'win' : tradeData.outcome === 'LOSS' ? 'loss' : 'active'}" 
+                             style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem; background: ${statusColor};">${statusText}</span></div>
+                    ${tradeData.status === 'ACTIVE' ? `
+                    <div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="earlyExit('${tradeData.id}')">Early Exit</button></div>
+                    <div><button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="markTradeWin('${tradeData.id}')">Mark Win</button>
+                         <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeLoss('${tradeData.id}')">Mark Loss</button></div>
+                    ` : '<div></div><div></div>'}
+                `;
+                tradeHistory.appendChild(newTrade);
+            });
+            
+            console.log('✅ Trade history loaded from localStorage successfully');
+        }
+
         // Update Record Trade tab with new ML-tracked trade (ENHANCED)
         function updateRecordTradeTab(tradeData) {
             const tradeHistory = document.getElementById('tradeHistory');
@@ -2225,12 +2295,14 @@ ${formatExecutionDetails(executionDetails)}
             // Try immediately first
             updateMLDashboardStats();
             updatePendingOrdersDisplay();
+            loadTradeHistoryFromStorage(); // 🔥 NEW: Load real trades from localStorage!
             
             // Also try after delay to ensure DOM is ready
             setTimeout(() => {
                 console.log('🔄 Secondary ML Dashboard initialization...');
                 updateMLDashboardStats();
                 updatePendingOrdersDisplay();
+                loadTradeHistoryFromStorage(); // Load trade history again to ensure it's loaded
             }, 1000);
             
             // Add another attempt after longer delay
@@ -2238,6 +2310,7 @@ ${formatExecutionDetails(executionDetails)}
                 console.log('🔄 Final ML Dashboard initialization...');
                 updateMLDashboardStats();
                 updatePendingOrdersDisplay();
+                loadTradeHistoryFromStorage(); // Final attempt to load trade history
             }, 3000);
         }
         
@@ -2257,8 +2330,9 @@ ${formatExecutionDetails(executionDetails)}
             
             updateMLDashboardStats();
             updatePendingOrdersDisplay();
+            loadTradeHistoryFromStorage(); // 🔥 Also refresh trade history display!
             
-            alert('🔄 Dashboard refreshed! Check console for debug info.');
+            alert('🔄 Dashboard refreshed! Trade history reloaded from localStorage. Check console for debug info.');
         }
         
         // Debug function to check pending orders
