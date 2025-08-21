@@ -1,46 +1,45 @@
 {
   "version": 2,
   "name": "quantum-trade-ai-v2-enhanced",
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
-  "devCommand": "npm start",
-  "installCommand": "npm install",
-  "framework": "create-react-app",
+  "public": true,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/",
+      "destination": "/NUCLEAR_DEPLOYMENT_ENHANCED.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/NUCLEAR_DEPLOYMENT_ENHANCED.html"
+    },
+    {
+      "source": "/trading",
+      "destination": "/NUCLEAR_DEPLOYMENT_ENHANCED.html"
     }
   ],
   "headers": [
     {
-      "source": "/",
+      "source": "/NUCLEAR_DEPLOYMENT_ENHANCED.html",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
         },
         {
-          "key": "X-Force-Refresh",
-          "value": "true"
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
         }
       ]
     },
     {
-      "source": "/static/(.*)",
+      "source": "/(.*).html",
       "headers": [
         {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
+          "key": "Cache-Control", 
+          "value": "public, max-age=3600"
         }
       ]
     }
-  ],
-  "env": {
-    "REACT_APP_API_TIMEOUT": "10000",
-    "REACT_APP_UPDATE_INTERVAL": "30000",
-    "REACT_APP_DEMO_MODE": "true",
-    "REACT_APP_BUILD_ID": "@BUILD_TIME",
-    "REACT_APP_VERSION": "2.1.1-enhanced"
-  }
+  ]
 }
