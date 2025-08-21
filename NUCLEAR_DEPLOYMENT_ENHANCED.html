@@ -1859,9 +1859,9 @@ ${formatExecutionDetails(executionDetails)}
             // Combine both ML trades and pending orders for complete history
             const allTrades = [...mlTrades];
             
-            // Add pending/filled orders that aren't yet in ML tracking
+            // Add pending/filled/cancelled orders that aren't yet in ML tracking
             pendingOrders.forEach(order => {
-                if (order.orderStatus === 'FILLED' || order.orderStatus === 'PENDING') {
+                if (order.orderStatus === 'FILLED' || order.orderStatus === 'PENDING' || order.orderStatus === 'CANCELLED') {
                     // Check if this order is already in ML trades
                     const existsInML = mlTrades.some(trade => trade.id === order.id);
                     if (!existsInML) {
@@ -1869,9 +1869,10 @@ ${formatExecutionDetails(executionDetails)}
                         const tradeFromOrder = {
                             ...order,
                             id: order.id,
-                            status: order.orderStatus === 'PENDING' ? 'PENDING' : 'ACTIVE',
+                            status: order.orderStatus === 'PENDING' ? 'PENDING' : 
+                                   order.orderStatus === 'CANCELLED' ? 'CANCELLED' : 'ACTIVE',
                             timestamp: order.orderTime || order.timestamp,
-                            outcome: order.orderStatus === 'PENDING' ? null : null
+                            outcome: order.orderStatus === 'CANCELLED' ? 'CANCELLED' : null
                         };
                         allTrades.push(tradeFromOrder);
                     }
@@ -1916,6 +1917,11 @@ ${formatExecutionDetails(executionDetails)}
                     statusText = 'PENDING';
                     actionButtons = `<div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="fillOrder('${tradeData.id}')">Mark Filled</button></div>
                                    <div><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="cancelOrder('${tradeData.id}')">Cancel</button></div>`;
+                } else if (tradeData.status === 'CANCELLED' || tradeData.orderStatus === 'CANCELLED') {
+                    profitDisplay = 'CANCELLED';
+                    statusColor = '#6b7280';
+                    statusText = 'CANCELLED';
+                    actionButtons = '<div></div><div></div>';
                 } else if (tradeData.status === 'CLOSED') {
                     const profit = tradeData.realizedPnL || 0;
                     profitDisplay = profit >= 0 ? `+$${Math.abs(profit).toFixed(0)}` : `-$${Math.abs(profit).toFixed(0)}`;
@@ -2318,6 +2324,7 @@ ${formatExecutionDetails(executionDetails)}
             // Update display
             updatePendingOrdersDisplay();
             updateMLDashboardStats(); // Update ML dashboard after order cancellation
+            loadTradeHistoryFromStorage(); // 🔥 FIX: Refresh trade history display after cancellation!
             
             alert(`❌ Order cancelled: ${order.symbol} ${order.strategy}\n\nReason: ${reason}\n\n💡 Good risk management! The ML system learns from cancellation patterns too.`);
         }
