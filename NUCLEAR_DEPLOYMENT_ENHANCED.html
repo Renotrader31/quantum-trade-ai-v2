@@ -1848,14 +1848,37 @@ ${formatExecutionDetails(executionDetails)}
             console.log('✅ Trade added to ML tracking system:', tradeData);
         }
 
-        // Load Trade History from localStorage on page startup (NEW!)
+        // Load Trade History from localStorage on page startup (ENHANCED!)
         function loadTradeHistoryFromStorage() {
-            console.log('📊 Loading trade history from localStorage...');
+            console.log('📊 Loading complete trade history from localStorage...');
             
             const tradeHistory = document.getElementById('tradeHistory');
             const mlTrades = JSON.parse(localStorage.getItem('mlTrainingTrades') || '[]');
+            const pendingOrders = JSON.parse(localStorage.getItem('pendingOrders') || '[]');
             
-            if (mlTrades.length === 0) {
+            // Combine both ML trades and pending orders for complete history
+            const allTrades = [...mlTrades];
+            
+            // Add pending/filled orders that aren't yet in ML tracking
+            pendingOrders.forEach(order => {
+                if (order.orderStatus === 'FILLED' || order.orderStatus === 'PENDING') {
+                    // Check if this order is already in ML trades
+                    const existsInML = mlTrades.some(trade => trade.id === order.id);
+                    if (!existsInML) {
+                        // Convert pending order to trade format for display
+                        const tradeFromOrder = {
+                            ...order,
+                            id: order.id,
+                            status: order.orderStatus === 'PENDING' ? 'PENDING' : 'ACTIVE',
+                            timestamp: order.orderTime || order.timestamp,
+                            outcome: order.orderStatus === 'PENDING' ? null : null
+                        };
+                        allTrades.push(tradeFromOrder);
+                    }
+                }
+            });
+            
+            if (allTrades.length === 0) {
                 console.log('📊 No trades in localStorage, keeping demo trades');
                 // Keep the hardcoded demo trades if no real trades exist
                 return;
@@ -1863,10 +1886,14 @@ ${formatExecutionDetails(executionDetails)}
             
             // Clear hardcoded demo trades and load real trades
             tradeHistory.innerHTML = '';
-            console.log(`📊 Loading ${mlTrades.length} real trades from localStorage...`);
+            console.log(`📊 Loading ${allTrades.length} total trades (ML: ${mlTrades.length}, Pending: ${pendingOrders.length})`);
             
             // Sort trades by timestamp (newest first)
-            const sortedTrades = mlTrades.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            const sortedTrades = allTrades.sort((a, b) => {
+                const timeA = new Date(a.timestamp || a.orderTime || 0);
+                const timeB = new Date(b.timestamp || b.orderTime || 0);
+                return timeB - timeA;
+            });
             
             sortedTrades.forEach(tradeData => {
                 const newTrade = document.createElement('div');
@@ -1877,16 +1904,24 @@ ${formatExecutionDetails(executionDetails)}
                     `${tradeData.contracts} contracts` : 
                     `${tradeData.quantity} shares`;
                 
-                // Show P&L if trade is closed, otherwise show cost
+                // Show P&L if trade is closed, otherwise show cost or pending status
                 let profitDisplay = '';
                 let statusColor = '#94a3b8';
                 let statusText = 'ACTIVE';
+                let actionButtons = '';
                 
-                if (tradeData.status === 'CLOSED') {
+                if (tradeData.status === 'PENDING' || tradeData.orderStatus === 'PENDING') {
+                    profitDisplay = 'PENDING';
+                    statusColor = '#f59e0b';
+                    statusText = 'PENDING';
+                    actionButtons = `<div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="fillOrder('${tradeData.id}')">Mark Filled</button></div>
+                                   <div><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="cancelOrder('${tradeData.id}')">Cancel</button></div>`;
+                } else if (tradeData.status === 'CLOSED') {
                     const profit = tradeData.realizedPnL || 0;
                     profitDisplay = profit >= 0 ? `+$${Math.abs(profit).toFixed(0)}` : `-$${Math.abs(profit).toFixed(0)}`;
                     statusColor = profit >= 0 ? '#10b981' : '#ef4444';
                     statusText = tradeData.outcome || 'CLOSED';
+                    actionButtons = '<div></div><div></div>';
                 } else {
                     const costDisplay = tradeData.initialDebit > 0 ? 
                         `Debit: $${tradeData.initialDebit.toFixed(2)}` : 
@@ -1894,9 +1929,12 @@ ${formatExecutionDetails(executionDetails)}
                     profitDisplay = costDisplay;
                     statusColor = '#10b981';
                     statusText = 'ACTIVE';
+                    actionButtons = `<div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="earlyExit('${tradeData.id}')">Early Exit</button></div>
+                                   <div><button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="markTradeWin('${tradeData.id}')">Mark Win</button>
+                                        <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeLoss('${tradeData.id}')">Mark Loss</button></div>`;
                 }
                 
-                const timeDisplay = new Date(tradeData.timestamp).toLocaleDateString();
+                const timeDisplay = new Date(tradeData.timestamp || tradeData.orderTime).toLocaleDateString();
                 
                 newTrade.innerHTML = `
                     <div><strong>${tradeData.symbol}</strong> - ${tradeData.strategy}<br>
@@ -1906,16 +1944,12 @@ ${formatExecutionDetails(executionDetails)}
                     <div style="color: #94a3b8;">${timeDisplay}</div>
                     <div><span class="status-${tradeData.outcome === 'WIN' ? 'win' : tradeData.outcome === 'LOSS' ? 'loss' : 'active'}" 
                              style="padding: 6px 12px; border-radius: 12px; font-size: 0.8rem; background: ${statusColor};">${statusText}</span></div>
-                    ${tradeData.status === 'ACTIVE' ? `
-                    <div><button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="earlyExit('${tradeData.id}')">Early Exit</button></div>
-                    <div><button class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 2px;" onclick="markTradeWin('${tradeData.id}')">Mark Win</button>
-                         <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="markTradeLoss('${tradeData.id}')">Mark Loss</button></div>
-                    ` : '<div></div><div></div>'}
+                    ${actionButtons}
                 `;
                 tradeHistory.appendChild(newTrade);
             });
             
-            console.log('✅ Trade history loaded from localStorage successfully');
+            console.log('✅ Complete trade history loaded from localStorage successfully');
         }
 
         // Update Record Trade tab with new ML-tracked trade (ENHANCED)
