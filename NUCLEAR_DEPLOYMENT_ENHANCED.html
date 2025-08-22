@@ -2791,76 +2791,95 @@ ${formatExecutionDetails(executionDetails)}
 
         // 🚀 POLYGON.IO LIVE DATA INTEGRATION 🚀
         
-        // Fetch real-time stock price from Polygon.io (FIXED FOR 403 ERRORS!)
+        // Fetch stock price using best available endpoint for user's plan
         async function fetchLivePrice(symbol) {
             if (!LIVE_DATA_CONFIG.enabled || !LIVE_DATA_CONFIG.polygonApiKey) {
                 return DEMO_PRICES[symbol] || null;
             }
 
-            try {
-                // Start with the most reliable endpoint - previous day (always works)
-                let url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
-                
-                console.log(`📡 Fetching price for ${symbol} (testing API key)...`);
-                let response = await fetch(url);
-                
-                if (response.status === 403) {
-                    throw new Error('API key authentication failed - check your Polygon.io API key and plan');
+            const apiKey = LIVE_DATA_CONFIG.polygonApiKey;
+            
+            // Try endpoints in order of preference (most current first)
+            const endpoints = [
+                {
+                    name: 'Real-time Quote',
+                    url: `https://api.polygon.io/v2/last/nbbo/${symbol}?apikey=${apiKey}`,
+                    dataPath: 'results.last.bid', // or ask price
+                    source: 'real-time-quote'
+                },
+                {
+                    name: 'Real-time Trade',
+                    url: `https://api.polygon.io/v2/last/trade/${symbol}?apikey=${apiKey}`,
+                    dataPath: 'results.p',
+                    source: 'real-time-trade'
+                },
+                {
+                    name: 'Current Day Minute',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&sort=desc&limit=1&apikey=${apiKey}`,
+                    dataPath: 'results.0.c',
+                    source: 'current-minute'
+                },
+                {
+                    name: 'Current Day',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&apikey=${apiKey}`,
+                    dataPath: 'results.0.c',
+                    source: 'current-day'
+                },
+                {
+                    name: 'Previous Day',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${apiKey}`,
+                    dataPath: 'results.0.c',
+                    source: 'previous-day'
                 }
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.results && data.results.length > 0) {
-                        const price = data.results[0].c;
-                        LIVE_DATA_CONFIG.cache[symbol] = {
-                            price: price,
-                            timestamp: Date.now(),
-                            source: 'previous-day'
-                        };
-                        console.log(`✅ ${symbol}: $${price.toFixed(2)} (previous day close)`);
-                        return price;
+            ];
+
+            for (const endpoint of endpoints) {
+                try {
+                    console.log(`📡 Trying ${endpoint.name} for ${symbol}...`);
+                    const response = await fetch(endpoint.url);
+                    
+                    if (response.status === 403) {
+                        console.log(`⚠️ ${endpoint.name}: 403 - requires higher plan`);
+                        continue; // Try next endpoint
                     }
-                }
-                
-                // If basic endpoint fails, try current day data (may require higher plan)
-                const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-                url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${today}/${today}?adjusted=true&apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
-                
-                console.log(`📡 Trying current day data for ${symbol}...`);
-                response = await fetch(url);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.results && data.results.length > 0) {
-                        const result = data.results[0];
-                        const price = result.c || result.o; // Close or open price
-                        LIVE_DATA_CONFIG.cache[symbol] = {
-                            price: price,
-                            timestamp: Date.now(),
-                            source: 'current-day'
-                        };
-                        console.log(`✅ ${symbol}: $${price.toFixed(2)} (current day)`);
-                        return price;
+                    
+                    if (response.status === 429) {
+                        console.log(`⚠️ ${endpoint.name}: Rate limited`);
+                        continue; // Try next endpoint
                     }
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const price = getNestedValue(data, endpoint.dataPath);
+                        
+                        if (price && price > 0) {
+                            LIVE_DATA_CONFIG.cache[symbol] = {
+                                price: price,
+                                timestamp: Date.now(),
+                                source: endpoint.source
+                            };
+                            console.log(`✅ ${symbol}: $${price.toFixed(2)} (${endpoint.source})`);
+                            return price;
+                        }
+                    }
+                    
+                    console.log(`❌ ${endpoint.name}: No valid price data`);
+                    
+                } catch (error) {
+                    console.log(`❌ ${endpoint.name}: ${error.message}`);
                 }
-                
-                throw new Error('All available API endpoints failed');
-                
-            } catch (error) {
-                console.error(`❌ Error fetching ${symbol} price:`, error.message);
-                
-                // Show user-friendly error for 403
-                if (error.message.includes('403') || error.message.includes('authentication')) {
-                    updateLiveDataStatus('error', 'API key authentication failed');
-                }
-                
-                // Fallback to demo data
-                if (LIVE_DATA_CONFIG.fallbackToDemo) {
-                    console.log(`🔄 Falling back to demo price for ${symbol}`);
-                    return DEMO_PRICES[symbol] || null;
-                }
-                return null;
             }
+            
+            // All endpoints failed, fallback to demo
+            console.log(`🔄 All endpoints failed for ${symbol}, using demo price`);
+            return DEMO_PRICES[symbol] || null;
+        }
+
+        // Helper function to get nested object values safely
+        function getNestedValue(obj, path) {
+            return path.split('.').reduce((current, key) => {
+                return current && current[key] !== undefined ? current[key] : null;
+            }, obj);
         }
 
         // Fetch multiple stock prices efficiently
@@ -2914,18 +2933,23 @@ ${formatExecutionDetails(executionDetails)}
 
         // Show Polygon.io API help
         function showPolygonHelp() {
-            alert(`🔗 Polygon.io API Setup Help\n\n` +
-                  `❌ Common 403 Error Causes:\n` +
-                  `• Invalid or expired API key\n` +
-                  `• Free tier limitations (very restricted)\n` +
-                  `• Rate limits exceeded\n\n` +
-                  `✅ Solutions:\n` +
-                  `• Get your API key from: polygon.io/dashboard\n` +
-                  `• Ensure you have a paid plan (Starter $99/mo minimum)\n` +
-                  `• Free tier only allows 5 calls/minute\n` +
-                  `• Check your usage limits in dashboard\n\n` +
-                  `📊 Alternative: Use with demo data for testing\n` +
-                  `The ML system works the same way!`);
+            alert(`🔗 Polygon.io Plan & Endpoint Guide\n\n` +
+                  `📊 Plan Tiers & Capabilities:\n` +
+                  `• Basic/Free: Previous day data only\n` +
+                  `• Starter ($99/mo): Current day aggregates\n` +
+                  `• Advanced ($199/mo): Near real-time quotes\n` +
+                  `• Professional ($399/mo): Real-time trades\n\n` +
+                  `🔍 Our system tests multiple endpoints:\n` +
+                  `1. Real-time trade (best)\n` +
+                  `2. Real-time quote\n` +
+                  `3. Current day minute bars\n` +
+                  `4. Current day aggregates\n` +
+                  `5. Previous day close (fallback)\n\n` +
+                  `✅ What to expect:\n` +
+                  `• System uses best available for your plan\n` +
+                  `• Even previous-day data is much better than static\n` +
+                  `• Check console for which endpoints work\n\n` +
+                  `💡 Your API key: polygon.io/dashboard`);
         }
 
         // Get current price (live or demo)
@@ -2954,27 +2978,72 @@ ${formatExecutionDetails(executionDetails)}
 
         // Test API key and detect plan capabilities
         async function testPolygonApiKey(apiKey) {
-            try {
-                // Test basic endpoint that works with all plans
-                const url = `https://api.polygon.io/v2/aggs/ticker/AAPL/prev?adjusted=true&apikey=${apiKey}`;
-                const response = await fetch(url);
-                
-                if (response.status === 403) {
-                    return { valid: false, error: 'Invalid API key or authentication failed' };
+            console.log('🔍 Testing Polygon.io API key and detecting plan capabilities...');
+            
+            const endpoints = [
+                {
+                    name: 'Previous Day Close',
+                    url: `https://api.polygon.io/v2/aggs/ticker/AAPL/prev?adjusted=true&apikey=${apiKey}`,
+                    plan: 'basic'
+                },
+                {
+                    name: 'Today Aggregates',
+                    url: `https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&apikey=${apiKey}`,
+                    plan: 'starter'
+                },
+                {
+                    name: 'Latest Quote',
+                    url: `https://api.polygon.io/v2/last/nbbo/AAPL?apikey=${apiKey}`,
+                    plan: 'advanced'
+                },
+                {
+                    name: 'Real-time Trade',
+                    url: `https://api.polygon.io/v2/last/trade/AAPL?apikey=${apiKey}`,
+                    plan: 'professional'
                 }
-                
-                if (response.status === 429) {
-                    return { valid: false, error: 'Rate limit exceeded - too many requests' };
+            ];
+            
+            const results = {
+                valid: false,
+                availableEndpoints: [],
+                plan: 'unknown',
+                errors: []
+            };
+            
+            for (const endpoint of endpoints) {
+                try {
+                    console.log(`Testing: ${endpoint.name}...`);
+                    const response = await fetch(endpoint.url);
+                    
+                    if (response.status === 403) {
+                        console.log(`❌ ${endpoint.name}: 403 Forbidden (requires ${endpoint.plan} plan or higher)`);
+                        results.errors.push(`${endpoint.name}: Requires ${endpoint.plan} plan`);
+                    } else if (response.status === 429) {
+                        console.log(`⚠️ ${endpoint.name}: Rate limited`);
+                        results.errors.push(`${endpoint.name}: Rate limited`);
+                    } else if (response.ok) {
+                        console.log(`✅ ${endpoint.name}: Available`);
+                        results.availableEndpoints.push(endpoint);
+                        results.valid = true;
+                        if (endpoint.plan === 'professional') results.plan = 'professional';
+                        else if (endpoint.plan === 'advanced' && results.plan !== 'professional') results.plan = 'advanced';
+                        else if (endpoint.plan === 'starter' && !['professional', 'advanced'].includes(results.plan)) results.plan = 'starter';
+                        else if (endpoint.plan === 'basic' && results.plan === 'unknown') results.plan = 'basic';
+                    } else {
+                        console.log(`❌ ${endpoint.name}: Error ${response.status}`);
+                        results.errors.push(`${endpoint.name}: HTTP ${response.status}`);
+                    }
+                    
+                    // Small delay between requests to avoid rate limits
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                } catch (error) {
+                    console.log(`❌ ${endpoint.name}: ${error.message}`);
+                    results.errors.push(`${endpoint.name}: ${error.message}`);
                 }
-                
-                if (response.ok) {
-                    return { valid: true, plan: 'detected' };
-                } else {
-                    return { valid: false, error: `API error: ${response.status}` };
-                }
-            } catch (error) {
-                return { valid: false, error: error.message };
             }
+            
+            return results;
         }
 
         // Toggle between live and demo data modes
@@ -3005,14 +3074,20 @@ ${formatExecutionDetails(executionDetails)}
             }
             
             // Test the API key first
-            updateLiveDataStatus('loading', 'Testing API key...');
+            updateLiveDataStatus('loading', 'Testing API key and detecting plan...');
             const test = await testPolygonApiKey(apiKey.trim());
             
             if (!test.valid) {
-                alert(`❌ API Key Error:\n${test.error}\n\nPlease check:\n1. API key is correct\n2. You have an active Polygon.io paid plan\n3. Rate limits not exceeded`);
-                updateLiveDataStatus('error', test.error);
+                const errorDetails = test.errors.join('\n');
+                alert(`❌ API Key Test Failed:\n\n${errorDetails}\n\nPossible solutions:\n• Check API key is correct\n• Upgrade to a higher Polygon.io plan\n• Contact Polygon.io support for plan details`);
+                updateLiveDataStatus('error', 'API validation failed');
                 return;
             }
+            
+            // Show what endpoints are available
+            const availableNames = test.availableEndpoints.map(e => e.name).join(', ');
+            console.log(`✅ API Key Valid! Plan: ${test.plan.toUpperCase()}`);
+            console.log(`Available endpoints: ${availableNames}`);
             
             LIVE_DATA_CONFIG.polygonApiKey = apiKey.trim();
             LIVE_DATA_CONFIG.enabled = true;
