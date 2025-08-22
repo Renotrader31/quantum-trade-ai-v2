@@ -424,6 +424,11 @@
                     🧪 TEST MODE (Force New Prices)
                 </button>
                 
+                <button onclick="setupPolygonStarter()" 
+                        style="background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                    🎯 Setup Polygon Starter
+                </button>
+                
                 <button onclick="configureRefreshTiming()" 
                         style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-left: 10px;">
                     ⏱️ Configure Timing
@@ -1016,20 +1021,25 @@
         document.getElementById('buildTime').textContent = new Date().toLocaleString();
         document.getElementById('dynamicBuildId').textContent = `1755719727688-CACHE-BUST-${Date.now()}`;
 
-        // 🚀 LIVE DATA CONFIGURATION SYSTEM 🚀
+        // 🚀 LIVE DATA CONFIGURATION SYSTEM - POLYGON STARTER OPTIMIZED 🚀
         const LIVE_DATA_CONFIG = {
-            enabled: true, // ENABLED FOR TESTING - Toggle between demo/live data
-            polygonApiKey: 'DEMO_TESTING_MODE', // Will be set by user (currently in demo mode for testing)
+            enabled: true, // ENABLED FOR POLYGON STARTER PLAN
+            polygonApiKey: '', // User will input their PAID Starter plan key
             fallbackToDemo: true, // Fallback if API fails
-            refreshInterval: 1800000, // 30 minutes (1800 seconds) for stable price updates
+            refreshInterval: 300000, // 5 minutes (optimal for Starter plan - current day minute bars)
             symbols: ['SPY', 'QQQ', 'AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'META', 'COIN'],
             lastUpdate: null,
             cache: {}, // Cache recent prices
             refreshTimer: null, // Store interval ID
             
-            // 🐋 UNUSUAL WHALES INTEGRATION
+            // 🎯 POLYGON STARTER PLAN OPTIMIZATION
+            planType: 'starter', // 'basic', 'starter', 'advanced', 'professional'
+            preferredEndpoints: ['current-minute', 'current-day', 'previous-day'], // Starter plan priority order
+            maxRequestsPerMinute: 100, // Starter plan rate limit
+            
+            // 🐋 UNUSUAL WHALES INTEGRATION (Phase 2)
             unusualWhalesEnabled: false,
-            unusualWhalesApiKey: '', // Alternative data source
+            unusualWhalesApiKey: '', // Will add in Phase 2
             dataSource: 'polygon' // 'polygon' or 'unusual-whales' or 'demo'
         };
 
@@ -2846,44 +2856,52 @@ ${formatExecutionDetails(executionDetails)}
 
             const apiKey = LIVE_DATA_CONFIG.polygonApiKey;
             
-            // Try endpoints in smart order (Starter plan friendly)
+            // 🎯 POLYGON STARTER PLAN OPTIMIZED ENDPOINTS (Best → Fallback)
             const endpoints = [
                 {
-                    name: 'Previous Day',
-                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${apiKey}`,
+                    name: 'Current Minute (Latest)',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&sort=desc&limit=1&apikey=${apiKey}`,
                     dataPath: 'results.0.c',
-                    source: 'previous-day',
-                    planRequired: 'basic'
+                    source: 'current-minute-latest',
+                    planRequired: 'starter',
+                    priority: 1
                 },
                 {
-                    name: 'Current Day',
-                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&apikey=${apiKey}`,
-                    dataPath: 'results.0.c',
-                    source: 'current-day',
-                    planRequired: 'starter'
-                },
-                {
-                    name: 'Current Day Minute',
+                    name: 'Current Minute (5min window)',
                     url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&sort=desc&limit=5&apikey=${apiKey}`,
                     dataPath: 'results.0.c',
                     source: 'current-minute',
-                    planRequired: 'starter'
+                    planRequired: 'starter',
+                    priority: 2
                 },
                 {
-                    name: 'Real-time Quote',
+                    name: 'Current Day Close',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&apikey=${apiKey}`,
+                    dataPath: 'results.0.c',
+                    source: 'current-day',
+                    planRequired: 'starter',
+                    priority: 3
+                },
+                {
+                    name: 'Previous Day Close',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${apiKey}`,
+                    dataPath: 'results.0.c',
+                    source: 'previous-day',
+                    planRequired: 'basic',
+                    priority: 4
+                },
+                {
+                    name: 'Real-time Quote (Advanced+)',
                     url: `https://api.polygon.io/v2/last/nbbo/${symbol}?apikey=${apiKey}`,
                     dataPath: 'results.last.bid',
                     source: 'real-time-quote',
-                    planRequired: 'advanced'
-                },
-                {
-                    name: 'Real-time Trade',
-                    url: `https://api.polygon.io/v2/last/trade/${symbol}?apikey=${apiKey}`,
-                    dataPath: 'results.p',
-                    source: 'real-time-trade',
-                    planRequired: 'professional'
+                    planRequired: 'advanced',
+                    priority: 5
                 }
             ];
+            
+            // Sort by priority for Starter plan optimization
+            endpoints.sort((a, b) => a.priority - b.priority);
 
             let detectedPlan = 'basic';
             
@@ -3135,9 +3153,11 @@ ${formatExecutionDetails(executionDetails)}
             // First check if we have live cached data
             if (LIVE_DATA_CONFIG.cache[normalizedSymbol] && LIVE_DATA_CONFIG.cache[normalizedSymbol].price) {
                 const cacheAge = Date.now() - LIVE_DATA_CONFIG.cache[normalizedSymbol].timestamp;
-                // Use cached price if less than 35 minutes old (slightly longer than refresh interval)
-                if (cacheAge < 2100000) {
-                    console.log(`💰 Using live cached price for ${symbol}: $${LIVE_DATA_CONFIG.cache[normalizedSymbol].price.toFixed(2)} (${LIVE_DATA_CONFIG.cache[normalizedSymbol].source}) - Age: ${Math.round(cacheAge/60000)} mins`);
+                // Use cached price if less than 6 minutes old (optimized for 5-minute refresh)
+                if (cacheAge < 360000) {
+                    const ageMinutes = Math.round(cacheAge/60000);
+                    const ageDisplay = ageMinutes < 1 ? `${Math.round(cacheAge/1000)}s` : `${ageMinutes}m`;
+                    console.log(`💰 Using live cached price for ${symbol}: $${LIVE_DATA_CONFIG.cache[normalizedSymbol].price.toFixed(2)} (${LIVE_DATA_CONFIG.cache[normalizedSymbol].source}) - Age: ${ageDisplay}`);
                     return LIVE_DATA_CONFIG.cache[normalizedSymbol].price;
                 }
             }
@@ -3319,6 +3339,83 @@ ${formatExecutionDetails(executionDetails)}
             if (container) {
                 container.innerHTML = '';
                 console.log('🗑️ FORCED CLEAR: All cached recommendations removed');
+            }
+        }
+
+        // 🎯 POLYGON STARTER PLAN SETUP - OPTIMIZED FOR PAID PLAN
+        async function setupPolygonStarter() {
+            console.log('🎯 Setting up Polygon Starter Plan integration...');
+            
+            const apiKey = prompt(`🎯 POLYGON STARTER PLAN SETUP
+            
+✅ Enter your PAID Polygon.io API key:
+            
+🚀 Starter Plan Benefits:
+• Current-day minute bars (near real-time!)
+• Much better than previous-day data
+• Perfect for ML training
+• 5-minute refresh for optimal performance
+
+💡 Your investment in quality data = better ML predictions!
+
+API Key:`);
+            
+            if (!apiKey || apiKey.trim() === '') {
+                alert('❌ API key required for Polygon Starter integration.');
+                return;
+            }
+            
+            // Configure for Starter plan
+            LIVE_DATA_CONFIG.polygonApiKey = apiKey.trim();
+            LIVE_DATA_CONFIG.enabled = true;
+            LIVE_DATA_CONFIG.dataSource = 'polygon';
+            LIVE_DATA_CONFIG.planType = 'starter';
+            LIVE_DATA_CONFIG.refreshInterval = 300000; // 5 minutes - optimal for Starter
+            LIVE_DATA_CONFIG.cache = {}; // Clear cache
+            
+            updateLiveDataStatus('loading', 'Testing Polygon Starter plan...');
+            
+            // Test with current-minute endpoint (Starter plan feature)
+            console.log('🧪 Testing Starter plan current-minute endpoint...');
+            const testPrice = await fetchLivePrice('AAPL');
+            
+            if (testPrice && testPrice > 0) {
+                const button = document.getElementById('liveDataToggle');
+                if (button) {
+                    button.textContent = '🔴 Switch to Demo';
+                    button.style.background = '#ef4444';
+                }
+                
+                // Start auto-refresh with 5-minute intervals
+                LIVE_DATA_CONFIG.refreshTimer = setInterval(updateAllPricesWithLiveData, LIVE_DATA_CONFIG.refreshInterval);
+                
+                alert(`🎉 POLYGON STARTER PLAN ACTIVATED!
+
+✅ Test Success: AAPL = $${testPrice.toFixed(2)}
+🕐 Refresh: Every 5 minutes (optimal)
+📊 Data: Current-day minute bars
+🎯 Quality: Professional-grade for ML
+
+🚀 Generating fresh recommendations with Starter data...`);
+                
+                updateLiveDataStatus('live', 'Polygon Starter - 5min refresh');
+                
+                // Generate new recommendations with Starter data
+                setTimeout(async () => {
+                    await refreshAllRecommendations();
+                }, 1000);
+                
+            } else {
+                alert(`❌ Polygon Starter test failed.
+                
+Possible issues:
+• API key invalid or expired
+• Network connectivity
+• Rate limiting
+• Plan not active
+
+Please verify your Starter plan subscription at polygon.io/dashboard`);
+                updateLiveDataStatus('error', 'Starter plan test failed');
             }
         }
 
