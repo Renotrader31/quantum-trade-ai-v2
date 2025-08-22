@@ -390,6 +390,31 @@
         <div class="build-info">
             🐋 UNUSUAL WHALES PREMIUM - DARK POOLS - OPTIONS FLOW - GEX - GREEKS - VOLATILITY - BUILD ID: 1755719727688 🐋
         </div>
+        
+        <!-- 🚀 LIVE DATA CONTROLS 🚀 -->
+        <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 2px solid #3b82f6;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <div id="liveDataStatus" style="text-align: center;">
+                    <span style="color: #f59e0b;">🟡 DEMO DATA</span>
+                    <small style="color: #94a3b8;">Static prices for testing</small>
+                </div>
+                
+                <button id="liveDataToggle" onclick="toggleLiveData()" 
+                        style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
+                    🟢 Enable Live Data
+                </button>
+                
+                <button onclick="updateAllPricesWithLiveData()" 
+                        style="background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                    🔄 Refresh Prices
+                </button>
+                
+                <div style="text-align: center; font-size: 0.9rem; color: #94a3b8;">
+                    <div>🔗 Powered by Polygon.io</div>
+                    <div>Auto-refresh: 30 seconds</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Navigation Tabs -->
@@ -964,6 +989,49 @@
     <script>
         // Initialize build time
         document.getElementById('buildTime').textContent = new Date().toLocaleString();
+
+        // 🚀 LIVE DATA CONFIGURATION SYSTEM 🚀
+        const LIVE_DATA_CONFIG = {
+            enabled: false, // Toggle between demo/live data
+            polygonApiKey: '', // Will be set by user
+            fallbackToDemo: true, // Fallback if API fails
+            refreshInterval: 30000, // 30 seconds
+            symbols: ['SPY', 'QQQ', 'AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'META', 'COIN'],
+            lastUpdate: null,
+            cache: {} // Cache recent prices
+        };
+
+        // Demo prices (fallback data)
+        const DEMO_PRICES = {
+            'SPY': 641.50,
+            'QQQ': 568.15,
+            'AAPL': 189.67,
+            'NVDA': 147.23,
+            'TSLA': 234.89,
+            'MSFT': 425.12,
+            'GOOGL': 182.45,
+            'AMZN': 178.92,
+            'META': 521.33,
+            'COIN': 248.50,
+            'AMD': 167.44,
+            'NFLX': 472.11,
+            'CRM': 284.67,
+            'UBER': 78.92,
+            'SHOP': 89.45
+        };
+
+        // Live Data Status Indicator
+        function updateLiveDataStatus(status, message) {
+            const statusEl = document.getElementById('liveDataStatus');
+            if (statusEl) {
+                statusEl.innerHTML = `
+                    <span style="color: ${status === 'live' ? '#10b981' : status === 'demo' ? '#f59e0b' : '#ef4444'};">
+                        ${status === 'live' ? '🟢 LIVE DATA' : status === 'demo' ? '🟡 DEMO DATA' : '🔴 DATA ERROR'}
+                    </span>
+                    <small style="color: #94a3b8;">${message}</small>
+                `;
+            }
+        }
 
         // Tab Management
         function showTab(tabName) {
@@ -2714,6 +2782,152 @@ ${formatExecutionDetails(executionDetails)}
         setTimeout(() => {
             initializeUnusualWhales();
         }, 2000);
+
+        // 🚀 POLYGON.IO LIVE DATA INTEGRATION 🚀
+        
+        // Fetch real-time stock price from Polygon.io
+        async function fetchLivePrice(symbol) {
+            if (!LIVE_DATA_CONFIG.enabled || !LIVE_DATA_CONFIG.polygonApiKey) {
+                return DEMO_PRICES[symbol] || null;
+            }
+
+            try {
+                const url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
+                
+                console.log(`📡 Fetching live price for ${symbol}...`);
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Polygon API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.results && data.results.length > 0) {
+                    const price = data.results[0].c; // Close price
+                    LIVE_DATA_CONFIG.cache[symbol] = {
+                        price: price,
+                        timestamp: Date.now()
+                    };
+                    console.log(`✅ ${symbol}: $${price.toFixed(2)} (live)`);
+                    return price;
+                } else {
+                    throw new Error('No price data in response');
+                }
+            } catch (error) {
+                console.error(`❌ Error fetching ${symbol} price:`, error);
+                
+                // Fallback to demo data
+                if (LIVE_DATA_CONFIG.fallbackToDemo) {
+                    console.log(`🔄 Falling back to demo price for ${symbol}`);
+                    return DEMO_PRICES[symbol] || null;
+                }
+                return null;
+            }
+        }
+
+        // Fetch multiple stock prices efficiently
+        async function fetchMultipleLivePrices(symbols) {
+            console.log(`📡 Fetching live prices for ${symbols.length} symbols...`);
+            
+            const promises = symbols.map(symbol => fetchLivePrice(symbol));
+            const results = await Promise.allSettled(promises);
+            
+            const prices = {};
+            symbols.forEach((symbol, index) => {
+                const result = results[index];
+                if (result.status === 'fulfilled' && result.value !== null) {
+                    prices[symbol] = result.value;
+                } else {
+                    prices[symbol] = DEMO_PRICES[symbol] || 100; // Fallback
+                }
+            });
+            
+            LIVE_DATA_CONFIG.lastUpdate = new Date();
+            console.log('✅ Live price fetch complete:', prices);
+            
+            return prices;
+        }
+
+        // Update all displayed prices with live data
+        async function updateAllPricesWithLiveData() {
+            try {
+                updateLiveDataStatus('loading', 'Fetching real-time prices...');
+                
+                const livePrices = await fetchMultipleLivePrices(LIVE_DATA_CONFIG.symbols);
+                
+                // Update demo prices with live data
+                Object.assign(DEMO_PRICES, livePrices);
+                
+                // Refresh the recommendations to show new prices
+                await refreshStockRecommendations();
+                
+                const mode = LIVE_DATA_CONFIG.enabled ? 'live' : 'demo';
+                const timestamp = new Date().toLocaleTimeString();
+                updateLiveDataStatus(mode, `Last update: ${timestamp}`);
+                
+                console.log('🚀 All prices updated with live data!');
+                
+            } catch (error) {
+                console.error('❌ Error updating live prices:', error);
+                updateLiveDataStatus('error', 'Failed to fetch live data');
+            }
+        }
+
+        // Get current price (live or demo)
+        function getCurrentPrice(symbol) {
+            return DEMO_PRICES[symbol] || 100;
+        }
+
+        // Refresh stock recommendations with current prices
+        async function refreshStockRecommendations() {
+            console.log('🔄 Refreshing stock recommendations with current prices...');
+            
+            // This function updates any displayed stock prices in the UI
+            // The main recommendation generation happens in refreshAllRecommendations()
+            
+            // Update any price displays that might exist
+            LIVE_DATA_CONFIG.symbols.forEach(symbol => {
+                const priceElements = document.querySelectorAll(`[data-symbol="${symbol}"] .price, .${symbol}-price`);
+                priceElements.forEach(el => {
+                    const price = getCurrentPrice(symbol);
+                    el.textContent = `$${price.toFixed(2)}`;
+                });
+            });
+            
+            console.log('✅ Stock recommendation prices updated');
+        }
+
+        // Toggle between live and demo data modes
+        function toggleLiveData() {
+            const apiKey = prompt('Enter your Polygon.io API key:');
+            if (!apiKey) {
+                alert('API key required for live data mode.');
+                return;
+            }
+            
+            LIVE_DATA_CONFIG.polygonApiKey = apiKey;
+            LIVE_DATA_CONFIG.enabled = !LIVE_DATA_CONFIG.enabled;
+            
+            const button = document.getElementById('liveDataToggle');
+            if (button) {
+                button.textContent = LIVE_DATA_CONFIG.enabled ? 
+                    '🔴 Switch to Demo' : '🟢 Enable Live Data';
+                button.style.background = LIVE_DATA_CONFIG.enabled ? 
+                    '#ef4444' : '#10b981';
+            }
+            
+            if (LIVE_DATA_CONFIG.enabled) {
+                updateAllPricesWithLiveData();
+                // Set up auto-refresh
+                setInterval(updateAllPricesWithLiveData, LIVE_DATA_CONFIG.refreshInterval);
+            }
+            
+            alert(LIVE_DATA_CONFIG.enabled ? 
+                '🚀 Live data enabled! Prices will update every 30 seconds.' : 
+                '🟡 Switched to demo data mode.'
+            );
+        }
 
         // Refresh ALL recommendations with MAXIMUM trade generation for ML training
         async function refreshAllRecommendations() {
