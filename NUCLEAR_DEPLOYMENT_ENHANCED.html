@@ -2799,58 +2799,76 @@ ${formatExecutionDetails(executionDetails)}
 
             const apiKey = LIVE_DATA_CONFIG.polygonApiKey;
             
-            // Try endpoints in order of preference (most current first)
+            // Try endpoints in smart order (Starter plan friendly)
             const endpoints = [
                 {
-                    name: 'Real-time Quote',
-                    url: `https://api.polygon.io/v2/last/nbbo/${symbol}?apikey=${apiKey}`,
-                    dataPath: 'results.last.bid', // or ask price
-                    source: 'real-time-quote'
-                },
-                {
-                    name: 'Real-time Trade',
-                    url: `https://api.polygon.io/v2/last/trade/${symbol}?apikey=${apiKey}`,
-                    dataPath: 'results.p',
-                    source: 'real-time-trade'
-                },
-                {
-                    name: 'Current Day Minute',
-                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&sort=desc&limit=1&apikey=${apiKey}`,
+                    name: 'Previous Day',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${apiKey}`,
                     dataPath: 'results.0.c',
-                    source: 'current-minute'
+                    source: 'previous-day',
+                    planRequired: 'basic'
                 },
                 {
                     name: 'Current Day',
                     url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&apikey=${apiKey}`,
                     dataPath: 'results.0.c',
-                    source: 'current-day'
+                    source: 'current-day',
+                    planRequired: 'starter'
                 },
                 {
-                    name: 'Previous Day',
-                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${apiKey}`,
+                    name: 'Current Day Minute',
+                    url: `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/${new Date().toISOString().split('T')[0]}/${new Date().toISOString().split('T')[0]}?adjusted=true&sort=desc&limit=5&apikey=${apiKey}`,
                     dataPath: 'results.0.c',
-                    source: 'previous-day'
+                    source: 'current-minute',
+                    planRequired: 'starter'
+                },
+                {
+                    name: 'Real-time Quote',
+                    url: `https://api.polygon.io/v2/last/nbbo/${symbol}?apikey=${apiKey}`,
+                    dataPath: 'results.last.bid',
+                    source: 'real-time-quote',
+                    planRequired: 'advanced'
+                },
+                {
+                    name: 'Real-time Trade',
+                    url: `https://api.polygon.io/v2/last/trade/${symbol}?apikey=${apiKey}`,
+                    dataPath: 'results.p',
+                    source: 'real-time-trade',
+                    planRequired: 'professional'
                 }
             ];
 
+            let detectedPlan = 'basic';
+            
             for (const endpoint of endpoints) {
                 try {
                     console.log(`📡 Trying ${endpoint.name} for ${symbol}...`);
                     const response = await fetch(endpoint.url);
                     
                     if (response.status === 403) {
-                        console.log(`⚠️ ${endpoint.name}: 403 - requires higher plan`);
+                        console.log(`⚠️ ${endpoint.name}: 403 - requires ${endpoint.planRequired} plan or higher`);
+                        // Don't try higher-tier endpoints if this one failed due to plan
+                        if (endpoint.planRequired === 'starter' && detectedPlan === 'basic') {
+                            console.log(`📋 Detected plan: Basic - skipping higher tier endpoints`);
+                            break;
+                        }
                         continue; // Try next endpoint
                     }
                     
                     if (response.status === 429) {
-                        console.log(`⚠️ ${endpoint.name}: Rate limited`);
+                        console.log(`⚠️ ${endpoint.name}: Rate limited - waiting and continuing...`);
+                        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
                         continue; // Try next endpoint
                     }
                     
                     if (response.ok) {
                         const data = await response.json();
-                        const price = getNestedValue(data, endpoint.dataPath);
+                        let price = getNestedValue(data, endpoint.dataPath);
+                        
+                        // For quotes, try ask price if bid is 0
+                        if ((!price || price === 0) && endpoint.source === 'real-time-quote') {
+                            price = getNestedValue(data, 'results.last.ask');
+                        }
                         
                         if (price && price > 0) {
                             LIVE_DATA_CONFIG.cache[symbol] = {
@@ -2859,6 +2877,12 @@ ${formatExecutionDetails(executionDetails)}
                                 source: endpoint.source
                             };
                             console.log(`✅ ${symbol}: $${price.toFixed(2)} (${endpoint.source})`);
+                            
+                            // Update detected plan based on successful endpoint
+                            if (endpoint.planRequired === 'starter') detectedPlan = 'starter';
+                            else if (endpoint.planRequired === 'advanced') detectedPlan = 'advanced';
+                            else if (endpoint.planRequired === 'professional') detectedPlan = 'professional';
+                            
                             return price;
                         }
                     }
@@ -2868,6 +2892,9 @@ ${formatExecutionDetails(executionDetails)}
                 } catch (error) {
                     console.log(`❌ ${endpoint.name}: ${error.message}`);
                 }
+                
+                // Small delay between requests to avoid rate limits
+                await new Promise(resolve => setTimeout(resolve, 200));
             }
             
             // All endpoints failed, fallback to demo
@@ -2915,20 +2942,50 @@ ${formatExecutionDetails(executionDetails)}
                 // Update demo prices with live data
                 Object.assign(DEMO_PRICES, livePrices);
                 
+                // Update ALL price displays in the UI
+                updatePricesInTradeInterface(livePrices);
+                
                 // Refresh the recommendations to show new prices
                 await refreshStockRecommendations();
                 
                 const mode = LIVE_DATA_CONFIG.enabled ? 'live' : 'demo';
                 const timestamp = new Date().toLocaleTimeString();
-                const sources = Object.values(LIVE_DATA_CONFIG.cache).map(c => c.source).join(', ');
-                updateLiveDataStatus(mode, `Last update: ${timestamp} (${sources})`);
+                const successfulUpdates = Object.keys(livePrices).length;
+                const sources = Object.values(LIVE_DATA_CONFIG.cache).map(c => c.source).filter((v, i, a) => a.indexOf(v) === i).join(', ');
+                updateLiveDataStatus(mode, `Updated ${successfulUpdates} symbols at ${timestamp} (${sources})`);
                 
-                console.log('🚀 All prices updated with live data!');
+                console.log(`🚀 ${successfulUpdates} prices updated with live data!`, livePrices);
                 
             } catch (error) {
                 console.error('❌ Error updating live prices:', error);
                 updateLiveDataStatus('error', 'Failed to fetch live data');
             }
+        }
+
+        // Update prices in the trading interface (NEW!)
+        function updatePricesInTradeInterface(prices) {
+            console.log('🔄 Updating prices in trading interface...', prices);
+            
+            // Force regenerate recommendations with new prices
+            if (typeof refreshAllRecommendations === 'function') {
+                // Don't await to avoid blocking
+                setTimeout(() => {
+                    refreshAllRecommendations();
+                }, 100);
+            }
+            
+            // Update any visible price displays
+            Object.entries(prices).forEach(([symbol, price]) => {
+                // Look for any elements showing this symbol's price
+                const priceElements = document.querySelectorAll(`*`);
+                priceElements.forEach(el => {
+                    if (el.textContent && el.textContent.includes(`$`) && el.textContent.includes(symbol)) {
+                        console.log(`💰 Found price element for ${symbol}, updating...`);
+                    }
+                });
+            });
+            
+            console.log('✅ Price interface update complete');
         }
 
         // Show Polygon.io API help
