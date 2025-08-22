@@ -3124,13 +3124,16 @@ ${formatExecutionDetails(executionDetails)}
 
         // Get current price (live or demo) - ENHANCED TO USE LIVE DATA!
         async function getCurrentPrice(symbol) {
+            // Normalize symbol to uppercase for cache lookup
+            const normalizedSymbol = symbol.toUpperCase();
+            
             // First check if we have live cached data
-            if (LIVE_DATA_CONFIG.cache[symbol] && LIVE_DATA_CONFIG.cache[symbol].price) {
-                const cacheAge = Date.now() - LIVE_DATA_CONFIG.cache[symbol].timestamp;
+            if (LIVE_DATA_CONFIG.cache[normalizedSymbol] && LIVE_DATA_CONFIG.cache[normalizedSymbol].price) {
+                const cacheAge = Date.now() - LIVE_DATA_CONFIG.cache[normalizedSymbol].timestamp;
                 // Use cached price if less than 5 minutes old
                 if (cacheAge < 300000) {
-                    console.log(`💰 Using live cached price for ${symbol}: $${LIVE_DATA_CONFIG.cache[symbol].price.toFixed(2)} (${LIVE_DATA_CONFIG.cache[symbol].source})`);
-                    return LIVE_DATA_CONFIG.cache[symbol].price;
+                    console.log(`💰 Using live cached price for ${symbol}: $${LIVE_DATA_CONFIG.cache[normalizedSymbol].price.toFixed(2)} (${LIVE_DATA_CONFIG.cache[normalizedSymbol].source})`);
+                    return LIVE_DATA_CONFIG.cache[normalizedSymbol].price;
                 }
             }
             
@@ -3138,21 +3141,21 @@ ${formatExecutionDetails(executionDetails)}
             if (LIVE_DATA_CONFIG.enabled) {
                 if (LIVE_DATA_CONFIG.dataSource === 'unusual-whales' && LIVE_DATA_CONFIG.unusualWhalesApiKey) {
                     console.log(`🐋 Fetching live price for ${symbol} from Unusual Whales...`);
-                    const uwPrice = await fetchUnusualWhalesPrice(symbol);
+                    const uwPrice = await fetchUnusualWhalesPrice(normalizedSymbol);
                     if (uwPrice && uwPrice > 0) {
                         return uwPrice;
                     }
                 } else if (LIVE_DATA_CONFIG.dataSource === 'polygon' && LIVE_DATA_CONFIG.polygonApiKey) {
                     console.log(`📡 Fetching live price for ${symbol} from Polygon...`);
-                    const polygonPrice = await fetchLivePrice(symbol);
+                    const polygonPrice = await fetchLivePrice(normalizedSymbol);
                     if (polygonPrice && polygonPrice > 0) {
                         return polygonPrice;
                     }
                 }
             }
             
-            // Fallback to demo prices (updated with live data)
-            const price = DEMO_PRICES[symbol] || 100;
+            // Fallback to demo prices (updated with live data) - try both cases
+            const price = DEMO_PRICES[normalizedSymbol] || DEMO_PRICES[symbol] || 100;
             console.log(`📊 Using demo price for ${symbol}: $${price.toFixed(2)}`);
             return price;
         }
