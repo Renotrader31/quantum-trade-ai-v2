@@ -1,0 +1,37 @@
+Server running on port 8000
+20/Aug/2025 21:54:21 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+20/Aug/2025 21:54:21 - code 404, message File not found
+20/Aug/2025 21:54:21 - "GET /favicon.ico HTTP/1.1" 404 -
+Server running on port 8000
+20/Aug/2025 22:57:32 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+20/Aug/2025 22:57:32 - code 404, message File not found
+20/Aug/2025 22:57:32 - "GET /favicon.ico HTTP/1.1" 404 -
+20/Aug/2025 22:58:34 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+Server running on port 8000
+21/Aug/2025 02:29:04 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+Server running on port 8000
+21/Aug/2025 02:48:47 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+21/Aug/2025 02:48:48 - code 404, message File not found
+21/Aug/2025 02:48:48 - "GET /favicon.ico HTTP/1.1" 404 -
+21/Aug/2025 02:54:31 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+21/Aug/2025 02:55:38 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+Server running on port 8000
+Server running on port 8000
+21/Aug/2025 14:41:41 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+21/Aug/2025 14:41:41 - code 404, message File not found
+21/Aug/2025 14:41:41 - "GET /favicon.ico HTTP/1.1" 404 -
+Server running on port 8000
+21/Aug/2025 14:47:08 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+21/Aug/2025 15:19:38 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+21/Aug/2025 15:19:51 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+21/Aug/2025 15:26:24 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+22/Aug/2025 15:24:13 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+22/Aug/2025 15:32:10 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+22/Aug/2025 15:42:03 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+22/Aug/2025 15:42:03 - code 404, message File not found
+22/Aug/2025 15:42:03 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+22/Aug/2025 15:42:03 - code 404, message File not found
+22/Aug/2025 15:42:03 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+22/Aug/2025 16:08:02 - "GET /NUCLEAR_DEPLOYMENT_ENHANCED.html HTTP/1.1" 200 -
+22/Aug/2025 16:08:02 - code 404, message File not found
+22/Aug/2025 16:08:02 - "GET /favicon.ico HTTP/1.1" 404 -
