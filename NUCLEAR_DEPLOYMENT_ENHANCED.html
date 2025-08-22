@@ -410,8 +410,8 @@
                 </button>
                 
                 <div style="text-align: center; font-size: 0.9rem; color: #94a3b8;">
-                    <div>🔗 Powered by Polygon.io</div>
-                    <div>Auto-refresh: 30 seconds</div>
+                    <div>🔗 Powered by Polygon.io Real-Time API</div>
+                    <div>Auto-refresh: 15 seconds | Multi-endpoint fallback</div>
                 </div>
             </div>
         </div>
@@ -995,10 +995,11 @@
             enabled: false, // Toggle between demo/live data
             polygonApiKey: '', // Will be set by user
             fallbackToDemo: true, // Fallback if API fails
-            refreshInterval: 30000, // 30 seconds
+            refreshInterval: 15000, // 15 seconds for more current prices
             symbols: ['SPY', 'QQQ', 'AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'META', 'COIN'],
             lastUpdate: null,
-            cache: {} // Cache recent prices
+            cache: {}, // Cache recent prices
+            refreshTimer: null // Store interval ID
         };
 
         // Demo prices (fallback data)
@@ -2785,35 +2786,74 @@ ${formatExecutionDetails(executionDetails)}
 
         // 🚀 POLYGON.IO LIVE DATA INTEGRATION 🚀
         
-        // Fetch real-time stock price from Polygon.io
+        // Fetch real-time stock price from Polygon.io (UPGRADED TO REAL-TIME!)
         async function fetchLivePrice(symbol) {
             if (!LIVE_DATA_CONFIG.enabled || !LIVE_DATA_CONFIG.polygonApiKey) {
                 return DEMO_PRICES[symbol] || null;
             }
 
             try {
-                const url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
+                // Try real-time quote first (most current)
+                let url = `https://api.polygon.io/v2/last/trade/${symbol}?apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
                 
-                console.log(`📡 Fetching live price for ${symbol}...`);
-                const response = await fetch(url);
+                console.log(`📡 Fetching real-time price for ${symbol}...`);
+                let response = await fetch(url);
                 
-                if (!response.ok) {
-                    throw new Error(`Polygon API error: ${response.status}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.results && data.results.p) {
+                        const price = data.results.p; // Last trade price
+                        LIVE_DATA_CONFIG.cache[symbol] = {
+                            price: price,
+                            timestamp: Date.now(),
+                            source: 'real-time'
+                        };
+                        console.log(`✅ ${symbol}: $${price.toFixed(2)} (real-time)`);
+                        return price;
+                    }
                 }
                 
-                const data = await response.json();
+                // Fallback to current day aggregate if real-time fails
+                const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+                url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/${today}/${today}?adjusted=true&sort=desc&limit=1&apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
                 
-                if (data.results && data.results.length > 0) {
-                    const price = data.results[0].c; // Close price
-                    LIVE_DATA_CONFIG.cache[symbol] = {
-                        price: price,
-                        timestamp: Date.now()
-                    };
-                    console.log(`✅ ${symbol}: $${price.toFixed(2)} (live)`);
-                    return price;
-                } else {
-                    throw new Error('No price data in response');
+                console.log(`📡 Fallback: Fetching latest minute bar for ${symbol}...`);
+                response = await fetch(url);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.results && data.results.length > 0) {
+                        const price = data.results[0].c; // Close of latest minute
+                        LIVE_DATA_CONFIG.cache[symbol] = {
+                            price: price,
+                            timestamp: Date.now(),
+                            source: 'latest-minute'
+                        };
+                        console.log(`✅ ${symbol}: $${price.toFixed(2)} (latest minute)`);
+                        return price;
+                    }
                 }
+                
+                // Final fallback to previous day
+                url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${LIVE_DATA_CONFIG.polygonApiKey}`;
+                response = await fetch(url);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.results && data.results.length > 0) {
+                        const price = data.results[0].c;
+                        LIVE_DATA_CONFIG.cache[symbol] = {
+                            price: price,
+                            timestamp: Date.now(),
+                            source: 'previous-day'
+                        };
+                        console.log(`✅ ${symbol}: $${price.toFixed(2)} (previous day)`);
+                        return price;
+                    }
+                }
+                
+                throw new Error('All API endpoints failed');
+                
             } catch (error) {
                 console.error(`❌ Error fetching ${symbol} price:`, error);
                 
@@ -2864,7 +2904,8 @@ ${formatExecutionDetails(executionDetails)}
                 
                 const mode = LIVE_DATA_CONFIG.enabled ? 'live' : 'demo';
                 const timestamp = new Date().toLocaleTimeString();
-                updateLiveDataStatus(mode, `Last update: ${timestamp}`);
+                const sources = Object.values(LIVE_DATA_CONFIG.cache).map(c => c.source).join(', ');
+                updateLiveDataStatus(mode, `Last update: ${timestamp} (${sources})`);
                 
                 console.log('🚀 All prices updated with live data!');
                 
@@ -2900,6 +2941,25 @@ ${formatExecutionDetails(executionDetails)}
 
         // Toggle between live and demo data modes
         function toggleLiveData() {
+            if (LIVE_DATA_CONFIG.enabled) {
+                // Disable live data
+                LIVE_DATA_CONFIG.enabled = false;
+                if (LIVE_DATA_CONFIG.refreshTimer) {
+                    clearInterval(LIVE_DATA_CONFIG.refreshTimer);
+                    LIVE_DATA_CONFIG.refreshTimer = null;
+                }
+                
+                const button = document.getElementById('liveDataToggle');
+                if (button) {
+                    button.textContent = '🟢 Enable Live Data';
+                    button.style.background = '#10b981';
+                }
+                
+                updateLiveDataStatus('demo', 'Switched to demo mode');
+                alert('🟡 Switched to demo data mode.');
+                return;
+            }
+            
             const apiKey = prompt('Enter your Polygon.io API key:');
             if (!apiKey) {
                 alert('API key required for live data mode.');
@@ -2907,26 +2967,19 @@ ${formatExecutionDetails(executionDetails)}
             }
             
             LIVE_DATA_CONFIG.polygonApiKey = apiKey;
-            LIVE_DATA_CONFIG.enabled = !LIVE_DATA_CONFIG.enabled;
+            LIVE_DATA_CONFIG.enabled = true;
             
             const button = document.getElementById('liveDataToggle');
             if (button) {
-                button.textContent = LIVE_DATA_CONFIG.enabled ? 
-                    '🔴 Switch to Demo' : '🟢 Enable Live Data';
-                button.style.background = LIVE_DATA_CONFIG.enabled ? 
-                    '#ef4444' : '#10b981';
+                button.textContent = '🔴 Switch to Demo';
+                button.style.background = '#ef4444';
             }
             
-            if (LIVE_DATA_CONFIG.enabled) {
-                updateAllPricesWithLiveData();
-                // Set up auto-refresh
-                setInterval(updateAllPricesWithLiveData, LIVE_DATA_CONFIG.refreshInterval);
-            }
+            // Start immediate update and set up auto-refresh
+            updateAllPricesWithLiveData();
+            LIVE_DATA_CONFIG.refreshTimer = setInterval(updateAllPricesWithLiveData, LIVE_DATA_CONFIG.refreshInterval);
             
-            alert(LIVE_DATA_CONFIG.enabled ? 
-                '🚀 Live data enabled! Prices will update every 30 seconds.' : 
-                '🟡 Switched to demo data mode.'
-            );
+            alert(`🚀 Live data enabled! Prices will update every ${LIVE_DATA_CONFIG.refreshInterval/1000} seconds with real-time data.`);
         }
 
         // Refresh ALL recommendations with MAXIMUM trade generation for ML training
