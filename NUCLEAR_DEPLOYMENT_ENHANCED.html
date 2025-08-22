@@ -409,6 +409,16 @@
                     🔄 Refresh Prices
                 </button>
                 
+                <button onclick="forceHardRefresh()" 
+                        style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                    ⚡ FORCE CACHE BUST
+                </button>
+                
+                <button onclick="switchToUnusualWhales()" 
+                        style="background: #8b5cf6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                    🐋 Try Unusual Whales API
+                </button>
+                
                 <button onclick="showPolygonHelp()" 
                         style="background: #6b7280; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold;">
                     ❓ API Help
@@ -987,13 +997,14 @@
             🎉 ENHANCED VERSION SUCCESSFULLY LOADED - BROADER UNIVERSE + AI RECOMMENDATIONS! 🎉
         </div>
         <div style="color: #94a3b8;">
-            Build Time: <span id="buildTime"></span> • Build ID: 1755719727688 • Version: 2.1.2-enhanced-universe
+            Build Time: <span id="buildTime"></span> • Build ID: <span id="dynamicBuildId"></span> • Version: 2.1.2-enhanced-universe
         </div>
     </div>
 
     <script>
         // Initialize build time
         document.getElementById('buildTime').textContent = new Date().toLocaleString();
+        document.getElementById('dynamicBuildId').textContent = `1755719727688-CACHE-BUST-${Date.now()}`;
 
         // 🚀 LIVE DATA CONFIGURATION SYSTEM 🚀
         const LIVE_DATA_CONFIG = {
@@ -1004,7 +1015,12 @@
             symbols: ['SPY', 'QQQ', 'AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'META', 'COIN'],
             lastUpdate: null,
             cache: {}, // Cache recent prices
-            refreshTimer: null // Store interval ID
+            refreshTimer: null, // Store interval ID
+            
+            // 🐋 UNUSUAL WHALES INTEGRATION
+            unusualWhalesEnabled: false,
+            unusualWhalesApiKey: '', // Alternative data source
+            dataSource: 'polygon' // 'polygon' or 'unusual-whales' or 'demo'
         };
 
         // Demo prices (fallback data) - UPDATED WITH MORE REALISTIC CURRENT MARKET VALUES
@@ -3029,6 +3045,43 @@ ${formatExecutionDetails(executionDetails)}
                   `💡 Your API key: polygon.io/dashboard`);
         }
 
+        // 🐋 UNUSUAL WHALES API INTEGRATION
+        async function fetchUnusualWhalesPrice(symbol) {
+            if (!LIVE_DATA_CONFIG.unusualWhalesApiKey || LIVE_DATA_CONFIG.unusualWhalesApiKey === '') {
+                console.log('📊 Unusual Whales API key not set, using demo prices');
+                return null;
+            }
+
+            try {
+                // Unusual Whales API endpoint for stock quotes
+                const response = await fetch(`https://api.unusualwhales.com/api/stock/${symbol}/quote`, {
+                    headers: {
+                        'Authorization': `Bearer ${LIVE_DATA_CONFIG.unusualWhalesApiKey}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const price = data.last_price || data.price || data.close;
+                    
+                    if (price && price > 0) {
+                        LIVE_DATA_CONFIG.cache[symbol] = {
+                            price: price,
+                            timestamp: Date.now(),
+                            source: 'unusual-whales'
+                        };
+                        console.log(`🐋 ${symbol}: $${price.toFixed(2)} (unusual-whales)`);
+                        return price;
+                    }
+                }
+            } catch (error) {
+                console.log(`⚠️ Unusual Whales API error for ${symbol}:`, error.message);
+            }
+
+            return null;
+        }
+
         // Get current price (live or demo) - ENHANCED TO USE LIVE DATA!
         function getCurrentPrice(symbol) {
             // First check if we have live cached data
@@ -3195,8 +3248,73 @@ ${formatExecutionDetails(executionDetails)}
             alert(`✅ Live data enabled!\nAPI key validated successfully.\nPrices will update every ${LIVE_DATA_CONFIG.refreshInterval/1000} seconds.`);
         }
 
+        // FORCE CLEAR ALL CACHED RECOMMENDATIONS FIRST
+        function forceClearRecommendations() {
+            const container = document.getElementById('aiRecommendations');
+            if (container) {
+                container.innerHTML = '';
+                console.log('🗑️ FORCED CLEAR: All cached recommendations removed');
+            }
+        }
+
+        // 🐋 SWITCH TO UNUSUAL WHALES DATA SOURCE
+        async function switchToUnusualWhales() {
+            const apiKey = prompt(`Enter your Unusual Whales API key:\n\n🐋 Alternative to Polygon.io\n📊 Get your API key from: unusualwhales.com/developers`);
+            
+            if (!apiKey || apiKey.trim() === '') {
+                alert('API key required for Unusual Whales data.');
+                return;
+            }
+            
+            LIVE_DATA_CONFIG.unusualWhalesApiKey = apiKey.trim();
+            LIVE_DATA_CONFIG.dataSource = 'unusual-whales';
+            LIVE_DATA_CONFIG.cache = {}; // Clear cache
+            
+            updateLiveDataStatus('loading', 'Testing Unusual Whales API...');
+            
+            // Test the API with a sample symbol
+            const testPrice = await fetchUnusualWhalesPrice('AAPL');
+            
+            if (testPrice && testPrice > 0) {
+                alert(`✅ Unusual Whales API connected successfully!\n🐋 AAPL price: $${testPrice.toFixed(2)}\n\nGenerating fresh recommendations...`);
+                updateLiveDataStatus('live', 'Unusual Whales API active');
+                await refreshAllRecommendations();
+            } else {
+                alert(`❌ Unusual Whales API test failed.\n\nPossible issues:\n• Invalid API key\n• Network connection\n• API rate limits\n\nFalling back to demo mode.`);
+                LIVE_DATA_CONFIG.dataSource = 'demo';
+                updateLiveDataStatus('demo', 'Using demo prices');
+            }
+        }
+
+        // ⚡ FORCE HARD REFRESH WITH CACHE BUSTING
+        function forceHardRefresh() {
+            console.log('⚡ FORCE REFRESH: Clearing all caches and reloading...');
+            
+            // Clear all live data cache
+            LIVE_DATA_CONFIG.cache = {};
+            
+            // Clear localStorage if any
+            try {
+                localStorage.removeItem('tradeHistory');
+                localStorage.removeItem('mlTrades');
+                localStorage.removeItem('pendingOrders');
+            } catch (e) {
+                console.log('localStorage clear failed:', e);
+            }
+            
+            // Force clear recommendations
+            forceClearRecommendations();
+            
+            // Add cache buster to URL and reload
+            const url = new URL(window.location);
+            url.searchParams.set('cacheBust', Date.now());
+            window.location.href = url.toString();
+        }
+
         // Refresh ALL recommendations with MAXIMUM trade generation for ML training
         async function refreshAllRecommendations() {
+            // FIRST: Force clear any cached recommendations
+            forceClearRecommendations();
             const button = event && event.target ? event.target : document.querySelector('button[onclick*="refreshAllRecommendations"]');
             const originalText = button ? button.innerHTML : 'Generate Max Trades';
             if (button) {
@@ -3319,7 +3437,7 @@ ${formatExecutionDetails(executionDetails)}
 
         console.log('🚀 Enhanced Quantum Trade AI v2.1 loaded successfully!');
         console.log('✅ Features: Broader Universe, AI Recommendations, Custom Ticker Input, ML Training, Unusual Whales Premium');
-        console.log('🎯 Build ID: 1755719727688');
+        console.log(`🎯 Build ID: 1755719727688-CACHE-BUST-${Date.now()}`);
     </script>
 </body>
 </html>
